@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resource Intelligence | ResourceX</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/compat.css">
+
+  <style>
+    /* PAGE SPECIFIC CSS */
+    .rx-intelligence-header {
+      padding: 6rem 2rem 4rem;
+      background-color: var(--rx-graphite);
+      color: var(--rx-ivory);
+      text-align: center;
+      border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+    }
+    
+    .rx-page-title {
+      font-family: var(--rx-font-display);
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .rx-page-subtitle {
+      font-family: var(--rx-font-body);
+      font-size: 1.25rem;
+      color: var(--rx-stone);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.5;
+    }
+
+    .rx-main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    /* Selector */
+    .rx-selector-container {
+      margin-bottom: 3rem;
+      background: #1A1D1C;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(242, 239, 231, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .rx-selector-container label {
+      font-family: var(--rx-font-tech);
+      font-size: 0.875rem;
+      color: var(--rx-stone);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .rx-select {
+      background: var(--rx-graphite);
+      color: var(--rx-ivory);
+      border: 1px solid rgba(242, 239, 231, 0.2);
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      font-family: var(--rx-font-body);
+      font-size: 1rem;
+      width: 100%;
+      max-width: 400px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .rx-select:focus {
+      border-color: var(--rx-brass);
+    }
+
+    /* Grid */
+    .rx-intel-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    @media (max-width: 768px) {
+      .rx-intel-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Panel Card */
+    .rx-panel {
+      background: #1A1D1C;
+      border: 1px solid rgba(242, 239, 231, 0.1);
+      border-radius: 8px;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .rx-panel-title {
+      font-family: var(--rx-font-display);
+      font-size: 1.25rem;
+      color: var(--rx-ivory);
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .rx-note {
+      font-size: 0.75rem;
+      color: var(--rx-stone);
+      font-style: italic;
+      margin-top: 1.5rem;
+      border-top: 1px solid rgba(242,239,231,0.1);
+      padding-top: 1rem;
+    }
+
+    /* Compatibility List */
+    .rx-compat-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .rx-compat-item {
+      margin-bottom: 1.25rem;
+    }
+
+    .rx-compat-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.25rem;
+      font-family: var(--rx-font-body);
+      font-size: 0.875rem;
+    }
+
+    .rx-compat-name {
+      color: var(--rx-ivory);
+      font-weight: 500;
+    }
+
+    .rx-compat-stars {
+      color: var(--rx-brass);
+    }
+
+    .rx-compat-desc {
+      color: var(--rx-stone);
+      font-size: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .rx-compat-bar-bg {
+      height: 4px;
+      background: rgba(242, 239, 231, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .rx-compat-bar-fill {
+      height: 100%;
+      background: var(--rx-brass);
+    }
+
+    /* Transport Gauge */
+    .rx-gauge-value {
+      font-family: var(--rx-font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: #E63946; /* High sensitivity red */
+      margin-bottom: 1rem;
+    }
+
+    .rx-gauge-gradient {
+      height: 12px;
+      background: linear-gradient(to right, #2A9D8F, #E9C46A, #F4A261, #E63946);
+      border-radius: 6px;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .rx-gauge-marker {
+      position: absolute;
+      top: -10px;
+      left: 80%;
+      width: 4px;
+      height: 32px;
+      background: var(--rx-ivory);
+      border-radius: 2px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    }
+
+    /* SVG Chart */
+    .rx-chart-container {
+      width: 100%;
+      height: 300px;
+      position: relative;
+    }
+    
+    .rx-chart-tooltip {
+      position: absolute;
+      background: var(--rx-graphite);
+      border: 1px solid var(--rx-brass);
+      color: var(--rx-ivory);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-family: var(--rx-font-tech);
+      font-size: 0.75rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      transform: translate(-50%, -120%);
+      z-index: 10;
+    }
+
+    /* Processing Requirements */
+    .rx-process-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(242,239,231,0.05);
+    }
+
+    .rx-process-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 1rem;
+    }
+    .rx-indicator-green { background: #2A9D8F; }
+    .rx-indicator-yellow { background: #E9C46A; }
+    .rx-indicator-red { background: #E63946; }
+
+    /* Buyer Matrix */
+    .rx-matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--rx-font-tech);
+      font-size: 0.75rem;
+    }
+
+    .rx-matrix th, .rx-matrix td {
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+      border: 1px solid rgba(242,239,231,0.1);
+    }
+
+    .rx-matrix th {
+      color: var(--rx-stone);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .rx-matrix td:first-child {
+      text-align: left;
+      color: var(--rx-ivory);
+      font-family: var(--rx-font-body);
+    }
+
+    .rx-cell-high { background: rgba(42, 157, 143, 0.2); color: #2A9D8F; }
+    .rx-cell-med { background: rgba(168, 138, 82, 0.2); color: var(--rx-brass); }
+    .rx-cell-low { background: rgba(230, 57, 70, 0.2); color: #E63946; }
+
+    /* Expandable Note */
+    .rx-methodology {
+      margin-bottom: 4rem;
+      border: 1px solid rgba(242,239,231,0.2);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .rx-meth-header {
+      padding: 1.5rem;
+      background: rgba(242,239,231,0.02);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--rx-font-display);
+      font-size: 1.125rem;
+    }
+
+    .rx-meth-content {
+      padding: 0 1.5rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      color: var(--rx-stone);
+      line-height: 1.6;
+    }
+    .rx-meth-content.open {
+      padding: 1.5rem;
+      max-height: 500px;
+    }
+
+    /* Example Card */
+    .rx-snapshot-card {
+      background: var(--rx-graphite);
+      border: 1px solid var(--rx-brass);
+      border-radius: 8px;
+      padding: 2.5rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    
+    .rx-snapshot-title {
+      color: var(--rx-brass);
+      font-family: var(--rx-font-tech);
+      font-size: 0.875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+  </style>
+</head>
+<body class="rx-theme-dark">
+  <div id="rx-nav-container"></div>
+  
+  <main style="padding-top: var(--rx-nav-height)">
+    
+    <!-- Header -->
+    <header class="rx-intelligence-header">
+      <span class="rx-badge-demo" style="margin-bottom: 1rem; display: inline-block;">ANALYTICAL TOOL — DEMO DATA</span>
+      <h1 class="rx-page-title">Resource Intelligence</h1>
+      <p class="rx-page-subtitle">Analytical tools for understanding material compatibility, regional demand and net value economics.</p>
+    </header>
+
+    <div class="rx-main-content">
+      
+      <!-- Material Selector -->
+      <div class="rx-selector-container">
+        <label for="material-select">Target Material</label>
+        <select id="material-select" class="rx-select">
+          <option value="6063">Aluminium Turnings (6063)</option>
+          <option value="brass">Brass Offcuts</option>
+          <option value="steel">Steel Punchings (CRCA)</option>
+        </select>
+      </div>
+
+      <!-- Panels Grid -->
+      <div class="rx-intel-grid">
+        
+        <!-- Compatibility Panel -->
+        <div class="rx-panel rx-fade-in-up">
+          <div class="rx-panel-title">Potential Uses & Compatibility</div>
+          <ul class="rx-compat-list" id="compat-list">
+            <li class="rx-compat-item">
+              <div class="rx-compat-header">
+                <span class="rx-compat-name">Casting</span>
+                <span class="rx-compat-stars">★★★★★</span>
+              </div>
+              <div class="rx-compat-desc">Primary application</div>
+              <div class="rx-compat-bar-bg"><div class="rx-compat-bar-fill" style="width: 100%"></div></div>
+            </li>
+            <li class="rx-compat-item">
+              <div class="rx-compat-header">
+                <span class="rx-compat-name">Remelting</span>
+                <span class="rx-compat-stars">★★★★★</span>
+              </div>
+              <div class="rx-compat-desc">High compatibility</div>
+              <div class="rx-compat-bar-bg"><div class="rx-compat-bar-fill" style="width: 100%"></div></div>
+            </li>
+            <li class="rx-compat-item">
+              <div class="rx-compat-header">
+                <span class="rx-compat-name">Secondary Alloy Production</span>
+                <span class="rx-compat-stars">★★★★☆</span>
+              </div>
+              <div class="rx-compat-desc">Good compatibility</div>
+              <div class="rx-compat-bar-bg"><div class="rx-compat-bar-fill" style="width: 80%"></div></div>
+            </li>
+            <li class="rx-compat-item">
+              <div class="rx-compat-header">
+                <span class="rx-compat-name">Powder Metallurgy</span>
+                <span class="rx-compat-stars">★★★☆☆</span>
+              </div>
+              <div class="rx-compat-desc">Moderate (requires processing)</div>
+              <div class="rx-compat-bar-bg"><div class="rx-compat-bar-fill" style="width: 60%"></div></div>
+            </li>
+            <li class="rx-compat-item">
+              <div class="rx-compat-header">
+                <span class="rx-compat-name">Aluminium Deoxidant</span>
+                <span class="rx-compat-stars">★★☆☆☆</span>
+              </div>
+              <div class="rx-compat-desc">Limited (grade-dependent)</div>
+              <div class="rx-compat-bar-bg"><div class="rx-compat-bar-fill" style="width: 40%"></div></div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Transport Sensitivity -->
+        <div class="rx-panel rx-fade-in-up" style="animation-delay: 0.1s">
+          <div class="rx-panel-title">Transport Sensitivity</div>
+          <div class="rx-gauge-value" id="transport-value">HIGH</div>
+          <p id="transport-desc" style="color: var(--rx-ivory)">Aluminium turnings have moderate value density. Long-distance freight significantly affects net value.</p>
+          
+          <div class="rx-gauge-gradient">
+            <div class="rx-gauge-marker" id="transport-marker"></div>
+          </div>
+          
+          <p style="font-family: var(--rx-font-tech); color: var(--rx-brass); font-size: 0.875rem;" id="transport-optimal">
+            Optimal supply radius for this material: ~50-80 km (indicative estimate)
+          </p>
+          
+          <div class="rx-note">This is an indicative analysis. Actual economics depend on specific buyer requirements and logistics.</div>
+        </div>
+
+        <!-- Net Value Chart -->
+        <div class="rx-panel rx-fade-in-up" style="animation-delay: 0.2s; grid-column: 1 / -1;">
+          <div class="rx-panel-title">
+            Net Value vs. Distance
+            <span class="rx-badge-demo" style="font-size: 0.6rem;">ILLUSTRATIVE CURVE — DEMO DATA</span>
+          </div>
+          
+          <div class="rx-chart-container" id="chart-container">
+            <!-- SVG injected by JS -->
+            <div class="rx-chart-tooltip" id="chart-tooltip"></div>
+          </div>
+        </div>
+
+        <!-- Processing Requirements -->
+        <div class="rx-panel rx-fade-in-up" style="animation-delay: 0.3s">
+          <div class="rx-panel-title">Processing Requirements</div>
+          
+          <div id="processing-list">
+            <div class="rx-process-item">
+              <div class="rx-process-indicator rx-indicator-green"></div>
+              <div>
+                <div style="color: var(--rx-ivory); font-weight: 500;">Direct remelting</div>
+                <div style="color: var(--rx-stone); font-size: 0.875rem;">Minimal — Washing / degreasing only</div>
+              </div>
+            </div>
+            <div class="rx-process-item">
+              <div class="rx-process-indicator rx-indicator-yellow"></div>
+              <div>
+                <div style="color: var(--rx-ivory); font-weight: 500;">Casting</div>
+                <div style="color: var(--rx-stone); font-size: 0.875rem;">Low — Sorting by alloy required</div>
+              </div>
+            </div>
+            <div class="rx-process-item">
+              <div class="rx-process-indicator rx-indicator-yellow"></div>
+              <div>
+                <div style="color: var(--rx-ivory); font-weight: 500;">Secondary Alloy</div>
+                <div style="color: var(--rx-stone); font-size: 0.875rem;">Moderate — Chemical analysis / blending</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Regional Demand -->
+        <div class="rx-panel rx-fade-in-up" style="animation-delay: 0.4s">
+          <div class="rx-panel-title">Regional Demand (Telangana / AP)</div>
+          
+          <div id="demand-list">
+            <div style="margin-bottom: 1rem; display: flex; justify-content: space-between;">
+              <span style="color: var(--rx-ivory);">Casting foundries</span>
+              <span style="color: #2A9D8F; font-weight: 500;">High demand (indicative)</span>
+            </div>
+            <div style="margin-bottom: 1rem; display: flex; justify-content: space-between;">
+              <span style="color: var(--rx-ivory);">Secondary smelters</span>
+              <span style="color: #2A9D8F; font-weight: 500;">Moderate-High demand</span>
+            </div>
+            <div style="margin-bottom: 1rem; display: flex; justify-content: space-between;">
+              <span style="color: var(--rx-ivory);">Extrusion plants</span>
+              <span style="color: var(--rx-brass); font-weight: 500;">Moderate demand</span>
+            </div>
+          </div>
+          
+          <div class="rx-note">Regional demand indicators are illustrative. Not based on live market data.</div>
+        </div>
+
+        <!-- Buyer Matrix -->
+        <div class="rx-panel rx-fade-in-up" style="animation-delay: 0.5s; grid-column: 1 / -1;">
+          <div class="rx-panel-title">
+            Buyer Compatibility Matrix
+            <span class="rx-badge-demo" style="font-size: 0.6rem;">SIMULATED MATRIX — DEMO DATA</span>
+          </div>
+          
+          <div style="overflow-x: auto;">
+            <table class="rx-matrix" id="buyer-matrix">
+              <thead>
+                <tr>
+                  <th>Buyer Type</th>
+                  <th>Grade Match</th>
+                  <th>Quantity Scale</th>
+                  <th>Location Pref</th>
+                  <th>Processing Cap.</th>
+                  <th>Price Sens.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Caster</td>
+                  <td class="rx-cell-high">High</td>
+                  <td class="rx-cell-med">Med</td>
+                  <td class="rx-cell-high">High</td>
+                  <td class="rx-cell-low">Low</td>
+                  <td class="rx-cell-med">Med</td>
+                </tr>
+                <tr>
+                  <td>Smelter</td>
+                  <td class="rx-cell-high">High</td>
+                  <td class="rx-cell-high">High</td>
+                  <td class="rx-cell-med">Med</td>
+                  <td class="rx-cell-high">High</td>
+                  <td class="rx-cell-low">Low</td>
+                </tr>
+                <tr>
+                  <td>Extruder</td>
+                  <td class="rx-cell-med">Med</td>
+                  <td class="rx-cell-med">Med</td>
+                  <td class="rx-cell-med">Med</td>
+                  <td class="rx-cell-med">Med</td>
+                  <td class="rx-cell-high">High</td>
+                </tr>
+                <tr>
+                  <td>Powder Producer</td>
+                  <td class="rx-cell-low">Low</td>
+                  <td class="rx-cell-low">Low</td>
+                  <td class="rx-cell-high">High</td>
+                  <td class="rx-cell-high">High</td>
+                  <td class="rx-cell-med">Med</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Methodology -->
+      <div class="rx-methodology rx-fade-in-up">
+        <div class="rx-meth-header" onclick="toggleMethodology()">
+          How Intelligence Works
+          <span style="font-size: 0.8rem; color: var(--rx-brass)">+ EXPAND</span>
+        </div>
+        <div class="rx-meth-content" id="meth-content">
+          <p style="margin-bottom: 1rem;">The Resource Intelligence system synthesizes multiple data dimensions to estimate optimal material routing:</p>
+          <ul style="padding-left: 1.5rem; margin-bottom: 1.5rem;">
+            <li><strong>Material specifications:</strong> Alloy grades, forms, and impurity profiles.</li>
+            <li><strong>Buyer processing requirements:</strong> Downstream capabilities and pre-processing needs.</li>
+            <li><strong>Distance-based freight estimates:</strong> Generalized volumetric weight vs. distance cost models.</li>
+            <li><strong>Historical transaction patterns:</strong> Aggregated, simulated insights on typical local consumption.</li>
+          </ul>
+          <p style="color: var(--rx-brass); font-weight: 500;">Disclaimer: ResourceX Intelligence is an analytical tool. It does not guarantee match quality, buyer readiness, or material verification. All data shown is simulated for demonstration purposes.</p>
+        </div>
+      </div>
+
+      <!-- Example Card -->
+      <div class="rx-snapshot-card rx-fade-in-up">
+        <div class="rx-snapshot-title">ILLUSTRATIVE INTELLIGENCE SNAPSHOT</div>
+        <h2 style="font-family: var(--rx-font-display); font-size: 2rem; color: var(--rx-ivory); margin-bottom: 1rem;">Aluminium Turnings (6063)</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: left; margin-bottom: 1.5rem;">
+          <div style="background: rgba(242,239,231,0.05); padding: 1rem; border-radius: 4px;">
+            <div style="font-size: 0.75rem; color: var(--rx-stone);">PRIMARY USE</div>
+            <div style="color: var(--rx-ivory); font-weight: 500;">Casting / Remelting (★★★★★)</div>
+          </div>
+          <div style="background: rgba(242,239,231,0.05); padding: 1rem; border-radius: 4px;">
+            <div style="font-size: 0.75rem; color: var(--rx-stone);">TRANSPORT SENSITIVITY</div>
+            <div style="color: #E63946; font-weight: 500;">HIGH</div>
+          </div>
+          <div style="background: rgba(242,239,231,0.05); padding: 1rem; border-radius: 4px;">
+            <div style="font-size: 0.75rem; color: var(--rx-stone);">OPTIMAL RADIUS</div>
+            <div style="color: var(--rx-brass); font-weight: 500;">~50-80km (indicative)</div>
+          </div>
+          <div style="background: rgba(242,239,231,0.05); padding: 1rem; border-radius: 4px;">
+            <div style="font-size: 0.75rem; color: var(--rx-stone);">REGIONAL DEMAND</div>
+            <div style="color: #2A9D8F; font-weight: 500;">High (Telangana)</div>
+          </div>
+        </div>
+        <div style="font-family: var(--rx-font-tech); font-size: 0.875rem; color: var(--rx-brass);">
+          Net value range: ₹85-92/kg at &lt;50km (illustrative)
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="rx-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/data/materials.js"></script>
+    <script src="js/data/matches.js"></script>
+    <script src="js/data/journeys.js"></script>
+    <script src="js/data/index.js"></script>
+  <script src="js/nav.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1 & 2: Inject Nav and Footer
+      if(window.RX && window.RX.navHTML) {
+        document.getElementById('rx-nav-container').innerHTML = window.RX.navHTML();
+      }
+      if(window.RX && window.RX.footerHTML) {
+        document.getElementById('rx-footer-container').innerHTML = window.RX.footerHTML();
+      }
+
+      // Initialize material selector from RX_DATA
+      const allMats = (window.RX_DATA && window.RX_DATA.materials) || [];
+      const activeId = (window.RX && window.RX.getActiveMaterialId) ? window.RX.getActiveMaterialId() : 'RX-AL-9402';
+      const selectEl = document.getElementById('material-select');
+
+      if (selectEl && allMats.length > 0) {
+        selectEl.innerHTML = allMats.map(m => `
+          <option value="${m.id}" ${m.id === activeId ? 'selected' : ''}>
+            ${m.id} — ${m.name} (${m.category})
+          </option>
+        `).join('');
+
+        selectEl.addEventListener('change', (e) => {
+          if (window.RX && window.RX.switchActiveMaterial) {
+            window.RX.switchActiveMaterial(e.target.value);
+          } else {
+            updateMockData(e.target.value);
+          }
+        });
+      }
+      
+      initChart();
+      
+      // Intersection Observer for scroll animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+            if (entry.target.id === 'chart-container') {
+              animateChart();
+            }
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      document.querySelectorAll('.rx-fade-in-up').forEach(el => {
+        el.style.animationPlayState = 'paused';
+        observer.observe(el);
+      });
+    });
+
+    function toggleMethodology() {
+      const content = document.getElementById('meth-content');
+      content.classList.toggle('open');
+    }
+
+    // Chart logic
+    function initChart() {
+      const container = document.getElementById('chart-container');
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      const padding = { top: 20, right: 20, bottom: 40, left: 50 };
+      
+      const width = w - padding.left - padding.right;
+      const height = h - padding.top - padding.bottom;
+      
+      // Data (mock distance vs net value)
+      const data = [
+        { dist: 0, val: 95 },
+        { dist: 25, val: 92 },
+        { dist: 50, val: 88 },
+        { dist: 75, val: 82 },
+        { dist: 100, val: 75 },
+        { dist: 150, val: 55 }
+      ];
+      
+      // Match data from RX_DATA mock
+      const matches = [
+        { dist: 12, val: 94, name: 'Precision Alloy Castings' },
+        { dist: 45, val: 89, name: 'Deccan Extrusions Pvt Ltd' },
+        { dist: 110, val: 72, name: 'Global Metals Recovery' }
+      ];
+      
+      // Scale functions
+      const xScale = d => (d / 150) * width;
+      const yScale = v => height - ((v - 50) / (100 - 50)) * height;
+      
+      // Path generation
+      const pathData = data.map((d, i) => 
+        (i === 0 ? 'M' : 'L') + (xScale(d.dist) + padding.left) + ',' + (yScale(d.val) + padding.top)
+      ).join(' ');
+
+      // Build SVG
+      let svg = \`<svg width="100%" height="100%" viewBox="0 0 \${w} \${h}">
+        <defs>
+          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#2A9D8F"/>
+            <stop offset="100%" stop-color="#E63946"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Axes -->
+        <line x1="\${padding.left}" y1="\${padding.top}" x2="\${padding.left}" y2="\${h - padding.bottom}" stroke="rgba(242,239,231,0.2)" stroke-width="1"/>
+        <line x1="\${padding.left}" y1="\${h - padding.bottom}" x2="\${w - padding.right}" y2="\${h - padding.bottom}" stroke="rgba(242,239,231,0.2)" stroke-width="1"/>
+        
+        <!-- Grid & Labels Y -->
+        \${[60, 70, 80, 90, 100].map(v => \`
+          <line x1="\${padding.left}" y1="\${yScale(v) + padding.top}" x2="\${w - padding.right}" y2="\${yScale(v) + padding.top}" stroke="rgba(242,239,231,0.05)" stroke-dasharray="4"/>
+          <text x="\${padding.left - 10}" y="\${yScale(v) + padding.top + 4}" fill="var(--rx-stone)" font-family="var(--rx-font-tech)" font-size="10" text-anchor="end">₹\${v}</text>
+        \`).join('')}
+        
+        <!-- Grid & Labels X -->
+        \${[0, 50, 100, 150].map(d => \`
+          <text x="\${xScale(d) + padding.left}" y="\${h - padding.bottom + 20}" fill="var(--rx-stone)" font-family="var(--rx-font-tech)" font-size="10" text-anchor="middle">\${d}km</text>
+        \`).join('')}
+        
+        <!-- Data Line -->
+        <path id="chart-line" d="\${pathData}" fill="none" stroke="url(#lineGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        
+        <!-- Match Points -->
+        \${matches.map((m, i) => \`
+          <circle 
+            cx="\${xScale(m.dist) + padding.left}" 
+            cy="\${yScale(m.val) + padding.top}" 
+            r="6" 
+            fill="var(--rx-graphite)" 
+            stroke="var(--rx-brass)" 
+            stroke-width="2"
+            class="match-point"
+            data-name="\${m.name}"
+            data-val="\${m.val}"
+          />
+        \`).join('')}
+      </svg>\`;
+      
+      container.insertAdjacentHTML('afterbegin', svg);
+      
+      // Setup tooltip
+      const tooltip = document.getElementById('chart-tooltip');
+      const points = container.querySelectorAll('.match-point');
+      
+      points.forEach(pt => {
+        pt.addEventListener('mouseenter', (e) => {
+          const name = e.target.getAttribute('data-name');
+          const val = e.target.getAttribute('data-val');
+          const bbox = e.target.getBoundingClientRect();
+          const cBox = container.getBoundingClientRect();
+          
+          tooltip.innerHTML = \`<strong>\${name}</strong><br>Net Val: ₹\${val}/kg\`;
+          tooltip.style.left = (bbox.left - cBox.left + bbox.width/2) + 'px';
+          tooltip.style.top = (bbox.top - cBox.top) + 'px';
+          tooltip.style.opacity = '1';
+        });
+        
+        pt.addEventListener('mouseleave', () => {
+          tooltip.style.opacity = '0';
+        });
+      });
+      
+      // Prepare animation
+      const path = document.getElementById('chart-line');
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = length;
+      path.style.strokeDashoffset = length;
+    }
+    
+    function animateChart() {
+      const path = document.getElementById('chart-line');
+      if(path) {
+        // Simple CSS transition
+        path.style.transition = 'stroke-dashoffset 1.5s ease-out';
+        path.style.strokeDashoffset = '0';
+      }
+    }
+    
+    function updateMockData(type) {
+      const val = document.getElementById('transport-value');
+      const marker = document.getElementById('transport-marker');
+      
+      if(type === 'brass') {
+        val.textContent = 'LOW';
+        val.style.color = '#2A9D8F';
+        marker.style.left = '20%';
+      } else if(type === 'steel') {
+        val.textContent = 'MEDIUM';
+        val.style.color = '#F4A261';
+        marker.style.left = '50%';
+      } else {
+        val.textContent = 'HIGH';
+        val.style.color = '#E63946';
+        marker.style.left = '80%';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materials — ResourceX</title>
+  <meta name="robots" content="noindex">
+  <!-- Route alias: /materials → marketplace or material-detail if id present -->
+  <script>
+    var params = new URLSearchParams(window.location.search);
+    var id = params.get('id') || params.get('material');
+    if (id) {
+      window.location.replace('material-detail.html' + window.location.search);
+    } else {
+      window.location.replace('marketplace.html' + window.location.search);
+    }
+  </script>
+</head>
+<body>
+  <p><a href="marketplace.html">Open the material marketplace</a></p>
+</body>
+</html>

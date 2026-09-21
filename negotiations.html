@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negotiations Workspace — ResourceX</title>
+    <meta name="description" content="ResourceX direct negotiation workspace between industrial material generators and verified buyers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/compat.css">
+    <style>
+        .neg-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2.5rem 5% 4rem;
+        }
+        .neg-layout {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        @media (max-width: 960px) {
+            .neg-layout { grid-template-columns: 1fr; }
+        }
+        .neg-sidebar {
+            background: #141716;
+            border: 1px solid rgba(223, 223, 222, 0.12);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .neg-sidebar-head {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(223, 223, 222, 0.12);
+            background: #0d0f0e;
+            font-family: var(--rx-font-mono);
+            font-size: 0.8125rem;
+            color: var(--rx-stone-400);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .neg-item {
+            padding: 1.25rem;
+            border-bottom: 1px solid rgba(223, 223, 222, 0.08);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .neg-item:hover, .neg-item.active {
+            background: rgba(4, 156, 108, 0.1);
+            border-left: 3px solid var(--rx-green-500, #049c6c);
+        }
+        .neg-main {
+            background: #141716;
+            border: 1px solid rgba(223, 223, 222, 0.12);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 600px;
+        }
+        .neg-main-header {
+            padding: 1.25rem 1.5rem;
+            background: #0d0f0e;
+            border-bottom: 1px solid rgba(223, 223, 222, 0.12);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .neg-thread {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            background: #101211;
+        }
+        .neg-msg {
+            max-width: 80%;
+            padding: 1rem 1.25rem;
+            border-radius: 6px;
+            font-family: var(--rx-font-sans);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        .neg-msg.buyer {
+            align-self: flex-start;
+            background: #1a1d1c;
+            border-left: 3px solid var(--rx-blue-500, #557ee8);
+            color: var(--rx-ivory-800);
+        }
+        .neg-msg.seller {
+            align-self: flex-end;
+            background: rgba(4, 156, 108, 0.15);
+            border-left: 3px solid var(--rx-green-500, #049c6c);
+            color: #ffffff;
+        }
+        .neg-msg-meta {
+            font-family: var(--rx-font-mono);
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-bottom: 0.35rem;
+        }
+        .neg-compose {
+            padding: 1.25rem 1.5rem;
+            background: #0d0f0e;
+            border-top: 1px solid rgba(223, 223, 222, 0.12);
+        }
+        .terms-summary-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(223, 223, 222, 0.1);
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+            font-family: var(--rx-font-mono);
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body data-page="negotiations">
+
+    <div id="rx-nav-container"></div>
+
+    <main>
+        <div class="rx-page-header" style="background: #0b0a09; padding: 3rem 5% 2rem; border-bottom: 1px solid rgba(223, 223, 222, 0.1);">
+            <div style="max-width: 1400px; margin: 0 auto;">
+                <span class="rx-section-label"><span class="rx-section-number">RX</span> Workspace</span>
+                <h1 class="rx-display-lg" style="color: #ffffff; margin-top: 0.5rem;">Direct Negotiations</h1>
+                <p class="rx-body-lg" style="max-width: 65ch; margin-top: 0.5rem; color: var(--rx-stone-400);">
+                    Structured bilateral offer and counter-offer communication between generators and verified buyers.
+                </p>
+                <span class="rx-badge-demo" style="margin-top: 0.75rem; display: inline-block;">SIMULATED CONVERSATION &bull; DEMO MODE</span>
+            </div>
+        </div>
+
+        <div class="neg-container">
+            <div class="neg-layout">
+                <!-- Sidebar -->
+                <div class="neg-sidebar">
+                    <div class="neg-sidebar-head">Active Threads (Demo)</div>
+                    <div id="neg-threads-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Main Chat Thread -->
+                <div class="neg-main">
+                    <div class="neg-main-header">
+                        <div>
+                            <span class="rx-badge-demo" style="font-size: 0.65rem; border: 1px solid var(--rx-green-500); color: var(--rx-green-400); background: transparent;">ACTIVE THREAD</span>
+                            <h2 style="font-family: var(--rx-font-display); font-size: 1.25rem; color: #fff; margin: 0.35rem 0 0;" id="active-thread-title">
+                                6063 Aluminium Turnings &bull; Demo Buyer A
+                            </h2>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <a href="match-explorer.html?id=RX-AL-9402" class="rx-btn rx-btn-secondary rx-btn-sm" id="btn-view-matches">Net Value Breakdown</a>
+                            <a href="material-detail.html?id=RX-AL-9402" class="rx-btn rx-btn-outline rx-btn-sm" id="btn-view-specs">Material Specs</a>
+                        </div>
+                    </div>
+
+                    <!-- Thread Messages -->
+                    <div class="neg-thread" id="neg-thread-messages">
+                        <!-- Injected via JS -->
+                    </div>
+
+                    <!-- Composer Form -->
+                    <div class="neg-compose">
+                        <div class="terms-summary-card">
+                            <div>
+                                <span style="color: var(--rx-stone-400); display: block;">Current Buyer Offer:</span>
+                                <strong style="color: var(--rx-brass-300);" id="term-buyer-offer">₹89.50/kg</strong>
+                            </div>
+                            <div>
+                                <span style="color: var(--rx-stone-400); display: block;">Quantity:</span>
+                                <strong style="color: #fff;" id="term-qty">5,000 kg</strong>
+                            </div>
+                            <div>
+                                <span style="color: var(--rx-stone-400); display: block;">Payment Terms:</span>
+                                <strong style="color: #fff;" id="term-payment">100% Advance</strong>
+                            </div>
+                            <div>
+                                <span style="color: var(--rx-stone-400); display: block;">Gross Settlement:</span>
+                                <strong style="color: var(--rx-green-400);" id="term-gross">₹4,47,500</strong>
+                            </div>
+                        </div>
+
+                        <form id="neg-form" onsubmit="event.preventDefault(); sendNegotiationMessage();">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 1rem; margin-bottom: 0.75rem;">
+                                <div>
+                                    <label style="font-family: var(--rx-font-mono); font-size: 0.72rem; color: var(--rx-stone-400); display: block; margin-bottom: 0.25rem;">Counter Rate (₹/kg)</label>
+                                    <input type="number" id="input-counter-price" value="91.00" step="0.25" class="rx-select" style="width: 100%; padding: 0.5rem; font-family: var(--rx-font-mono);" oninput="recalcComposerGross()">
+                                </div>
+                                <div>
+                                    <label style="font-family: var(--rx-font-mono); font-size: 0.72rem; color: var(--rx-stone-400); display: block; margin-bottom: 0.25rem;">Quantity (kg)</label>
+                                    <input type="number" id="input-counter-qty" value="5000" class="rx-select" style="width: 100%; padding: 0.5rem; font-family: var(--rx-font-mono);" oninput="recalcComposerGross()">
+                                </div>
+                                <div>
+                                    <label style="font-family: var(--rx-font-mono); font-size: 0.72rem; color: var(--rx-stone-400); display: block; margin-bottom: 0.25rem;">Payment / Logistics Terms</label>
+                                    <input type="text" id="input-counter-terms" value="50% Advance + Balance on Weighbridge" class="rx-select" style="width: 100%; padding: 0.5rem;">
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 0.75rem; align-items: center;">
+                                <input type="text" id="input-counter-text" placeholder="Type formal counter-offer response..." required style="flex: 1; background: #1a1d1c; border: 1px solid rgba(223, 223, 222, 0.2); padding: 0.75rem 1rem; color: #fff; font-family: var(--rx-font-sans); border-radius: 4px; outline: none;">
+                                <button type="submit" class="rx-btn rx-btn-primary" style="padding: 0.75rem 1.5rem; white-space: nowrap;">
+                                    Submit Counter
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="rx-footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/data/types.js"></script>
+    <script src="js/data/materials.js"></script>
+    <script src="js/data/matches.js"></script>
+    <script src="js/data/journeys.js"></script>
+    <script src="js/data/index.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/nav.js"></script>
+    
+    <script>
+        const threadList = [
+            {
+                id: 'NEG-001',
+                materialId: 'RX-AL-9402',
+                materialName: '6063 Aluminium Turnings',
+                buyerName: 'Demo Casting Facility A',
+                status: 'Active Offer',
+                qty: 5000,
+                buyerOffer: 89.50,
+                payment: '100% Advance',
+                messages: [
+                    { from: 'buyer', time: '2 days ago', text: 'Interested in the full 5,000 kg lot. Can you confirm availability and earliest pickup date?' },
+                    { from: 'seller', time: '2 days ago', text: 'Yes, full lot available. Pickup available from Monday onwards. Material is sorted and ready in Sangareddy.' },
+                    { from: 'buyer', time: '1 day ago', text: 'Can you consider ₹88/kg for the full quantity? We can arrange pickup within 3 days.' },
+                    { from: 'seller', time: '1 day ago', text: 'Counter offer: ₹91/kg for full 5,000 kg lot. Payment terms: advance 50% + balance before dispatch.' },
+                    { from: 'buyer', time: '4 hours ago', text: 'We can do ₹89.50/kg. Payment: 100% advance. Pickup in 2 days. Final offer.' }
+                ]
+            },
+            {
+                id: 'NEG-002',
+                materialId: 'RX-PE-5218',
+                materialName: 'HDPE Regrind — Natural',
+                buyerName: 'Demo Pipe Manufacturing Unit',
+                status: 'Under Review',
+                qty: 12000,
+                buyerOffer: 47.00,
+                payment: '30 Days LC',
+                messages: [
+                    { from: 'buyer', time: 'Yesterday', text: 'We tested the sample regrind. Melt flow index is acceptable for our corrugated pipe line.' },
+                    { from: 'seller', time: '18 hours ago', text: 'Great. Asking price is ₹48.50/kg ex-works Hyderabad for the 12MT batch.' },
+                    { from: 'buyer', time: '5 hours ago', text: 'Would you close at ₹47.00/kg if we take all 12MT in a single shipment?' }
+                ]
+            }
+        ];
+
+        let activeIndex = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetId = urlParams.get('id') || (window.RX && window.RX.getActiveMaterialId ? window.RX.getActiveMaterialId() : 'RX-AL-9402');
+            
+            const matchIdx = threadList.findIndex(t => t.materialId === targetId);
+            if (matchIdx !== -1) activeIndex = matchIdx;
+
+            renderSidebar();
+            renderThread();
+        });
+
+        function renderSidebar() {
+            const container = document.getElementById('neg-threads-list');
+            container.innerHTML = threadList.map((t, idx) => `
+                <div class="neg-item ${idx === activeIndex ? 'active' : ''}" onclick="selectThread(${idx})">
+                    <div style="font-family: var(--rx-font-mono); font-size: 0.72rem; color: var(--rx-brass-300);">${t.id} &bull; ${t.materialId}</div>
+                    <div style="font-weight: 600; color: #fff; margin: 0.25rem 0;">${t.materialName}</div>
+                    <div style="font-size: 0.8125rem; color: var(--rx-stone-400);">${t.buyerName}</div>
+                    <span class="rx-badge-demo" style="margin-top: 0.5rem; font-size: 0.65rem; border: 1px solid var(--rx-green-500); color: var(--rx-green-400); background: transparent;">
+                        ${t.status}
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        function selectThread(idx) {
+            activeIndex = idx;
+            renderSidebar();
+            renderThread();
+        }
+
+        function renderThread() {
+            const t = threadList[activeIndex];
+            document.getElementById('active-thread-title').textContent = `${t.materialName} · ${t.buyerName}`;
+            document.getElementById('btn-view-matches').href = `match-explorer.html?id=${encodeURIComponent(t.materialId)}`;
+            document.getElementById('btn-view-specs').href = `material-detail.html?id=${encodeURIComponent(t.materialId)}`;
+            
+            document.getElementById('term-buyer-offer').textContent = `₹${t.buyerOffer.toFixed(2)}/kg`;
+            document.getElementById('term-qty').textContent = `${t.qty.toLocaleString()} kg`;
+            document.getElementById('term-payment').textContent = t.payment;
+            document.getElementById('term-gross').textContent = `₹${Math.round(t.qty * t.buyerOffer).toLocaleString('en-IN')}`;
+
+            document.getElementById('input-counter-price').value = (t.buyerOffer + 1.25).toFixed(2);
+            document.getElementById('input-counter-qty').value = t.qty;
+
+            const box = document.getElementById('neg-thread-messages');
+            box.innerHTML = t.messages.map(m => {
+                const isMe = m.from === 'seller';
+                const name = isMe ? 'YOU (SELLER)' : t.buyerName.toUpperCase();
+                return `
+                    <div class="neg-msg ${isMe ? 'seller' : 'buyer'}">
+                        <div class="neg-msg-meta">${name} &bull; ${m.time}</div>
+                        <div>${m.text}</div>
+                    </div>
+                `;
+            }).join('');
+            box.scrollTop = box.scrollHeight;
+
+            if (window.RX && window.RX.setActiveMaterialId) {
+                window.RX.setActiveMaterialId(t.materialId);
+            }
+        }
+
+        function recalcComposerGross() {
+            const price = parseFloat(document.getElementById('input-counter-price').value) || 0;
+            const qty = parseFloat(document.getElementById('input-counter-qty').value) || 0;
+            document.getElementById('term-gross').textContent = `₹${Math.round(price * qty).toLocaleString('en-IN')} (Counter)`;
+        }
+
+        function sendNegotiationMessage() {
+            const price = parseFloat(document.getElementById('input-counter-price').value);
+            const qty = parseFloat(document.getElementById('input-counter-qty').value);
+            const terms = document.getElementById('input-counter-terms').value.trim();
+            const text = document.getElementById('input-counter-text').value.trim();
+
+            if (!text) return;
+
+            const fullMsg = `${text} [Counter: ₹${price.toFixed(2)}/kg for ${qty.toLocaleString()} kg &bull; Terms: ${terms}]`;
+            
+            threadList[activeIndex].messages.push({
+                from: 'seller',
+                time: 'Just now',
+                text: fullMsg
+            });
+
+            document.getElementById('input-counter-text').value = '';
+            renderThread();
+
+            if (window.RX && window.RX.toast) {
+                window.RX.toast('Counter offer transmitted to counterparty (Demo mode)', 'success');
+            }
+        }
+    </script>
+</body>
+</html>

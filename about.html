@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About ResourceX | Industrial Material Exchange</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/compat.css">
+
+    <style>
+        :root {
+            --rx-nav-height: 80px;
+        }
+        
+        body {
+            background-color: var(--rx-bg-color, #151817);
+            color: var(--rx-text-color, #F2EFE7);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6, .display-font {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+        }
+
+        .mono-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--rx-accent-color, #A88A52);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        /* HERO SECTION */
+        .hero-section {
+            padding: calc(var(--rx-nav-height) + 6rem) 5% 6rem;
+            background-color: #151817;
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            max-width: 1200px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 2vw, 1.75rem);
+            color: #8D8A82; /* Stone */
+            max-width: 800px;
+            line-height: 1.4;
+            margin-bottom: 4rem;
+        }
+
+        .hero-divider {
+            height: 1px;
+            background-color: rgba(242, 239, 231, 0.2);
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        /* THE PROBLEM */
+        .problem-section {
+            padding: 8rem 5%;
+            background-color: #151817;
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .problem-copy {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: #8D8A82;
+        }
+
+        .problem-copy p {
+            margin-bottom: 1.5rem;
+        }
+
+        .problem-diagram {
+            width: 100%;
+            height: auto;
+            border: 1px solid rgba(242, 239, 231, 0.1);
+            padding: 2rem;
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* THE APPROACH */
+        .approach-section {
+            padding: 8rem 5%;
+            background-color: #173A2B; /* Forest Green */
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+        }
+
+        .approach-title {
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            max-width: 800px;
+        }
+
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        @media (max-width: 900px) {
+            .approach-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .approach-card {
+            border-top: 1px solid rgba(242, 239, 231, 0.2);
+            padding-top: 2rem;
+        }
+
+        .approach-number {
+            font-family: 'JetBrains Mono', monospace;
+            color: #A88A52; /* Brass */
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .approach-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .approach-card p {
+            color: rgba(242, 239, 231, 0.8);
+            line-height: 1.6;
+        }
+
+        /* RESOURCEX IS NOT */
+        .not-section {
+            padding: 8rem 5%;
+            background-color: #151817;
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+        }
+
+        .not-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 3rem 0;
+            max-width: 800px;
+        }
+
+        .not-list li {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #8D8A82;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+        }
+
+        .not-list li::before {
+            content: '×';
+            font-family: 'Space Grotesk', sans-serif;
+            color: #A88A52;
+            font-size: 1.5rem;
+        }
+
+        .not-summary {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            max-width: 800px;
+            border-left: 2px solid #A88A52;
+            padding-left: 2rem;
+        }
+
+        /* THE PRODUCT */
+        .product-section {
+            padding: 8rem 5%;
+            background-color: #151817;
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+        }
+
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 1000px;
+        }
+
+        .product-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+            text-decoration: none;
+            color: inherit;
+            transition: opacity 0.2s;
+        }
+
+        .product-item:hover {
+            opacity: 0.8;
+        }
+
+        .product-item-num {
+            font-family: 'JetBrains Mono', monospace;
+            color: #A88A52;
+            font-size: 1.25rem;
+        }
+
+        .product-item-content h3 {
+            font-size: 1.5rem;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .product-item-content p {
+            color: #8D8A82;
+            margin: 0;
+        }
+
+        .product-item-arrow {
+            font-size: 1.5rem;
+            color: #A88A52;
+        }
+
+        @media (max-width: 768px) {
+            .product-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        /* CIRCULAR FLOW */
+        .flow-section {
+            padding: 8rem 5%;
+            background-color: #151817;
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+            text-align: center;
+        }
+
+        .flow-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .flow-copy {
+            color: #8D8A82;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            line-height: 1.6;
+        }
+
+        .flow-diagram {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            height: auto;
+        }
+
+        /* STATUS */
+        .status-section {
+            padding: 6rem 5%;
+            background-color: #151817;
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+        }
+
+        .status-panel {
+            background: rgba(242, 239, 231, 0.03);
+            border: 1px solid rgba(242, 239, 231, 0.1);
+            padding: 3rem;
+            max-width: 800px;
+        }
+
+        .status-panel p {
+            color: #8D8A82;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .status-panel p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* CONTACT */
+        .contact-section {
+            padding: 8rem 5%;
+            background-color: #151817;
+        }
+
+        .contact-container {
+            max-width: 600px;
+        }
+
+        .contact-title {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #8D8A82;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(242, 239, 231, 0.2);
+            color: #F2EFE7;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            padding: 0.75rem 0;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-bottom-color: #A88A52;
+        }
+
+        .form-select {
+            appearance: none;
+            border-radius: 0;
+        }
+        
+        .form-select option {
+            background: #151817;
+            color: #F2EFE7;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background-color: #F2EFE7;
+            color: #151817;
+            border: none;
+            padding: 1rem 2rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 1rem;
+        }
+
+        .submit-btn:hover {
+            background-color: #A88A52;
+            color: #F2EFE7;
+        }
+
+        .contact-note {
+            font-size: 0.85rem;
+            color: #8D8A82;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Toast styles */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .toast {
+            background-color: #173A2B;
+            border-left: 4px solid #A88A52;
+            color: #F2EFE7;
+            padding: 1rem 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div id="rx-nav-container"></div>
+
+    <main style="padding-top: var(--rx-nav-height)">
+        
+        <!-- HERO SECTION -->
+        <section class="hero-section">
+            <span class="section-label">About ResourceX</span>
+            <h1 class="hero-title">Industrial materials should be treated as resources<br>before they are treated as waste.</h1>
+            <p class="hero-subtitle">ResourceX is being built to create digital infrastructure for industrial secondary material exchange.</p>
+            <div class="hero-divider"></div>
+            <span class="rx-badge-demo" style="display:inline-block; font-family:'JetBrains Mono', monospace; font-size:0.75rem; border:1px solid #A88A52; padding:0.25rem 0.5rem; color:#A88A52;">DEMO DATA</span>
+        </section>
+
+        <!-- THE PROBLEM -->
+        <section class="problem-section">
+            <span class="section-label">01 &mdash; The Problem</span>
+            <div class="problem-grid">
+                <div class="problem-copy">
+                    <p>Every day, industrial processes generate materials that cannot be immediately reused within the same facility.</p>
+                    <p>These materials &mdash; machining turnings, polymer regrind, construction aggregate, glass cullet, textile fibre &mdash; accumulate as surplus.</p>
+                    <p>In many cases, a material that is surplus at one facility is a potential input at another.</p>
+                    <p>The problem is not the absence of compatible buyers. It is the absence of the infrastructure to find them, compare them, and evaluate the economic viability of the exchange.</p>
+                </div>
+                <div class="problem-diagram">
+                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Left side nodes -->
+                        <circle cx="50" cy="50" r="15" fill="#8D8A82" />
+                        <circle cx="50" cy="150" r="15" fill="#8D8A82" />
+                        <circle cx="50" cy="250" r="15" fill="#8D8A82" />
+                        
+                        <!-- Right side nodes -->
+                        <circle cx="350" cy="80" r="15" fill="#8D8A82" />
+                        <circle cx="350" cy="180" r="15" fill="#8D8A82" />
+                        
+                        <!-- Disconnected lines -->
+                        <path d="M 70 50 Q 200 65 330 80" stroke="#8D8A82" stroke-width="2" stroke-dasharray="4,4" fill="none" opacity="0.3"/>
+                        <path d="M 70 150 Q 200 115 330 80" stroke="#8D8A82" stroke-width="2" stroke-dasharray="4,4" fill="none" opacity="0.3"/>
+                        <path d="M 70 150 Q 200 165 330 180" stroke="#8D8A82" stroke-width="2" stroke-dasharray="4,4" fill="none" opacity="0.3"/>
+                        <path d="M 70 250 Q 200 215 330 180" stroke="#8D8A82" stroke-width="2" stroke-dasharray="4,4" fill="none" opacity="0.3"/>
+                        
+                        <text x="50" y="30" fill="#F2EFE7" font-family="JetBrains Mono" font-size="10" text-anchor="middle">Supply</text>
+                        <text x="350" y="60" fill="#F2EFE7" font-family="JetBrains Mono" font-size="10" text-anchor="middle">Demand</text>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE APPROACH -->
+        <section class="approach-section">
+            <span class="section-label" style="color: #F2EFE7;">02 &mdash; Our Approach</span>
+            <h2 class="approach-title">A platform for discovery, matching, and evaluation.</h2>
+            <div class="approach-grid">
+                <div class="approach-card">
+                    <span class="approach-number">01</span>
+                    <h3>DISCOVERY</h3>
+                    <p>Make industrial secondary materials visible and searchable by material type, grade, location, and quantity.</p>
+                </div>
+                <div class="approach-card">
+                    <span class="approach-number">02</span>
+                    <h3>MATCHING</h3>
+                    <p>Not just connecting sellers and buyers, but estimating the net value of each potential exchange after accounting for transport, processing, and handling.</p>
+                </div>
+                <div class="approach-card">
+                    <span class="approach-number">03</span>
+                    <h3>EVALUATION</h3>
+                    <p>Help buyers and sellers compare options, understand the economics, and negotiate terms.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESOURCEX IS NOT -->
+        <section class="not-section">
+            <span class="section-label">03 &mdash; What We Are Not</span>
+            <ul class="not-list">
+                <li>Not a payment or settlement platform</li>
+                <li>Not a logistics provider</li>
+                <li>Not a material quality verification service</li>
+                <li>Not a regulatory compliance system</li>
+                <li>Not a guaranteed transaction facilitator</li>
+            </ul>
+            <div class="not-summary">
+                ResourceX creates visibility and analytical infrastructure. Commercial terms, logistics, and quality verification remain the responsibility of the parties involved.
+            </div>
+        </section>
+
+        <!-- THE PRODUCT -->
+        <section class="product-section">
+            <span class="section-label">04 &mdash; The Product</span>
+            <div class="product-list">
+                <a href="listings.html" class="product-item">
+                    <span class="product-item-num">A</span>
+                    <div class="product-item-content">
+                        <h3>Material Marketplace</h3>
+                        <p>Browse and list industrial materials</p>
+                    </div>
+                    <span class="product-item-arrow">&rarr;</span>
+                </a>
+                <a href="matches.html" class="product-item">
+                    <span class="product-item-num">B</span>
+                    <div class="product-item-content">
+                        <h3>Net Value Matching</h3>
+                        <p>Compare buyers by estimated net value, not just gross price</p>
+                    </div>
+                    <span class="product-item-arrow">&rarr;</span>
+                </a>
+                <a href="journey.html" class="product-item">
+                    <span class="product-item-num">C</span>
+                    <div class="product-item-content">
+                        <h3>Material Journey</h3>
+                        <p>Visualise how material transforms through the supply chain</p>
+                    </div>
+                    <span class="product-item-arrow">&rarr;</span>
+                </a>
+                <a href="bank.html" class="product-item">
+                    <span class="product-item-num">D</span>
+                    <div class="product-item-content">
+                        <h3>Material Bank</h3>
+                        <p>Seller-managed holding layer for materials without immediate buyers</p>
+                    </div>
+                    <span class="product-item-arrow">&rarr;</span>
+                </a>
+                <a href="intelligence.html" class="product-item">
+                    <span class="product-item-num">E</span>
+                    <div class="product-item-content">
+                        <h3>Resource Intelligence</h3>
+                        <p>Material compatibility, transport sensitivity, and demand analytics</p>
+                    </div>
+                    <span class="product-item-arrow">&rarr;</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- CIRCULAR INDUSTRIAL FLOW -->
+        <section class="flow-section">
+            <span class="section-label">05 &mdash; Circular Industrial Flow</span>
+            <h2 class="flow-title">Industrial materials are not waste. They are the input for the next process.</h2>
+            <p class="flow-copy">ResourceX is designed to support visibility into secondary supply chains. This analytical layer potentially enables more efficient utilisation of materials.</p>
+            
+            <div class="flow-diagram">
+                <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Flow circle nodes -->
+                    <circle cx="300" cy="50" r="10" fill="#A88A52" />
+                    <text x="300" y="30" fill="#F2EFE7" font-family="JetBrains Mono" font-size="12" text-anchor="middle">Generation</text>
+                    
+                    <circle cx="450" cy="90" r="10" fill="#8D8A82" />
+                    <text x="470" y="95" fill="#F2EFE7" font-family="JetBrains Mono" font-size="12">Discovery</text>
+                    
+                    <circle cx="510" cy="200" r="10" fill="#8D8A82" />
+                    <text x="530" y="205" fill="#F2EFE7" font-family="JetBrains Mono" font-size="12">Matching</text>
+                    
+                    <circle cx="300" cy="250" r="10" fill="#8D8A82" />
+                    <text x="300" y="275" fill="#F2EFE7" font-family="JetBrains Mono" font-size="12" text-anchor="middle">Processing</text>
+                    
+                    <circle cx="90" cy="200" r="10" fill="#8D8A82" />
+                    <text x="70" y="205" fill="#F2EFE7" font-family="JetBrains Mono" font-size="12" text-anchor="end">Manufacturing</text>
+                    
+                    <circle cx="150" cy="90" r="10" fill="#8D8A82" />
+                    <text x="130" y="95" fill="#F2EFE7" font-family="JetBrains Mono" font-size="12" text-anchor="end">New Product</text>
+
+                    <!-- Circular Path with Arrows -->
+                    <path d="M 315 55 Q 430 70 445 85" stroke="#A88A52" stroke-width="2" fill="none" />
+                    <polygon points="445,85 435,80 440,90" fill="#A88A52" />
+
+                    <path d="M 455 100 Q 500 150 510 185" stroke="#8D8A82" stroke-width="2" fill="none" />
+                    <polygon points="510,185 500,175 515,175" fill="#8D8A82" />
+
+                    <path d="M 500 210 Q 420 250 315 250" stroke="#8D8A82" stroke-width="2" fill="none" />
+                    <polygon points="315,250 325,245 325,255" fill="#8D8A82" />
+
+                    <path d="M 285 250 Q 180 250 100 210" stroke="#8D8A82" stroke-width="2" fill="none" />
+                    <polygon points="100,210 110,215 110,205" fill="#8D8A82" />
+
+                    <path d="M 90 185 Q 100 150 145 100" stroke="#8D8A82" stroke-width="2" fill="none" />
+                    <polygon points="145,100 135,105 140,95" fill="#8D8A82" />
+
+                    <path d="M 160 85 Q 200 60 285 52" stroke="#8D8A82" stroke-width="2" fill="none" />
+                    <polygon points="285,52 275,47 275,57" fill="#8D8A82" />
+                </svg>
+            </div>
+        </section>
+
+        <!-- PLATFORM STATUS -->
+        <section class="status-section">
+            <span class="section-label">06 &mdash; Platform Status</span>
+            <div class="status-panel">
+                <span class="rx-badge-demo" style="display:inline-block; font-family:'JetBrains Mono', monospace; font-size:0.75rem; border:1px solid #A88A52; padding:0.25rem 0.5rem; color:#A88A52; margin-bottom: 1.5rem;">SIMULATED DATA</span>
+                <p>ResourceX is currently in development. The listings, matches, and journeys shown throughout this platform are for demonstration purposes only.</p>
+                <p>All company names, material quantities, prices, and match data are illustrative.</p>
+                <p>No real transactions, certifications, or logistics integrations are active in this demo.</p>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="contact-section" id="contact">
+            <span class="section-label">07 &mdash; Contact</span>
+            <div class="contact-container">
+                <h2 class="contact-title">Get in touch.</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Name</label>
+                        <input type="text" id="name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="org">Organisation</label>
+                        <input type="text" id="org" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="role">Role</label>
+                        <select id="role" class="form-select" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="generator">Generator</option>
+                            <option value="buyer">Buyer</option>
+                            <option value="processor">Processor</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" id="email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="message">Message</label>
+                        <textarea id="message" class="form-textarea" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Request</button>
+                    <p class="contact-note">This contact form is for demonstration only.</p>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="rx-footer-container"></div>
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/data/materials.js"></script>
+    <script src="js/data/matches.js"></script>
+    <script src="js/data/journeys.js"></script>
+    <script src="js/data/index.js"></script>
+    <script src="js/nav.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inject Nav and Footer
+            const navContainer = document.getElementById('rx-nav-container');
+            const footerContainer = document.getElementById('rx-footer-container');
+            
+            if (navContainer && window.RX && typeof window.RX.navHTML === 'function') {
+                navContainer.innerHTML = window.RX.navHTML();
+            }
+            if (footerContainer && window.RX && typeof window.RX.footerHTML === 'function') {
+                footerContainer.innerHTML = window.RX.footerHTML();
+            }
+
+            // Contact Form handler
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    showToast('Message received &mdash; Demo mode. Not sent to a real inbox.');
+                    contactForm.reset();
+                });
+            }
+        });
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = message;
+            
+            container.appendChild(toast);
+            
+            // Trigger reflow for animation
+            void toast.offsetWidth;
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

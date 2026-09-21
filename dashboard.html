@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ResourceX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/compat.css">
+    <style>
+        :root {
+            --rx-nav-height: 72px;
+        }
+        body {
+            background-color: var(--color-graphite);
+            color: var(--color-ivory);
+            font-family: var(--font-body);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Banner */
+        .demo-banner {
+            background-color: var(--color-forest);
+            color: var(--color-ivory);
+            text-align: center;
+            padding: var(--spacing-sm);
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Header */
+        .dashboard-header {
+            padding: var(--spacing-xl) var(--spacing-2xl) var(--spacing-lg);
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: var(--spacing-md);
+        }
+        .dashboard-header h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin: 0 0 var(--spacing-xs) 0;
+        }
+        .dashboard-header p {
+            color: var(--color-stone);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        /* Stats Row */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-lg);
+            padding: var(--spacing-lg) var(--spacing-2xl);
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(242, 239, 231, 0.1);
+            padding: var(--spacing-lg);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card:hover {
+            border-color: var(--color-brass);
+        }
+        .stat-label {
+            color: var(--color-stone);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--spacing-md);
+            display: block;
+        }
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--color-ivory);
+            line-height: 1;
+            margin-bottom: var(--spacing-md);
+        }
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 0.875rem;
+            color: var(--color-brass);
+        }
+        .stat-link {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1;
+        }
+
+        /* Main Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+            gap: var(--spacing-2xl);
+            padding: var(--spacing-2xl);
+        }
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tabs */
+        .tabs-nav {
+            display: flex;
+            gap: var(--spacing-lg);
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+            margin-bottom: var(--spacing-xl);
+            overflow-x: auto;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--color-stone);
+            font-family: var(--font-display);
+            font-size: 1rem;
+            padding: var(--spacing-sm) 0;
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+        }
+        .tab-btn.active {
+            color: var(--color-ivory);
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--color-brass);
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Tables & Lists */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        .data-table th {
+            text-align: left;
+            padding: var(--spacing-sm);
+            color: var(--color-stone);
+            font-weight: 400;
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+        }
+        .data-table td {
+            padding: var(--spacing-md) var(--spacing-sm);
+            border-bottom: 1px solid rgba(242, 239, 231, 0.05);
+        }
+        .data-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .tech-text {
+            font-family: var(--font-mono);
+            color: var(--color-brass);
+        }
+
+        /* Sidebar */
+        .sidebar-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(242, 239, 231, 0.1);
+            border-radius: 4px;
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        .sidebar-section h3 {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            margin: 0 0 var(--spacing-lg) 0;
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+        }
+        
+        .action-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        .action-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: rgba(255, 255, 255, 0.03);
+            text-decoration: none;
+            color: var(--color-ivory);
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .action-item:hover {
+            border-color: var(--color-brass);
+            background: rgba(168, 138, 82, 0.05);
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+        .activity-item {
+            display: flex;
+            gap: var(--spacing-md);
+            font-size: 0.875rem;
+        }
+        .activity-icon {
+            color: var(--color-brass);
+            margin-top: 2px;
+        }
+        .activity-text {
+            color: var(--color-ivory);
+        }
+        .activity-time {
+            color: var(--color-stone);
+            font-size: 0.75rem;
+            margin-top: var(--spacing-xs);
+        }
+
+        /* Buttons & Badges */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: transparent;
+            color: var(--color-ivory);
+            border: 1px solid var(--color-brass);
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background: var(--color-brass);
+            color: var(--color-graphite);
+        }
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 0.75rem;
+        }
+        .btn-primary {
+            background: var(--color-brass);
+            color: var(--color-graphite);
+        }
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--color-brass);
+        }
+        .rx-badge-demo {
+            display: inline-block;
+            background: rgba(168, 138, 82, 0.15);
+            color: var(--color-brass);
+            border: 1px solid rgba(168, 138, 82, 0.3);
+            padding: 2px 6px;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            border-radius: 2px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            border-radius: 2px;
+            border: 1px solid currentColor;
+        }
+        .status-active { color: #4ade80; }
+        .status-banked { color: var(--color-stone); }
+        .status-pending { color: var(--color-brass); }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(21, 24, 23, 0.9);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--color-graphite);
+            border: 1px solid var(--color-brass);
+            width: 100%;
+            max-width: 600px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-header {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-bottom: 1px solid rgba(242, 239, 231, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-body {
+            padding: var(--spacing-lg);
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        .modal-footer {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-top: 1px solid rgba(242, 239, 231, 0.1);
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--color-stone);
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        .chat-message {
+            margin-bottom: var(--spacing-md);
+            max-width: 80%;
+        }
+        .chat-message.me {
+            margin-left: auto;
+        }
+        .chat-message.other {
+            margin-right: auto;
+        }
+        .chat-bubble {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 0.875rem;
+        }
+        .chat-message.me .chat-bubble {
+            background: rgba(168, 138, 82, 0.1);
+            border: 1px solid rgba(168, 138, 82, 0.3);
+        }
+        .chat-meta {
+            font-size: 0.75rem;
+            color: var(--color-stone);
+            margin-top: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Toast */
+        #toast-container {
+            position: fixed;
+            bottom: var(--spacing-lg);
+            right: var(--spacing-lg);
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        .toast {
+            background: var(--color-forest);
+            color: var(--color-ivory);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-left: 4px solid var(--color-brass);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            animation: slideInRight 0.3s forwards;
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+        }
+
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .mt-4 { margin-top: var(--spacing-lg); }
+        .text-muted { color: var(--color-stone); }
+    </style>
+</head>
+<body>
+
+    <div id="rx-nav-container"></div>
+
+    <main style="padding-top: var(--rx-nav-height)">
+        <div class="demo-banner">
+            DEMO DATA — Not a live account. Simulated environment.
+        </div>
+
+        <header class="dashboard-header">
+            <div class="header-top">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Demo User — Industrial Generator <span class="rx-badge-demo">DEMO SESSION</span></p>
+                </div>
+                <a href="list-material.html" class="btn btn-primary">List a Material</a>
+            </div>
+        </header>
+
+        <section class="stats-grid" id="stats-container">
+            <!-- Stats populated by JS -->
+        </section>
+
+        <section class="dashboard-grid">
+            <div class="main-content">
+                <div class="tabs-nav">
+                    <button class="tab-btn active" data-target="tab-listings">Listings</button>
+                    <button class="tab-btn" data-target="tab-matches">Matches <span class="rx-badge-demo">3 New</span></button>
+                    <button class="tab-btn" data-target="tab-offers">Offers</button>
+                    <button class="tab-btn" data-target="tab-negotiations">Negotiations</button>
+                    <button class="tab-btn" data-target="tab-bank">Material Bank</button>
+                    <button class="tab-btn" data-target="tab-journeys">Journeys</button>
+                </div>
+
+                <!-- LISTINGS TAB -->
+                <div class="tab-content active" id="tab-listings">
+                    <div class="flex-between" style="margin-bottom: var(--spacing-md);">
+                        <h2 style="font-family: var(--font-display); margin: 0;">Active Listings <span class="rx-badge-demo">DEMO DATA</span></h2>
+                        <a href="list-material.html" class="btn btn-sm">Add New</a>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Material Name</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th>Matches</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listings-tbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- MATCHES TAB -->
+                <div class="tab-content" id="tab-matches">
+                    <div class="flex-between" style="margin-bottom: var(--spacing-md);">
+                        <h2 style="font-family: var(--font-display); margin: 0;">Potential Matches <span class="rx-badge-demo">SIMULATED MATCHES</span></h2>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Buyer Target</th>
+                                <th>Compatibility</th>
+                                <th>Est. Net Value</th>
+                                <th>Distance</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="matches-tbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- OFFERS TAB -->
+                <div class="tab-content" id="tab-offers">
+                    <div class="flex-between" style="margin-bottom: var(--spacing-md);">
+                        <h2 style="font-family: var(--font-display); margin: 0;">Incoming Offers <span class="rx-badge-demo">DEMO DATA</span></h2>
+                    </div>
+                    <p class="text-muted" style="margin-bottom: var(--spacing-md); font-size: 0.875rem;">Note: No real offers are possible in demo mode.</p>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Buyer</th>
+                                <th>Offered Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="tech-text">RX-AL-9402</span><br>6063 Aluminium Turnings</td>
+                                <td>Demo Buyer A</td>
+                                <td>₹89.50/kg</td>
+                                <td><span class="status-badge status-pending">Pending Review</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" onclick="showToast('Offer accepted (Simulation)')">Accept</button>
+                                    <a href="negotiations.html?id=RX-AL-9402" class="btn btn-sm">Counter</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="tech-text">RX-PE-5218</span><br>HDPE Regrind — Natural</td>
+                                <td>Demo Recycler B</td>
+                                <td>₹47.00/kg</td>
+                                <td><span class="status-badge status-pending">Pending Review</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" onclick="showToast('Offer accepted (Simulation)')">Accept</button>
+                                    <a href="negotiations.html?id=RX-PE-5218" class="btn btn-sm">Counter</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- NEGOTIATIONS TAB -->
+                <div class="tab-content" id="tab-negotiations">
+                    <div class="flex-between" style="margin-bottom: var(--spacing-md);">
+                        <h2 style="font-family: var(--font-display); margin: 0;">Active Negotiations <span class="rx-badge-demo">DEMO DATA</span></h2>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Counterparty</th>
+                                <th>Last Message</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="negotiations-tbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- MATERIAL BANK TAB -->
+                <div class="tab-content" id="tab-bank">
+                    <div class="flex-between" style="margin-bottom: var(--spacing-md);">
+                        <h2 style="font-family: var(--font-display); margin: 0;">Material Bank <span class="rx-badge-demo">DEMO DATA</span></h2>
+                        <a href="material-bank.html" class="btn btn-sm">Manage Bank</a>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Material Type</th>
+                                <th>Accumulated</th>
+                                <th>Target</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bank-tbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- JOURNEYS TAB -->
+                <div class="tab-content" id="tab-journeys">
+                    <div class="flex-between" style="margin-bottom: var(--spacing-md);">
+                        <h2 style="font-family: var(--font-display); margin: 0;">Active Journeys <span class="rx-badge-demo">DEMO DATA</span></h2>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Stages</th>
+                                <th>Current Stage</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="journeys-tbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Quick Actions</h3>
+                    <div class="action-list">
+                        <a href="list-material.html" class="action-item">
+                            <span>List a Material</span>
+                            <span>→</span>
+                        </a>
+                        <a href="marketplace.html" class="action-item">
+                            <span>Browse Marketplace</span>
+                            <span>→</span>
+                        </a>
+                        <a href="match-explorer.html" class="action-item">
+                            <span>Find Matches</span>
+                            <span>→</span>
+                        </a>
+                        <a href="material-bank.html" class="action-item">
+                            <span>View Material Bank</span>
+                            <span>→</span>
+                        </a>
+                        <a href="intelligence.html" class="action-item">
+                            <span>Resource Intelligence</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Recent Activity <span class="rx-badge-demo" style="font-size: 0.5rem">SIMULATED</span></h3>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">◆</div>
+                            <div>
+                                <div class="activity-text">New match found for <span class="tech-text">RX-AL-9402</span></div>
+                                <div class="activity-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">◆</div>
+                            <div>
+                                <div class="activity-text">Offer received from Demo Buyer A</div>
+                                <div class="activity-time">Yesterday</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">◆</div>
+                            <div>
+                                <div class="activity-text">Material <span class="tech-text">RX-PP-6102</span> moved to Material Bank</div>
+                                <div class="activity-time">2 days ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">◆</div>
+                            <div>
+                                <div class="activity-text"><span class="tech-text">RX-ST-3301</span> listed</div>
+                                <div class="activity-time">3 days ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">◆</div>
+                            <div>
+                                <div class="activity-text">Match analysis run for <span class="tech-text">RX-PE-5218</span></div>
+                                <div class="activity-time">5 days ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <div id="rx-footer-container"></div>
+
+    <div id="toast-container"></div>
+
+    <!-- Negotiation Modal -->
+    <div class="modal-overlay" id="chat-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin:0; font-family:var(--font-display);">Negotiation Thread <span class="rx-badge-demo">DEMO</span></h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="chat-body">
+                <!-- Messages populated by JS -->
+            </div>
+            <div class="modal-footer">
+                <input type="text" id="chat-input" placeholder="Type a message..." style="flex-grow:1; background:rgba(255,255,255,0.05); border:1px solid rgba(242,239,231,0.2); color:white; padding:8px; font-family:var(--font-body);">
+                <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data/materials.js"></script>
+    <script src="js/data/matches.js"></script>
+    <script src="js/data/journeys.js"></script>
+    <script src="js/data/index.js"></script>
+    <script src="js/nav.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inject Nav and Footer
+            if (window.RX && window.RX.navHTML) {
+                document.getElementById('rx-nav-container').innerHTML = window.RX.navHTML();
+            }
+            if (window.RX && window.RX.footerHTML) {
+                document.getElementById('rx-footer-container').innerHTML = window.RX.footerHTML();
+            }
+
+            renderDashboard();
+            setupTabs();
+            animateCounters();
+        });
+
+        function renderDashboard() {
+            if (!window.RX_DATA) return;
+            const data = window.RX_DATA;
+
+            // Stats
+            const statsContainer = document.getElementById('stats-container');
+            const stats = [
+                { label: 'Active Listings', val: data.dashboardStats.activeListings, link: '#tab-listings' },
+                { label: 'Potential Matches', val: data.dashboardStats.potentialMatches, link: '#tab-matches' },
+                { label: 'Incoming Offers', val: data.dashboardStats.incomingOffers, link: '#tab-offers' },
+                { label: 'Active Negotiations', val: data.dashboardStats.activeNegotiations, link: '#tab-negotiations' }
+            ];
+
+            statsContainer.innerHTML = stats.map(s => `
+                <div class="stat-card">
+                    <a href="javascript:void(0)" onclick="switchTab('${s.link.replace('#', '')}')" class="stat-link"></a>
+                    <span class="stat-label">${s.label} <span class="rx-badge-demo">DEMO</span></span>
+                    <div class="stat-value counter" data-target="${s.val}">0</div>
+                    <div class="stat-trend">↗ Available to review</div>
+                </div>
+            `).join('');
+
+            // Listings
+            const listingsTbody = document.getElementById('listings-tbody');
+            const listingsHtml = data.materials.slice(0, 5).map(m => `
+                <tr>
+                    <td><span class="tech-text">${m.id}</span></td>
+                    <td>${m.name}</td>
+                    <td>${m.quantity} ${m.unit}</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td>3 Matches</td>
+                    <td><a href="material-detail.html?id=${m.id}" class="btn btn-sm">View</a></td>
+                </tr>
+            `).join('');
+            listingsTbody.innerHTML = listingsHtml || '<tr><td colspan="6">No listings found.</td></tr>';
+
+            // Matches
+            const matchesTbody = document.getElementById('matches-tbody');
+            let matchesHtml = '';
+            const matchData = data.matches['RX-AL-9402'] || [];
+            matchData.forEach(m => {
+                const buyerName = m.buyerName || m.buyer || 'Industrial Processor';
+                const compat = m.compatibility || m.compatibilityScore || 90;
+                const netVal = typeof m.estimatedNetValue === 'number' ? '₹' + m.estimatedNetValue.toLocaleString('en-IN') : (m.estimatedNetValue || 'N/A');
+                const dist = m.distance || m.distanceMiles || 50;
+                matchesHtml += `
+                    <tr>
+                        <td><span class="tech-text">RX-AL-9402</span></td>
+                        <td>${buyerName}</td>
+                        <td>${compat}%</td>
+                        <td>${netVal}</td>
+                        <td>${dist} km</td>
+                        <td><a href="match-explorer.html?id=RX-AL-9402" class="btn btn-sm btn-primary">View Analysis</a></td>
+                    </tr>
+                `;
+            });
+            matchesTbody.innerHTML = matchesHtml || '<tr><td colspan="6">No matches found.</td></tr>';
+
+            // Negotiations
+            const negTbody = document.getElementById('negotiations-tbody');
+            const negs = data.negotiations || [];
+            if(negs.length > 0) {
+                negTbody.innerHTML = negs.map((n, i) => {
+                    const lastMsg = n.messages && n.messages.length > 0 ? n.messages[n.messages.length-1].text : 'Enquiry open';
+                    const preview = lastMsg.length > 40 ? lastMsg.substring(0, 40) + '...' : lastMsg;
+                    const bName = n.buyerName || n.buyer || 'Demo Buyer A';
+                    return `
+                        <tr>
+                            <td><span class="tech-text">${n.materialId}</span></td>
+                            <td>${bName}</td>
+                            <td>"${preview}"</td>
+                            <td><span class="status-badge status-pending">${n.status || 'Active'}</span></td>
+                            <td><button class="btn btn-sm" onclick="openModal(${i})">View Thread</button></td>
+                        </tr>
+                    `;
+                }).join('');
+            } else {
+                negTbody.innerHTML = '<tr><td colspan="5">No active negotiations.</td></tr>';
+            }
+
+            // Bank
+            const bankTbody = document.getElementById('bank-tbody');
+            const bankEntries = data.bankEntries || [];
+            if(bankEntries.length > 0) {
+                bankTbody.innerHTML = bankEntries.map(b => {
+                    const askPrice = b.currentAsk !== undefined ? '₹' + Number(b.currentAsk).toFixed(2) + '/kg' : '₹38.00/kg';
+                    const days = b.daysListed || 8;
+                    return `
+                        <tr>
+                            <td><strong>${b.materialName || b.materialType || 'Industrial Material'}</strong></td>
+                            <td>${(b.quantity || 0).toLocaleString()} ${b.unit || 'kg'}</td>
+                            <td>${askPrice}</td>
+                            <td><span class="status-badge status-active">${days} Days Listed</span></td>
+                            <td><a href="material-bank.html?id=${encodeURIComponent(b.materialId)}" class="btn btn-sm">Manage Bank</a></td>
+                        </tr>
+                    `;
+                }).join('');
+            } else {
+                bankTbody.innerHTML = '<tr><td colspan="5">No materials currently in bank.</td></tr>';
+            }
+
+            // Journeys
+            const journeyTbody = document.getElementById('journeys-tbody');
+            const journeys = data.journeys || [];
+            if(journeys.length > 0) {
+                journeyTbody.innerHTML = journeys.slice(0, 3).map(j => {
+                    const nodeCount = (j.nodes && j.nodes.length) || (j.stages && j.stages.length) || 6;
+                    const stageLabel = (j.nodes && j.nodes[2] && (j.nodes[2].label || j.nodes[2].title)) || 'In Transit';
+                    return `
+                        <tr>
+                            <td><span class="tech-text">${j.materialId}</span></td>
+                            <td>${nodeCount} Stages</td>
+                            <td>${stageLabel}</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td><a href="material-journey.html?id=${encodeURIComponent(j.materialId)}" class="btn btn-sm">View Journey</a></td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-target');
+                    switchTab(target);
+                });
+            });
+        }
+
+        function switchTab(targetId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            const btn = document.querySelector(`.tab-btn[data-target="${targetId}"]`);
+            const content = document.getElementById(targetId);
+            
+            if(btn && content) {
+                btn.classList.add('active');
+                content.classList.add('active');
+            }
+        }
+
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200; 
+
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 10);
+                    } else {
+                        counter.innerText = target < 10 ? '0' + target : target;
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `${message} <span class="rx-badge-demo" style="border-color: rgba(255,255,255,0.3); color: white;">DEMO</span>`;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        let currentChatIndex = 0;
+        function openModal(negIndex) {
+            currentChatIndex = negIndex;
+            const modal = document.getElementById('chat-modal');
+            const body = document.getElementById('chat-body');
+            const neg = window.RX_DATA.negotiations[negIndex] || window.RX_DATA.negotiations[0];
+            
+            let html = `<p class="text-muted" style="text-align:center; font-size: 0.8rem; margin-bottom: 1rem;">End-to-end encrypted chat simulation &bull; ${neg.materialName || 'Resource Stream'}</p>`;
+            
+            (neg.messages || []).forEach(m => {
+                const isMe = m.sender === 'seller' || m.from === 'seller';
+                const senderName = isMe ? 'You (Seller)' : (neg.buyerName || neg.buyer || 'Buyer');
+                const timeStr = m.time || (m.timestamp ? new Date(m.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Recent');
+                html += `
+                    <div class="chat-message ${isMe ? 'me' : 'other'}">
+                        <div class="chat-bubble">${m.text}</div>
+                        <div class="chat-meta">
+                            <span>${senderName}</span>
+                            <span>${timeStr}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            body.innerHTML = html;
+            modal.classList.add('active');
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function closeModal() {
+            document.getElementById('chat-modal').classList.remove('active');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const val = input.value.trim();
+            if(!val) return;
+            
+            const body = document.getElementById('chat-body');
+            const html = `
+                <div class="chat-message me">
+                    <div class="chat-bubble">${val}</div>
+                    <div class="chat-meta">
+                        <span>You</span>
+                        <span>Just now</span>
+                    </div>
+                </div>
+            `;
+            body.innerHTML += html;
+            input.value = '';
+            body.scrollTop = body.scrollHeight;
+            
+            showToast('Message sent (Simulation)');
+        }
+    </script>
+</body>
+</html>

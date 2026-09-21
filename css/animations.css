@@ -1,0 +1,344 @@
+/* ============================================================
+   RESOURCEX ANIMATIONS
+   ============================================================ */
+
+/* ============================================================
+   REVEAL ANIMATIONS (Intersection Observer driven)
+   ============================================================ */
+
+.rx-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--rx-duration-slow) var(--rx-ease-out),
+              transform var(--rx-duration-slow) var(--rx-ease-out);
+}
+
+.rx-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rx-reveal-left {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition: opacity var(--rx-duration-slow) var(--rx-ease-out),
+              transform var(--rx-duration-slow) var(--rx-ease-out);
+}
+
+.rx-reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.rx-reveal-right {
+  opacity: 0;
+  transform: translateX(32px);
+  transition: opacity var(--rx-duration-slow) var(--rx-ease-out),
+              transform var(--rx-duration-slow) var(--rx-ease-out);
+}
+
+.rx-reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger delays */
+.rx-delay-1 { transition-delay: 100ms; }
+.rx-delay-2 { transition-delay: 200ms; }
+.rx-delay-3 { transition-delay: 300ms; }
+.rx-delay-4 { transition-delay: 400ms; }
+.rx-delay-5 { transition-delay: 500ms; }
+.rx-delay-6 { transition-delay: 600ms; }
+.rx-delay-7 { transition-delay: 700ms; }
+.rx-delay-8 { transition-delay: 800ms; }
+
+/* ============================================================
+   SCANNER ANIMATION
+   ============================================================ */
+
+.rx-scanner {
+  position: relative;
+  overflow: hidden;
+}
+
+.rx-scanner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(168, 138, 82, 0.6),
+    transparent
+  );
+  animation: scanDown 3s ease-in-out infinite;
+}
+
+@keyframes scanDown {
+  0%   { top: 0%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ============================================================
+   PULSE ANIMATIONS
+   ============================================================ */
+
+@keyframes rxPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes rxPulseScale {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.05); }
+}
+
+.rx-pulse { animation: rxPulse 2s ease-in-out infinite; }
+
+/* Status dot */
+.rx-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--rx-green-400);
+  animation: rxPulse 2s ease-in-out infinite;
+}
+
+.rx-status-dot.brass { background: var(--rx-brass-500); }
+.rx-status-dot.stone { background: var(--rx-stone-500); animation: none; }
+
+/* ============================================================
+   NUMBER COUNT-UP ANIMATION
+   ============================================================ */
+
+.rx-count-up {
+  display: inline-block;
+}
+
+/* ============================================================
+   LINE DRAW (SVG paths)
+   ============================================================ */
+
+.rx-line-draw {
+  stroke-dashoffset: var(--dash-length, 1000);
+  stroke-dasharray: var(--dash-length, 1000);
+  transition: stroke-dashoffset 1.5s var(--rx-ease-out);
+}
+
+.rx-line-draw.drawn {
+  stroke-dashoffset: 0;
+}
+
+/* ============================================================
+   INDUSTRIAL TEXTURE OVERLAY
+   ============================================================ */
+
+.rx-texture {
+  position: relative;
+}
+
+.rx-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.012) 0px,
+      rgba(255,255,255,0.012) 1px,
+      transparent 1px,
+      transparent 32px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.rx-texture > * { position: relative; z-index: 1; }
+
+/* ============================================================
+   GRAIN TEXTURE
+   ============================================================ */
+
+.rx-grain {
+  position: relative;
+}
+
+.rx-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+/* ============================================================
+   NODE ANIMATIONS (Journey Graph)
+   ============================================================ */
+
+@keyframes nodeAppear {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes edgeDraw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes particleFlow {
+  0%   { offset-distance: 0%; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+.rx-particle {
+  animation: particleFlow 3s linear infinite;
+  offset-rotate: auto;
+}
+
+/* ============================================================
+   MATERIAL FINGERPRINT
+   ============================================================ */
+
+@keyframes radarScan {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.rx-radar-sweep {
+  transform-origin: center;
+  animation: radarScan 4s linear infinite;
+}
+
+/* ============================================================
+   FLOW DIAGRAM
+   ============================================================ */
+
+@keyframes flowPulse {
+  0%   { stroke-opacity: 0.4; }
+  50%  { stroke-opacity: 1; }
+  100% { stroke-opacity: 0.4; }
+}
+
+.rx-flow-arrow {
+  animation: flowPulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   BRASS SHIMMER
+   ============================================================ */
+
+@keyframes brassShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.rx-brass-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--rx-brass-600) 0%,
+    var(--rx-brass-400) 40%,
+    var(--rx-brass-300) 50%,
+    var(--rx-brass-400) 60%,
+    var(--rx-brass-600) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: brassShimmer 4s linear infinite;
+}
+
+/* ============================================================
+   HOVER GRID EFFECT
+   ============================================================ */
+
+.rx-grid-hover {
+  position: relative;
+}
+
+.rx-grid-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(168,138,82,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168,138,82,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0;
+  transition: opacity var(--rx-duration-slow) ease;
+  pointer-events: none;
+}
+
+.rx-grid-hover:hover::before { opacity: 1; }
+
+/* ============================================================
+   LOADING SKELETON
+   ============================================================ */
+
+@keyframes skeletonPulse {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.rx-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--rx-graphite-600) 25%,
+    var(--rx-graphite-500) 50%,
+    var(--rx-graphite-600) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  border-radius: var(--rx-radius-md);
+}
+
+/* ============================================================
+   MATERIAL CATEGORY VISUAL PATTERNS
+   ============================================================ */
+
+.rx-cat-metals {
+  background: linear-gradient(135deg, #2a2e2c 0%, #1e2422 100%);
+  position: relative;
+}
+.rx-cat-metals::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(168,138,82,0.06) 0px,
+    rgba(168,138,82,0.06) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+
+.rx-cat-polymers {
+  background: linear-gradient(135deg, #1e2826 0%, #192420 100%);
+}
+
+.rx-cat-glass {
+  background: linear-gradient(135deg, #1a2028 0%, #151d25 100%);
+}
+
+.rx-cat-construction {
+  background: linear-gradient(135deg, #262420 0%, #201e1a 100%);
+}
+
+.rx-cat-textiles {
+  background: linear-gradient(135deg, #221e28 0%, #1c1822 100%);
+}
+
+.rx-cat-electronic {
+  background: linear-gradient(135deg, #1a2228 0%, #151c22 100%);
+}

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Details | ResourceX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/compat.css">
+    <style>
+        :root {
+            --sidebar-width: 360px;
+        }
+        
+        .page-header {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--rx-border);
+            position: relative;
+        }
+
+        .breadcrumb {
+            font-family: var(--rx-font-mono);
+            font-size: 0.875rem;
+            color: var(--rx-text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .material-title-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .material-id-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--rx-font-mono);
+            color: var(--rx-accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .material-id-box button {
+            background: none;
+            border: 1px solid var(--rx-border);
+            color: var(--rx-text);
+            cursor: pointer;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        
+        .material-id-box button:hover {
+            background: var(--rx-surface);
+            border-color: var(--rx-accent);
+        }
+
+        h1 {
+            font-family: var(--rx-font-display);
+            font-size: 3rem;
+            margin: 0 0 1rem 0;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .fingerprint-card {
+            background: var(--rx-surface);
+            border: 1px solid var(--rx-border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fingerprint-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .fp-item {
+            background: rgba(23, 58, 43, 0.2);
+            border: 1px solid var(--rx-primary);
+            padding: 1rem;
+            border-radius: 6px;
+        }
+        
+        .fp-label {
+            font-family: var(--rx-font-body);
+            font-size: 0.75rem;
+            color: var(--rx-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        
+        .fp-value {
+            font-family: var(--rx-font-mono);
+            font-size: 1rem;
+            color: var(--rx-accent);
+            word-break: break-word;
+        }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr var(--sidebar-width);
+            gap: 3rem;
+            padding: 3rem 0;
+        }
+        
+        @media (max-width: 900px) {
+            .layout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .main-col h2 {
+            font-family: var(--rx-font-display);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--rx-border);
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        
+        .spec-table tr {
+            border-bottom: 1px solid var(--rx-border);
+        }
+        
+        .spec-table td {
+            padding: 1rem;
+        }
+        
+        .spec-label {
+            font-family: var(--rx-font-mono);
+            color: var(--rx-text-muted);
+            width: 40%;
+        }
+        
+        .spec-value {
+            font-family: var(--rx-font-display);
+            color: var(--rx-text);
+        }
+
+        .apps-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+        
+        .app-pill {
+            background: var(--rx-surface);
+            border: 1px solid var(--rx-border);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        .match-preview-card {
+            background: var(--rx-surface);
+            border: 1px solid var(--rx-border);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: calc(var(--rx-nav-height, 70px) + 2rem);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .side-card {
+            background: var(--rx-surface);
+            border: 1px solid var(--rx-border);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .side-card h3 {
+            font-family: var(--rx-font-mono);
+            font-size: 0.875rem;
+            color: var(--rx-text-muted);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .price-display {
+            font-family: var(--rx-font-display);
+            font-size: 2.5rem;
+            color: var(--rx-accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-total {
+            font-size: 1.25rem;
+            color: var(--rx-text);
+            margin-bottom: 1rem;
+        }
+
+        .side-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(21, 24, 23, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--rx-bg);
+            border: 1px solid var(--rx-border);
+            padding: 2rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: var(--rx-font-mono);
+            font-size: 0.875rem;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--rx-surface);
+            border: 1px solid var(--rx-border);
+            color: var(--rx-text);
+            border-radius: 4px;
+            font-family: var(--rx-font-body);
+        }
+
+        .net-value-preview {
+            background: var(--rx-surface);
+            padding: 4rem 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--rx-border);
+            border-bottom: 1px solid var(--rx-border);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--rx-primary);
+            color: var(--rx-text);
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 2000;
+        }
+        
+        .toast.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .journey-preview {
+            background: var(--rx-surface);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--rx-border);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="rx-nav-container"></div>
+    <main style="padding-top: var(--rx-nav-height, 70px);">
+        <div class="rx-container" id="page-content">
+            <!-- Content will be injected here -->
+        </div>
+        
+        <div class="net-value-preview" id="net-value-section" style="display: none;">
+            <div class="rx-container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                    <h2 style="font-family: var(--rx-font-display); margin: 0;">Estimated Net Value Analysis</h2>
+                    <span class="rx-badge-demo">ILLUSTRATIVE EXAMPLE</span>
+                </div>
+                
+                <!-- Mockup of chart -->
+                <div style="height: 100px; background: var(--rx-surface); border: 1px solid var(--rx-border); margin-bottom: 2rem; position: relative; border-radius: 4px; overflow: hidden; display: flex;">
+                    <div style="width: 80%; background: var(--rx-primary); display: flex; align-items: center; padding-left: 1rem; font-family: var(--rx-font-mono); font-size: 0.875rem;">
+                        NET VALUE
+                    </div>
+                    <div style="width: 10%; background: #a52a2a; display: flex; align-items: center; justify-content: center; font-family: var(--rx-font-mono); font-size: 0.75rem;" title="Freight Costs">
+                        FRT
+                    </div>
+                    <div style="width: 10%; background: #d2691e; display: flex; align-items: center; justify-content: center; font-family: var(--rx-font-mono); font-size: 0.75rem;" title="Processing Costs">
+                        PRC
+                    </div>
+                </div>
+                <button class="rx-btn rx-btn-primary" id="compare-matches-btn">Compare All Matches</button>
+            </div>
+        </div>
+    </main>
+    <div id="rx-footer-container"></div>
+
+    <!-- Enquiry Modal -->
+    <div class="modal-overlay" id="enquiry-modal">
+        <div class="modal-content">
+            <button style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--rx-text); cursor: pointer; font-size: 1.5rem;" onclick="closeModal()">×</button>
+            <h2 style="font-family: var(--rx-font-display); margin-top: 0;">Make Enquiry</h2>
+            <p style="color: var(--rx-text-muted); font-size: 0.875rem; margin-bottom: 1.5rem;"><span class="rx-badge-demo">DEMO MODE</span> Messages are not sent to real sellers.</p>
+            
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" placeholder="Jane Doe">
+            </div>
+            <div class="form-group">
+                <label>Organisation</label>
+                <input type="text" placeholder="Acme Corp">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="jane@example.com">
+            </div>
+            <div class="form-group">
+                <label>Quantity Required (kg)</label>
+                <input type="number" placeholder="5000">
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea rows="4" placeholder="I am interested in this material..."></textarea>
+            </div>
+            <button class="rx-btn rx-btn-primary" style="width: 100%;" onclick="submitEnquiry()">Submit Enquiry</button>
+        </div>
+    </div>
+    
+    <div class="toast" id="rx-toast">Message</div>
+
+    <script src="js/data/materials.js"></script>
+    <script src="js/data/matches.js"></script>
+    <script src="js/data/journeys.js"></script>
+    <script src="js/data/index.js"></script>
+    <script src="js/nav.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.RX && window.RX.navHTML) {
+                document.getElementById('rx-nav-container').innerHTML = window.RX.navHTML();
+            }
+            if (window.RX && window.RX.footerHTML) {
+                document.getElementById('rx-footer-container').innerHTML = window.RX.footerHTML();
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const materialId = urlParams.get('id') || urlParams.get('material') || (window.RX && window.RX.getActiveMaterialId ? window.RX.getActiveMaterialId() : 'RX-AL-9402');
+            
+            const rawMaterials = window.RX_DATA?.materials || [];
+            const material = Array.isArray(rawMaterials) 
+                ? (rawMaterials.find(m => m.id === materialId) || rawMaterials[0])
+                : (rawMaterials[materialId] || Object.values(rawMaterials)[0]);
+            
+            if (material && window.RX && window.RX.setActiveMaterialId) {
+                window.RX.setActiveMaterialId(material.id);
+            }
+
+            const pageContent = document.getElementById('page-content');
+            
+            if (!material) {
+                pageContent.innerHTML = `
+                    <div style="padding: 4rem 0; text-align: center;">
+                        <h1 style="font-family: var(--rx-font-display);">Material Not Found</h1>
+                        <p>The requested material ID (${materialId}) does not exist in the demo dataset.</p>
+                        <a href="marketplace.html" class="rx-btn rx-btn-primary" style="margin-top: 1rem; display: inline-block;">Return to Marketplace</a>
+                    </div>
+                `;
+                return;
+            }
+
+            // Render Content
+            let specRows = '';
+            if (material.specifications && typeof material.specifications === 'object') {
+                for (const [key, value] of Object.entries(material.specifications)) {
+                    specRows += `
+                        <tr>
+                            <td class="spec-label">${key}</td>
+                            <td class="spec-value">${value}</td>
+                        </tr>
+                    `;
+                }
+            } else {
+                specRows = '<tr><td colspan="2" style="color: var(--rx-text-muted);">No specifications available.</td></tr>';
+            }
+            
+            let matchesPreview = '';
+            let materialMatches = [];
+            if (window.RX_DATA && window.RX_DATA.getMatchesForMaterial) {
+                materialMatches = window.RX_DATA.getMatchesForMaterial(material.id);
+            } else {
+                const matchesData = window.RX_DATA?.matches || {};
+                materialMatches = matchesData[material.id] || matchesData['RX-AL-9402'] || [];
+            }
+            
+            if (materialMatches.length > 0) {
+                const topMatches = materialMatches.slice(0, 2);
+                topMatches.forEach(match => {
+                    const compat = match.compatibility || match.compatibilityScore || 90;
+                    const netVal = typeof match.estimatedNetValue === 'number' 
+                        ? (window.RX && window.RX.formatINR ? window.RX.formatINR(match.estimatedNetValue) : '₹' + match.estimatedNetValue.toLocaleString('en-IN'))
+                        : (match.estimatedNetValue || 'N/A');
+
+                    matchesPreview += `
+                        <div class="match-preview-card">
+                            <div>
+                                <div style="font-family: var(--rx-font-mono); color: var(--rx-text-muted); font-size: 0.75rem; margin-bottom: 0.25rem;">Buyer</div>
+                                <div style="font-size: 1.125rem;">${match.buyerName || 'Unknown Buyer'}</div>
+                            </div>
+                            <div>
+                                <div style="font-family: var(--rx-font-mono); color: var(--rx-text-muted); font-size: 0.75rem; margin-bottom: 0.25rem;">Compatibility</div>
+                                <div style="font-family: var(--rx-font-mono); color: var(--rx-brass-400, #B49A62); font-weight: 700;">${compat}%</div>
+                            </div>
+                            <div>
+                                <div style="font-family: var(--rx-font-mono); color: var(--rx-text-muted); font-size: 0.75rem; margin-bottom: 0.25rem;">Est. Net Value</div>
+                                <div style="font-family: var(--rx-font-display); color: #4ade80; font-weight: 700;">${netVal}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                matchesPreview = `<p style="color: var(--rx-text-muted);">No matches simulated for this material.</p>`;
+            }
+            
+            const qNum = typeof material.quantity === 'number' ? material.quantity : parseFloat(String(material.quantity || 0).replace(/[^\d.]/g, ''));
+            const pNum = typeof material.askingPrice === 'number' ? material.askingPrice : (material.price ? parseFloat(String(material.price).replace(/[^\d.]/g, '')) : 0);
+            
+            const totalValue = (!isNaN(qNum) && !isNaN(pNum) && qNum > 0 && pNum > 0)
+                ? (window.RX && window.RX.formatINR ? window.RX.formatINR(qNum * pNum) : '₹' + (qNum * pNum).toLocaleString('en-IN'))
+                : 'N/A';
+
+            const priceDisplay = pNum > 0 ? `₹${pNum.toFixed(2)}/kg` : 'On Request';
+            const quantityDisplay = qNum > 0 ? `${qNum.toLocaleString('en-IN')} ${material.unit || 'kg'}` : 'N/A';
+
+            const appsPills = (material.applications && Array.isArray(material.applications))
+                ? material.applications.map(app => `<div class="app-pill">${app}</div>`).join('')
+                : '<div class="app-pill">Direct Remelting</div><div class="app-pill">Alloy Master Batches</div><div class="app-pill">Secondary Production</div>';
+
+            const fpGrade = material.specifications?.alloyGrade || material.specifications?.Grade || material.grade || 'Standard';
+            const fpForm = material.specifications?.form || material.specifications?.Form || material.form || 'Solid / Batch';
+            const fpCond = material.condition || material.specifications?.Condition || 'Sorted';
+            const fpContam = material.contamination || material.specifications?.Contamination || 'Low';
+            const fpLoc = typeof material.location === 'object' ? `${material.location.city}, ${material.location.state}` : (material.location || 'India');
+
+            const html = `
+                <div class="page-header">
+                    <div class="breadcrumb">
+                        ResourceX / Marketplace / ${material.name}
+                    </div>
+                    <div class="material-title-area">
+                        <div>
+                            <div class="material-id-box">
+                                ${materialId}
+                                <button onclick="copyId('${materialId}')">Copy</button>
+                            </div>
+                            <h1>${material.name}</h1>
+                            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                                <span style="background: rgba(23, 58, 43, 0.5); color: #4ade80; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; border: 1px solid #4ade80;">Active Listing</span>
+                                <span class="rx-badge-demo">SAMPLE LISTING — DEMO DATA</span>
+                            </div>
+                        </div>
+                        <div class="header-actions">
+                            <button class="rx-btn rx-btn-outline" onclick="window.location.href='match-explorer.html?id=${materialId}'">View Matches</button>
+                            <button class="rx-btn rx-btn-primary" onclick="openModal()">Make Enquiry</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fingerprint-card rx-scanner">
+                    <div style="position: absolute; top: 1rem; right: 1rem; font-family: var(--rx-font-mono); font-size: 0.75rem; color: var(--rx-brass-400);">MATERIAL FINGERPRINT</div>
+                    <div class="fingerprint-grid">
+                        <div class="fp-item">
+                            <div class="fp-label">Grade</div>
+                            <div class="fp-value">${fpGrade}</div>
+                        </div>
+                        <div class="fp-item">
+                            <div class="fp-label">Form</div>
+                            <div class="fp-value">${fpForm}</div>
+                        </div>
+                        <div class="fp-item">
+                            <div class="fp-label">Condition</div>
+                            <div class="fp-value">${fpCond}</div>
+                        </div>
+                        <div class="fp-item">
+                            <div class="fp-label">Contamination</div>
+                            <div class="fp-value">${fpContam}</div>
+                        </div>
+                        <div class="fp-item">
+                            <div class="fp-label">Quantity</div>
+                            <div class="fp-value">${quantityDisplay}</div>
+                        </div>
+                        <div class="fp-item">
+                            <div class="fp-label">Location</div>
+                            <div class="fp-value">${fpLoc}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layout-grid">
+                    <div class="main-col">
+                        <h2>Material Overview</h2>
+                        <p style="color: var(--rx-text-muted); line-height: 1.6; margin-bottom: 2rem;">
+                            ${material.description || 'High-quality industrial secondary material suitable for immediate remelting or processing. Demonstrates consistent properties across the batch.'}
+                        </p>
+                        
+                        <h2 style="margin-top: 3rem;">Technical Specifications</h2>
+                        <div class="rx-scanner" style="margin-bottom: 2rem;">
+                            <table class="spec-table">
+                                <tbody>
+                                    ${specRows}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h2 style="margin-top: 3rem;">Potential Applications</h2>
+                        <div class="apps-list">
+                            ${appsPills}
+                        </div>
+
+                        <h2 style="margin-top: 3rem;">Potential Matches Preview <span class="rx-badge-demo" style="font-size: 0.5em; vertical-align: middle; margin-left: 1rem;">SIMULATED MATCHES</span></h2>
+                        <div style="margin-bottom: 1rem;">
+                            ${matchesPreview}
+                        </div>
+                        <button class="rx-btn rx-btn-outline" style="width: 100%;" onclick="window.location.href='match-explorer.html?id=${materialId}'">View Full Match Analysis</button>
+
+                        <h2 style="margin-top: 3rem;">Material Journey Preview</h2>
+                        <div class="journey-preview">
+                            <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                                <div style="padding: 1rem; background: var(--rx-bg); border: 1px solid var(--rx-border); border-radius: 50%; font-family: var(--rx-font-mono); font-size: 0.875rem;">Source</div>
+                                <div style="height: 2px; width: 50px; background: var(--rx-primary);"></div>
+                                <div style="padding: 1rem; background: var(--rx-bg); border: 1px solid var(--rx-border); border-radius: 50%; font-family: var(--rx-font-mono); font-size: 0.875rem;">Transport</div>
+                                <div style="height: 2px; width: 50px; background: var(--rx-border);"></div>
+                                <div style="padding: 1rem; background: var(--rx-bg); border: 1px solid var(--rx-border); border-radius: 50%; opacity: 0.5; font-family: var(--rx-font-mono); font-size: 0.875rem;">Processor</div>
+                            </div>
+                            <button class="rx-btn rx-btn-outline" onclick="window.location.href='material-journey.html?id=${materialId}'">View Full Journey</button>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar">
+                        <div class="side-card">
+                            <h3>Indicative Asking Price</h3>
+                            <div class="price-display">${priceDisplay}</div>
+                            <div class="price-total">Est. Total: ${totalValue}</div>
+                            <p style="font-size: 0.75rem; color: var(--rx-text-muted);">Indicative price. Subject to negotiation and weighbridge.</p>
+                        </div>
+                        
+                        <div class="side-card">
+                            <h3>Availability</h3>
+                            <div style="margin-bottom: 0.5rem; font-family: var(--rx-font-body);"><strong>Quantity:</strong> ${quantityDisplay}</div>
+                            <div style="margin-bottom: 0.5rem; font-family: var(--rx-font-body);"><strong>Available:</strong> ${material.availability || 'Immediate'}</div>
+                            <div style="font-family: var(--rx-font-body);"><strong>Location:</strong> ${fpLoc}</div>
+                        </div>
+
+                        <div class="side-card">
+                            <h3>Seller Information</h3>
+                            <div style="font-size: 1.125rem; margin-bottom: 0.25rem;">Demo Industrial Facility</div>
+                            <div style="color: var(--rx-text-muted); margin-bottom: 1rem; font-size: 0.875rem;">Type: Generator</div>
+                            <div class="rx-badge-demo" style="display: block; text-align: center;">Seller details are illustrative — DEMO DATA</div>
+                        </div>
+
+                        <div class="side-actions">
+                            <button class="rx-btn rx-btn-primary" onclick="openModal()">Make Enquiry</button>
+                            <button class="rx-btn rx-btn-outline" onclick="showToast('Saved to Watch List')">Save to Watch List</button>
+                            <button class="rx-btn" style="background: transparent; border: 1px dashed var(--rx-border); color: var(--rx-text);" onclick="showToast('This is a demo listing')">Request Sample Data</button>
+                        </div>
+
+                        <div class="side-card">
+                            <h3>Documents</h3>
+                            <ul style="list-style: none; padding: 0; margin: 0 0 1rem 0;">
+                                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    📄 <a href="#" onclick="event.preventDefault(); showToast('Document demo only');" style="color: var(--rx-text); text-decoration: underline; font-size: 0.875rem;">Test Report.pdf</a>
+                                </li>
+                                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                    📄 <a href="#" onclick="event.preventDefault(); showToast('Document demo only');" style="color: var(--rx-text); text-decoration: underline; font-size: 0.875rem;">Material Safety Data Sheet.pdf</a>
+                                </li>
+                            </ul>
+                            <p style="font-size: 0.75rem; color: var(--rx-text-muted);">Documents are for illustration only — Demo Data</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            pageContent.innerHTML = html;
+            document.getElementById('net-value-section').style.display = 'block';
+            document.getElementById('compare-matches-btn').onclick = () => {
+                window.location.href = `match-explorer.html?id=${materialId}`;
+            };
+        });
+
+        function copyId(id) {
+            navigator.clipboard.writeText(id).then(() => {
+                showToast('ID copied to clipboard');
+            }).catch(err => {
+                showToast('Failed to copy ID');
+            });
+        }
+        
+        function openModal() {
+            document.getElementById('enquiry-modal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('enquiry-modal').classList.remove('active');
+        }
+        
+        function submitEnquiry() {
+            closeModal();
+            showToast('Enquiry submitted (Demo — not sent to a real seller)');
+        }
+        
+        function showToast(message) {
+            const toast = document.getElementById('rx-toast');
+            toast.textContent = message;
+            toast.classList.add('active');
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

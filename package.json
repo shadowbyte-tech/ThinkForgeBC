@@ -1,0 +1,12 @@
+{
+  "name": "resourcex",
+  "version": "1.0.0",
+  "description": "ResourceX — Industrial Resources. Reimagined.",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000"
+  },
+  "keywords": ["industrial-exchange", "byproducts", "circular-materials", "net-value-matching"],
+  "author": "ResourceX",
+  "license": "UNLICENSED"
+}

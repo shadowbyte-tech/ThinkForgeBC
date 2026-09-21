@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Bank | ResourceX</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/compat.css">
+
+    <style>
+        :root {
+            --bank-header-bg: #151817; /* Graphite */
+            --bank-header-text: #F2EFE7; /* Ivory */
+            --bank-accent: #A88A52; /* Brass */
+            --bank-card-bg: #1c201e;
+            --bank-border: #333835;
+        }
+
+        body {
+            background-color: var(--bank-header-bg);
+            color: var(--bank-header-text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        main {
+            padding-top: var(--rx-nav-height, 80px);
+        }
+
+        .rx-badge-demo {
+            display: inline-block;
+            background-color: var(--bank-accent);
+            color: var(--bank-header-bg);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            vertical-align: middle;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            padding: 4rem 0 2rem;
+            border-bottom: 1px solid var(--bank-border);
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header .subtitle {
+            font-size: 1.25rem;
+            color: var(--color-stone, #8D8A82);
+            margin-bottom: 1.5rem;
+        }
+
+        .key-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(168, 138, 82, 0.1);
+            color: var(--bank-accent);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--bank-accent);
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+        }
+
+        /* CONCEPT EXPLAINER */
+        .explainer-section {
+            padding: 4rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            border-bottom: 1px solid var(--bank-border);
+        }
+
+        .explainer-copy h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--bank-header-text);
+        }
+
+        .explainer-copy ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .explainer-copy li {
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--color-stone, #8D8A82);
+            line-height: 1.6;
+        }
+
+        .explainer-copy li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--bank-accent);
+        }
+
+        .explainer-visual {
+            background-color: var(--bank-card-bg);
+            padding: 2rem;
+            border: 1px solid var(--bank-border);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .explainer-visual svg {
+            width: 100%;
+            height: auto;
+            max-width: 400px;
+        }
+
+        /* BANKED MATERIALS LIST */
+        .bank-list-section {
+            padding: 4rem 0;
+        }
+
+        .bank-list-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .bank-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .bank-card {
+            background-color: var(--bank-card-bg);
+            border: 1px solid var(--bank-border);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bank-card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--bank-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .bank-card-title h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .bank-card-title .material-id {
+            color: var(--color-stone, #8D8A82);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .badge-seller-managed {
+            display: inline-block;
+            border: 1px solid var(--bank-accent);
+            color: var(--bank-accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .bank-card-days {
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--color-stone, #8D8A82);
+        }
+
+        .days-bar {
+            width: 100px;
+            height: 4px;
+            background-color: var(--bank-border);
+            margin-top: 0.5rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .days-bar-fill {
+            height: 100%;
+            background-color: var(--bank-accent);
+        }
+
+        .bank-card-metrics {
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            border-bottom: 1px solid var(--bank-border);
+        }
+
+        .metric {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--color-stone, #8D8A82);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.125rem;
+        }
+
+        .metric-value.crossed {
+            text-decoration: line-through;
+            color: var(--color-stone, #8D8A82);
+            font-size: 0.875rem;
+        }
+
+        .bank-card-note {
+            padding: 1.5rem;
+            background-color: rgba(168, 138, 82, 0.05);
+            border-bottom: 1px solid var(--bank-border);
+            font-style: italic;
+            color: var(--color-stone, #8D8A82);
+        }
+
+        .bank-card-actions {
+            padding: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--bank-accent);
+            color: var(--bank-header-bg);
+            border: 1px solid var(--bank-accent);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--bank-accent);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--bank-header-text);
+            border: 1px solid var(--bank-border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--bank-header-text);
+        }
+
+        /* SELLER CONTROLS */
+        .seller-controls-section {
+            padding: 4rem 0;
+            border-top: 1px solid var(--bank-border);
+            border-bottom: 1px solid var(--bank-border);
+            background-color: rgba(23, 58, 43, 0.1); /* Forest Green tint */
+        }
+
+        .seller-controls-panel {
+            background-color: var(--bank-card-bg);
+            border: 1px solid var(--bank-accent);
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .seller-controls-panel h3 {
+            margin-bottom: 1rem;
+            color: var(--bank-accent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--color-stone, #8D8A82);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--bank-header-bg);
+            border: 1px solid var(--bank-border);
+            color: var(--bank-header-text);
+            font-family: 'JetBrains Mono', monospace;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--bank-accent);
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bank-border);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--bank-header-text);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--bank-accent);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+            background-color: var(--bank-header-bg);
+        }
+
+        /* HOW IT WORKS */
+        .how-it-works-section {
+            padding: 4rem 0 6rem;
+        }
+
+        .how-it-works-section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            gap: 2rem;
+        }
+
+        .process-flow::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 50px;
+            right: 50px;
+            height: 2px;
+            background-color: var(--bank-border);
+            z-index: 0;
+        }
+
+        .process-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background-color: var(--bank-header-bg);
+            padding: 0 1rem;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background-color: var(--bank-card-bg);
+            border: 2px solid var(--bank-accent);
+            color: var(--bank-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .process-step h4 {
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .process-step p {
+            font-size: 0.875rem;
+            color: var(--color-stone, #8D8A82);
+            line-height: 1.5;
+        }
+
+        /* NEGOTIATION MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: flex-end;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-drawer {
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--bank-header-bg);
+            height: 100%;
+            border-left: 1px solid var(--bank-border);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-overlay.active .side-drawer {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--bank-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--bank-header-text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .drawer-body {
+            padding: 1.5rem;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .drawer-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--bank-border);
+            background-color: var(--bank-card-bg);
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--bank-accent);
+            color: var(--bank-header-bg);
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .explainer-section {
+                grid-template-columns: 1fr;
+            }
+            .process-flow {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            .process-flow::before {
+                top: 0;
+                bottom: 0;
+                left: 40px;
+                width: 2px;
+                height: auto;
+            }
+            .process-step {
+                display: flex;
+                text-align: left;
+                align-items: flex-start;
+                gap: 1.5rem;
+                padding: 0;
+            }
+            .step-number {
+                margin: 0;
+                flex-shrink: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="rx-nav-container"></div>
+
+    <main>
+        <!-- PAGE HEADER -->
+        <header class="page-header container">
+            <h1>Material Bank <span class="rx-badge-demo">DEMO DATA</span></h1>
+            <p class="subtitle">Materials waiting for the right match. Seller-managed. No automatic discounting.</p>
+            <div class="key-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Seller Controlled — No Automatic Discounts
+            </div>
+        </header>
+
+        <!-- CONCEPT EXPLAINER -->
+        <section class="explainer-section container">
+            <div class="explainer-copy">
+                <h2>Control stays with the seller.</h2>
+                <ul>
+                    <li>Materials without immediate buyers don't disappear from the market.</li>
+                    <li>They remain visible and searchable to potential buyers over time.</li>
+                    <li>Seller controls the price and terms at all times.</li>
+                    <li>'Seller Managed' philosophy—not 'Platform Managed'.</li>
+                    <li>Complete transparency into buyer interest and market inquiries.</li>
+                </ul>
+            </div>
+            <div class="explainer-visual">
+                <!-- Simple Flow Diagram SVG -->
+                <svg viewBox="0 0 400 200" fill="none" stroke="currentColor">
+                    <rect x="20" y="80" width="100" height="40" rx="4" stroke="var(--bank-header-text)" fill="var(--bank-card-bg)"></rect>
+                    <text x="70" y="105" text-anchor="middle" fill="var(--bank-header-text)" font-family="Inter" font-size="12" stroke="none">Listed</text>
+                    
+                    <path d="M120 100 L180 100" stroke="var(--bank-accent)" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)"></path>
+                    <text x="150" y="90" text-anchor="middle" fill="var(--color-stone)" font-family="Inter" font-size="10" stroke="none">No immediate match</text>
+                    
+                    <rect x="180" y="70" width="120" height="60" rx="4" stroke="var(--bank-accent)" stroke-width="2" fill="rgba(168, 138, 82, 0.1)"></rect>
+                    <text x="240" y="105" text-anchor="middle" fill="var(--bank-accent)" font-family="Space Grotesk" font-weight="600" font-size="14" stroke="none">Material Bank</text>
+                    
+                    <path d="M300 100 L360 100" stroke="var(--bank-header-text)" stroke-width="2" marker-end="url(#arrow)"></path>
+                    <text x="330" y="80" text-anchor="middle" fill="var(--bank-header-text)" font-family="Inter" font-size="10" stroke="none">New enquiry</text>
+                    
+                    <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" stroke="none" />
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+        </section>
+
+        <!-- BANKED MATERIALS LIST -->
+        <section class="bank-list-section container">
+            <h2>Available in Material Bank <span class="rx-badge-demo">DEMO DATA</span></h2>
+            <div class="bank-grid" id="bank-entries-container">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- SELLER CONTROLS SECTION (DEMO) -->
+        <section class="seller-controls-section">
+            <div class="container">
+                <div class="seller-controls-panel">
+                    <h3>Seller Controls (Demo View) <span class="rx-badge-demo">SIMULATION</span></h3>
+                    <p style="color: var(--color-stone); font-size: 0.875rem; margin-bottom: 2rem;">These controls are illustrative. Seller authentication not implemented in this demo.</p>
+                    
+                    <form id="seller-demo-form" onsubmit="event.preventDefault(); window.showToast('Listing updated — Demo mode');">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                            <div class="form-group">
+                                <label>Update Asking Price (₹/kg)</label>
+                                <input type="number" class="form-control" value="85.50" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label>Update Available Quantity (MT)</label>
+                                <input type="number" class="form-control" value="45.2">
+                            </div>
+                        </div>
+
+                        <div class="toggle-group">
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>Mark as Negotiable</span>
+                        </div>
+
+                        <div class="toggle-group" style="align-items: flex-start;">
+                            <label class="toggle">
+                                <input type="checkbox" id="bulk-toggle" checked onchange="document.getElementById('bulk-input-group').style.display = this.checked ? 'block' : 'none'">
+                                <span class="slider"></span>
+                            </label>
+                            <div>
+                                <span>Offer Bulk Rate</span>
+                                <div class="form-group" id="bulk-input-group" style="margin-top: 0.5rem; display: block;">
+                                    <label>Bulk Price (₹/kg) for taking full lot</label>
+                                    <input type="number" class="form-control" value="82.00" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Add Seller Note to Listing</label>
+                            <textarea class="form-control" rows="3">Price firm for partial lots. Will negotiate for full offtake.</textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Update Listing</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW MATERIAL BANK WORKS -->
+        <section class="how-it-works-section container">
+            <h2>How Material Bank Works</h2>
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h4>Material Listed</h4>
+                    <p>Seller posts material. If no immediate algorithm match occurs, the listing remains active.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h4>Moved to Bank</h4>
+                    <p>Seller moves material to bank. It is never automatically moved or discounted without consent.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h4>Continued Discovery</h4>
+                    <p>The material remains searchable by buyers. Seller tracks buyer interest and views over time.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h4>Seller Manages</h4>
+                    <p>Seller manages price, terms, and availability directly, choosing when to accept incoming enquiries.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="rx-footer-container"></div>
+
+    <!-- NEGOTIATION PANEL MODAL -->
+    <div class="modal-overlay" id="negotiation-modal">
+        <div class="side-drawer">
+            <div class="drawer-header">
+                <h3>Make Enquiry <span class="rx-badge-demo" style="margin-left: 0.5rem;">SIMULATED</span></h3>
+                <button class="close-btn" onclick="closeNegotiationModal()">×</button>
+            </div>
+            <div class="drawer-body">
+                <p style="color: var(--color-stone); font-size: 0.875rem; margin-bottom: 2rem;">You are initiating an enquiry for <strong id="modal-material-name">Material</strong>.</p>
+                
+                <form id="enquiry-form" onsubmit="event.preventDefault(); submitEnquiry();">
+                    <div class="form-group">
+                        <label>Your Offer Price (₹/kg)</label>
+                        <input type="number" class="form-control" placeholder="e.g. 80.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity Required (MT)</label>
+                        <input type="number" class="form-control" placeholder="e.g. 20" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Terms</label>
+                        <select class="form-control">
+                            <option>Ex-Works (Buyer arranges transport)</option>
+                            <option>Delivered (Seller arranges transport)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Terms</label>
+                        <select class="form-control">
+                            <option>100% Advance</option>
+                            <option>LC at Sight</option>
+                            <option>30 Days Credit</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message to Seller</label>
+                        <textarea class="form-control" rows="4" placeholder="Any specific requirements or conditions..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="drawer-footer">
+                <button type="submit" form="enquiry-form" class="btn btn-primary" style="width: 100%;">Send Offer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="system-toast">Notification Message</div>
+
+    <!-- Scripts -->
+    <script src="js/data/materials.js"></script>
+    <script src="js/data/matches.js"></script>
+    <script src="js/data/journeys.js"></script>
+    <script src="js/data/index.js"></script>
+    <script src="js/nav.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inject Nav and Footer
+            if (window.RX && window.RX.navHTML) {
+                document.getElementById('rx-nav-container').innerHTML = window.RX.navHTML();
+            }
+            if (window.RX && window.RX.footerHTML) {
+                document.getElementById('rx-footer-container').innerHTML = window.RX.footerHTML();
+            }
+
+            initSellerForm();
+            renderBankEntries();
+        });
+
+        let selectedBankLotId = 'BNK-AL-9402';
+
+        function initSellerForm() {
+            const entries = window.RX_DATA.bankEntries || [];
+            const form = document.getElementById('seller-demo-form');
+            if (!form) return;
+
+            // Add lot selector at the top of seller form
+            const existingSelect = document.getElementById('seller-lot-selector');
+            if (!existingSelect) {
+                const group = document.createElement('div');
+                group.className = 'form-group';
+                group.style.marginBottom = '1.25rem';
+                group.innerHTML = `
+                    <label style="color: var(--bank-accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem;">Select Banked Lot to Manage</label>
+                    <select id="seller-lot-selector" class="form-control" onchange="onSellerLotSelected(this.value)" style="background: #101211; border-color: rgba(223, 223, 222, 0.2); color: #fff; font-family: 'JetBrains Mono', monospace;">
+                        ${entries.map(e => `<option value="${e.id}">${e.id} &bull; ${e.materialName} (Current: ₹${e.currentAsk}/kg)</option>`).join('')}
+                    </select>
+                `;
+                form.insertBefore(group, form.firstChild);
+            }
+
+            form.onsubmit = function (e) {
+                e.preventDefault();
+                saveSellerControls();
+            };
+        }
+
+        function onSellerLotSelected(lotId) {
+            selectedBankLotId = lotId;
+            const entry = (window.RX_DATA.bankEntries || []).find(e => e.id === lotId);
+            if (!entry) return;
+
+            const priceInput = document.querySelector('#seller-demo-form input[type="number"][step="0.01"]');
+            const qtyInput = document.querySelectorAll('#seller-demo-form input[type="number"]')[1];
+            const bulkInput = document.querySelector('#bulk-input-group input');
+
+            if (priceInput) priceInput.value = entry.currentAsk || 90;
+            if (qtyInput) qtyInput.value = (entry.quantity ? (entry.quantity / 1000).toFixed(1) : 5.0);
+            if (bulkInput && entry.bulkOffer) bulkInput.value = entry.bulkOffer;
+        }
+
+        function saveSellerControls() {
+            const entry = (window.RX_DATA.bankEntries || []).find(e => e.id === selectedBankLotId);
+            if (!entry) return;
+
+            const priceInput = document.querySelector('#seller-demo-form input[type="number"][step="0.01"]');
+            const bulkToggle = document.getElementById('bulk-toggle');
+            const bulkInput = document.querySelector('#bulk-input-group input');
+
+            if (priceInput && parseFloat(priceInput.value)) {
+                entry.currentAsk = parseFloat(priceInput.value);
+            }
+            if (bulkToggle && bulkToggle.checked && bulkInput && parseFloat(bulkInput.value)) {
+                entry.bulkOffer = parseFloat(bulkInput.value);
+            } else if (bulkToggle && !bulkToggle.checked) {
+                entry.bulkOffer = null;
+            }
+
+            renderBankEntries();
+            window.showToast(`Listing ${entry.id} updated to ₹${entry.currentAsk}/kg. Seller-controlled pricing active.`);
+        }
+
+        function renderBankEntries() {
+            const container = document.getElementById('bank-entries-container');
+            const entries = window.RX_DATA.bankEntries || [];
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetId = urlParams.get('id') || urlParams.get('material') || (window.RX && window.RX.getActiveMaterialId ? window.RX.getActiveMaterialId() : '');
+
+            if (entries.length === 0) {
+                container.innerHTML = '<p>No materials currently in bank.</p>';
+                return;
+            }
+
+            container.innerHTML = entries.map(entry => {
+                const matList = window.RX_DATA.materials || [];
+                const mat = (Array.isArray(matList) ? matList.find(m => m.id === entry.materialId) : matList[entry.materialId]) || { 
+                    id: entry.materialId || 'LOT-BANK', 
+                    name: entry.materialName || 'Industrial Material', 
+                    category: entry.category || 'Secondary Resource' 
+                };
+                
+                const isTarget = targetId && (entry.materialId === targetId || entry.id === targetId);
+                const currentAsk = entry.currentAsk !== undefined ? entry.currentAsk : 38.0;
+                const originalAsk = entry.originalAsk !== undefined ? entry.originalAsk : entry.originalAskPrice;
+                const bulkOffer = entry.bulkOffer !== undefined ? entry.bulkOffer : entry.bulkOfferPrice;
+                const note = entry.notes || entry.sellerNote;
+                const interestCount = entry.buyerInterest !== undefined ? entry.buyerInterest : 2;
+
+                let bulkHtml = '';
+                if (bulkOffer) {
+                    bulkHtml = `
+                        <div class="metric">
+                            <span class="metric-label">Bulk Offer</span>
+                            <span class="metric-value">₹${Number(bulkOffer).toFixed(2)}/kg</span>
+                        </div>
+                    `;
+                }
+
+                let originalAskHtml = '';
+                if (originalAsk && originalAsk !== currentAsk) {
+                    originalAskHtml = `
+                        <div class="metric">
+                            <span class="metric-label">Orig. Ask</span>
+                            <span class="metric-value crossed">₹${Number(originalAsk).toFixed(2)}/kg</span>
+                        </div>
+                    `;
+                }
+
+                let noteHtml = '';
+                if (note) {
+                    noteHtml = `
+                        <div class="bank-card-note">
+                            "${note}" — Seller
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="bank-card ${isTarget ? 'target-lot' : ''}" style="${isTarget ? 'border: 2px solid var(--rx-green-500, #049c6c); box-shadow: 0 0 20px rgba(4, 156, 108, 0.2);' : ''}">
+                        <div class="bank-card-header">
+                            <div class="bank-card-title">
+                                <span class="material-id">${mat.id || entry.materialId}</span>
+                                <h3>${mat.name}</h3>
+                                <span class="badge-seller-managed">STRICTLY SELLER MANAGED</span>
+                                <span class="rx-badge-demo" style="margin-left: 0.5rem; font-size: 0.65rem;">DEMO DATA</span>
+                            </div>
+                            <div class="bank-card-days">
+                                <div>${entry.daysListed || 8} Days Listed</div>
+                                <div class="days-bar">
+                                    <div class="days-bar-fill" style="width: ${Math.min(((entry.daysListed || 8) / 60) * 100, 100)}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bank-card-metrics">
+                            <div class="metric">
+                                <span class="metric-label">Current Ask</span>
+                                <span class="metric-value" style="color: var(--bank-accent);">₹${Number(currentAsk).toFixed(2)}/kg</span>
+                            </div>
+                            ${originalAskHtml}
+                            ${bulkHtml}
+                            <div class="metric">
+                                <span class="metric-label">Buyer Interest</span>
+                                <span class="metric-value">${interestCount} enquiries</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Pricing Policy</span>
+                                <span class="metric-value" style="font-size: 0.78rem; font-family: 'Inter', sans-serif; color: var(--rx-green-400, #26b583);">
+                                    ✓ No Auto Discounts
+                                </span>
+                            </div>
+                        </div>
+
+                        ${noteHtml}
+
+                        <div class="bank-card-actions">
+                            <a href="material-detail.html?id=${encodeURIComponent(entry.materialId)}" class="btn btn-outline">Specs</a>
+                            <button onclick="openNegotiationModal('${mat.name}', ${currentAsk})" class="btn btn-primary">Make Enquiry</button>
+                            <a href="match-explorer.html?id=${encodeURIComponent(entry.materialId)}" class="btn btn-outline">Matches</a>
+                            <a href="material-journey.html?id=${encodeURIComponent(entry.materialId)}" class="btn btn-outline">Journey</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Modal Logic
+        function openNegotiationModal(materialName, defaultAsk) {
+            document.getElementById('modal-material-name').textContent = materialName;
+            const offerInput = document.querySelector('#enquiry-form input[type="number"]');
+            if (offerInput && defaultAsk) {
+                offerInput.value = (defaultAsk * 0.95).toFixed(2);
+            }
+            document.getElementById('negotiation-modal').classList.add('active');
+        }
+
+        function closeNegotiationModal() {
+            document.getElementById('negotiation-modal').classList.remove('active');
+        }
+
+        function submitEnquiry() {
+            closeNegotiationModal();
+            window.showToast('Enquiry & Offer submitted directly to Seller (Simulation)');
+        }
+
+        // Toast Logic
+        window.showToast = function(message) {
+            const toast = document.getElementById('system-toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        };
+    </script>
+</body>
+</html>
