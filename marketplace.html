@@ -692,7 +692,34 @@
                 location: '',
                 qtyMin: null,
                 qtyMax: null,
+                priceMin: null,
+                priceMax: null,
                 availability: [] // in days
+            };
+
+            // Shortlist helpers
+            window.isShortlisted = function(id) {
+                try {
+                    const list = JSON.parse(localStorage.getItem('rx_shortlist') || '[]');
+                    return list.indexOf(id) !== -1;
+                } catch(e) { return false; }
+            };
+
+            window.toggleShortlist = function(id, btn) {
+                try {
+                    let list = JSON.parse(localStorage.getItem('rx_shortlist') || '[]');
+                    const idx = list.indexOf(id);
+                    if (idx === -1) {
+                        list.push(id);
+                        if(btn) btn.classList.add('active');
+                        if (window.RX && window.RX.toast) window.RX.toast('Material ' + id + ' saved to your Shortlist', 'success');
+                    } else {
+                        list.splice(idx, 1);
+                        if(btn) btn.classList.remove('active');
+                        if (window.RX && window.RX.toast) window.RX.toast('Removed ' + id + ' from Shortlist', 'info');
+                    }
+                    localStorage.setItem('rx_shortlist', JSON.stringify(list));
+                } catch(e) {}
             };
 
             // DOM Elements
@@ -708,6 +735,8 @@
             const locationInput = document.getElementById('location-input');
             const qtyMinInput = document.getElementById('qty-min');
             const qtyMaxInput = document.getElementById('qty-max');
+            const priceMinInput = document.getElementById('price-min');
+            const priceMaxInput = document.getElementById('price-max');
             const sortSelect = document.getElementById('sort-select');
             
             // Default categories if missing
@@ -763,28 +792,29 @@
             locationInput.addEventListener('input', updateFilters);
             qtyMinInput.addEventListener('input', updateFilters);
             qtyMaxInput.addEventListener('input', updateFilters);
+            if (priceMinInput) priceMinInput.addEventListener('input', updateFilters);
+            if (priceMaxInput) priceMaxInput.addEventListener('input', updateFilters);
             sortSelect.addEventListener('change', renderGrid);
-            
-            document.querySelectorAll('#condition-filters input').forEach(cb => {
-                cb.addEventListener('change', updateFilters);
-            });
-            document.querySelectorAll('#availability-filters input').forEach(cb => {
-                cb.addEventListener('change', updateFilters);
-            });
-            
-            document.getElementById('clear-filters-btn').addEventListener('click', resetAllFilters);
-            document.getElementById('reset-no-results').addEventListener('click', resetAllFilters);
 
-            function resetAllFilters() {
+            document.querySelectorAll('#condition-filters input').forEach(cb => cb.addEventListener('change', updateFilters));
+            document.querySelectorAll('#availability-filters input').forEach(cb => cb.addEventListener('change', updateFilters));
+            
+            document.getElementById('clear-filters-btn').addEventListener('click', clearAllFilters);
+            document.getElementById('reset-no-results').addEventListener('click', clearAllFilters);
+
+            function clearAllFilters() {
                 searchInput.value = '';
                 locationInput.value = '';
                 qtyMinInput.value = '';
                 qtyMaxInput.value = '';
+                if (priceMinInput) priceMinInput.value = '';
+                if (priceMaxInput) priceMaxInput.value = '';
+                document.querySelectorAll('#category-filters input').forEach(cb => cb.checked = false);
+                document.querySelectorAll('#condition-filters input').forEach(cb => cb.checked = false);
+                document.querySelectorAll('#availability-filters input').forEach(cb => cb.checked = false);
+                document.querySelectorAll('.category-pill').forEach(pill => pill.classList.remove('active'));
                 
-                document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-                    cb.checked = false;
-                });
-                
+                // Clear URL param if present
                 if (window.history.replaceState) {
                     const url = new URL(window.location);
                     url.searchParams.delete('category');
@@ -798,6 +828,8 @@
                 activeFilters.location = locationInput.value.toLowerCase();
                 activeFilters.qtyMin = qtyMinInput.value ? parseFloat(qtyMinInput.value) : null;
                 activeFilters.qtyMax = qtyMaxInput.value ? parseFloat(qtyMaxInput.value) : null;
+                activeFilters.priceMin = (priceMinInput && priceMinInput.value) ? parseFloat(priceMinInput.value) : null;
+                activeFilters.priceMax = (priceMaxInput && priceMaxInput.value) ? parseFloat(priceMaxInput.value) : null;
                 
                 activeFilters.categories = Array.from(document.querySelectorAll('#category-filters input:checked')).map(cb => cb.value);
                 activeFilters.conditions = Array.from(document.querySelectorAll('#condition-filters input:checked')).map(cb => cb.value);
@@ -838,6 +870,10 @@
                     if(activeFilters.qtyMin !== null && m.quantity < activeFilters.qtyMin) return false;
                     if(activeFilters.qtyMax !== null && m.quantity > activeFilters.qtyMax) return false;
                     
+                    // Price
+                    if(activeFilters.priceMin !== null && m.askingPrice < activeFilters.priceMin) return false;
+                    if(activeFilters.priceMax !== null && m.askingPrice > activeFilters.priceMax) return false;
+
                     // Availability - simplistic check for demo
                     if(activeFilters.availability.length > 0) {
                         // Assuming materials are immediately available unless specified
@@ -879,6 +915,15 @@
                         qtyMinInput.value = ''; qtyMaxInput.value = ''; updateFilters();
                     });
                 }
+                if(activeFilters.priceMin !== null || activeFilters.priceMax !== null) {
+                    const min = activeFilters.priceMin || 0;
+                    const max = activeFilters.priceMax || 'Any';
+                    createTag(`Price: ₹${min} - ₹${max}`, () => {
+                        if(priceMinInput) priceMinInput.value = ''; 
+                        if(priceMaxInput) priceMaxInput.value = ''; 
+                        updateFilters();
+                    });
+                }
                 activeFilters.categories.forEach(cat => {
                     createTag(cat, () => {
                         document.querySelector(`#category-filters input[value="${cat}"]`).checked = false;
@@ -906,8 +951,15 @@
                     case 'quantity-desc':
                         sorted.sort((a, b) => b.quantity - a.quantity);
                         break;
-                    case 'match-count':
-                        // If there was a match count property
+                    case 'distance':
+                        sorted.sort((a, b) => {
+                            const da = (typeof a.location === 'object' && a.location.city === 'Sangareddy') ? 42 : 85;
+                            const db = (typeof b.location === 'object' && b.location.city === 'Sangareddy') ? 42 : 85;
+                            return da - db;
+                        });
+                        break;
+                    case 'net-value':
+                        sorted.sort((a, b) => (b.askingPrice * b.quantity * 0.94) - (a.askingPrice * a.quantity * 0.94));
                         break;
                     default:
                         break;
@@ -938,7 +990,11 @@
                     if(m.category && (m.category.includes('Plastic') || m.category.includes('Polymer'))) bgClass = 'rx-cat-polymers';
                     if(m.category && (m.category.includes('Fiber') || m.category.includes('Paper'))) bgClass = 'rx-cat-fibers';
                     
-                    let bankedBadge = m.status === 'banked' ? `<span class="rx-badge-demo" style="background:#173A2B;color:#A88A52;border:1px solid #A88A52">MATERIAL BANK</span>` : '';
+                    let bankedBadge = m.status === 'banked' ? `<span class="rx-badge-demo" style="background:rgba(4,156,108,0.15);color:#049c6c;border:1px solid #049c6c">MATERIAL BANK</span>` : '';
+
+                    const appsHtml = (m.applications && Array.isArray(m.applications)) 
+                        ? `<div class="card-apps-list">${m.applications.slice(0, 3).map(a => `<span class="card-app-pill">${a}</span>`).join('')}</div>`
+                        : '';
 
                     card.innerHTML = `
                         <div class="card-visual ${bgClass}">
@@ -957,9 +1013,14 @@
                                 <div><strong>Condition</strong> ${m.condition || 'N/A'}</div>
                                 <div><strong>Location</strong> ${typeof m.location === 'object' ? (m.location.city + ', ' + m.location.state) : (m.location || 'N/A')}</div>
                             </div>
+                            ${appsHtml}
                             <div class="card-footer">
                                 <div class="card-price">₹${m.askingPrice || 0}/kg</div>
-                                <a href="material-detail.html?id=${m.id}" class="btn-view">View Details</a>
+                                <div class="card-actions-row">
+                                    <button class="btn-shortlist ${isShortlisted(m.id) ? 'active' : ''}" onclick="toggleShortlist('${m.id}', this)" title="Save to shortlist" aria-label="Shortlist">★</button>
+                                    <a href="match-explorer.html?id=${m.id}" class="btn-compare" title="Compare and simulate matches">Compare Match</a>
+                                    <a href="material-detail.html?id=${m.id}" class="btn-view">View Material</a>
+                                </div>
                             </div>
                         </div>
                     `;

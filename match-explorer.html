@@ -842,15 +842,25 @@
                         </div>
 
                         <div>
-                            <button type="button" class="calc-toggle" onclick="toggleCalc(this)">View Live Calculation Math ▾</button>
+                            <button type="button" class="calc-toggle" onclick="toggleCalc(this)">Why this match? & Calculation Details ▾</button>
                             <div class="calc-panel">
-                                <strong>Formula Breakdown:</strong><br>
-                                Gross: ${formatINR(match.grossOffer)}<br>
-                                Freight: -${formatINR(match.freight)} (${match.distance}km @ ₹${currentSimSettings.freightRate}/km)<br>
-                                Processing: -${formatINR(match.processing)} (Factor: ${currentSimSettings.processingMultiplier}x)<br>
-                                Handling: -${formatINR(match.handling)}<br>
-                                ======================<br>
-                                <strong>Net Yield: ${formatINR(match.netValue)}</strong> (₹${match.netPerKg}/kg)
+                                <div style="color: var(--rx-brass-300); font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.72rem;">Compatibility Assessment:</div>
+                                <div style="font-size: 0.75rem; color: var(--rx-stone-300); margin-bottom: 0.75rem; line-height: 1.5;">
+                                    &bull; <strong>Material Fit:</strong> ${match.factors ? match.factors[0] : 92}% &mdash; verified assay tolerance for secondary feed<br>
+                                    &bull; <strong>Quality & Grade:</strong> ${match.factors ? match.factors[1] : 88}% &mdash; specification aligns with processing line<br>
+                                    &bull; <strong>Quantity Acceptance:</strong> ${match.factors ? match.factors[2] : 95}% &mdash; facility accepts full batch in single delivery<br>
+                                    &bull; <strong>Location Factor:</strong> ${match.distance} km road haul from generator site<br>
+                                    &bull; <strong>Processing Penalty:</strong> ${match.factors ? match.factors[3] : 80}% &mdash; minimal pre-treatment required
+                                </div>
+                                <div style="border-top: 1px solid rgba(223, 223, 222, 0.15); padding-top: 0.5rem;">
+                                    <strong>Formula Breakdown:</strong><br>
+                                    Gross: ${formatINR(match.grossOffer)}<br>
+                                    Freight: -${formatINR(match.freight)} (${match.distance}km @ ₹${currentSimSettings.freightRate}/km)<br>
+                                    Processing: -${formatINR(match.processing)} (Factor: ${currentSimSettings.processingMultiplier}x)<br>
+                                    Handling: -${formatINR(match.handling)}<br>
+                                    ======================<br>
+                                    <strong>Estimated Net Value: ${formatINR(match.netValue)}</strong> (₹${match.netPerKg.toFixed(2)}/kg)
+                                </div>
                             </div>
                         </div>
 
