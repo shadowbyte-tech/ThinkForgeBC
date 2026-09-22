@@ -1,0 +1,8 @@
+2026-09-22 15:00:53,292 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.177:5000
+2026-09-22 15:00:53,292 - INFO - [33mPress CTRL+C to quit[0m
+2026-09-22 15:00:53,825 - INFO - 127.0.0.1 - - [22/Sep/2026 15:00:53] "GET /api/status HTTP/1.1" 200 -
+2026-09-22 15:01:13,779 - INFO - {"timestamp": "2026-09-22T15:01:13.779146", "userId": "demo_seller_3eb47830", "userEmail": "demo-seller@resourcex.local", "userRole": "seller", "action": "DEMO_LOGIN", "details": {"role": "seller"}, "status": "success", "ip": "127.0.0.1"}
+2026-09-22 15:01:13,821 - INFO - 127.0.0.1 - - [22/Sep/2026 15:01:13] "POST /api/auth/demo-login HTTP/1.1" 200 -

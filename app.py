@@ -237,6 +237,16 @@ def serve_static(path):
 
 
 # ============================================================
+# DEMO LOGIN PAGE (FOR TESTING RBAC WITHOUT GOOGLE AUTH)
+# ============================================================
+
+@app.route('/demo-login')
+def serve_demo_login():
+    """Serve the RBAC demo login page for testing."""
+    return send_file(os.path.join(STATIC_DIR, 'demo-login.html'))
+
+
+# ============================================================
 # AUTHENTICATION API (GOOGLE LOG IN)
 # ============================================================
 
@@ -449,6 +459,56 @@ def api_auth_session():
     return jsonify({
         'authenticated': False,
         'needsProfileSetup': False
+    })
+
+
+@app.route('/api/auth/demo-login', methods=['POST'])
+def api_auth_demo_login():
+    """
+    Demo login endpoint for testing RBAC without Google auth.
+    Call this to test the role selection modal and dashboards.
+    """
+    data = request.get_json(force=True, silent=True) or {}
+    role = data.get('role', 'seller').lower()
+    
+    if role not in ['seller', 'buyer', 'logistics']:
+        return jsonify({'success': False, 'error': 'Invalid role'}), 400
+    
+    # Create demo user
+    demo_user = {
+        'id': f'demo_{role}_{secrets.token_hex(4)}',
+        'google_sub': f'demo_{role}',
+        'name': f'Demo {role.title()}',
+        'email': f'demo-{role}@resourcex.local',
+        'email_verified': True,
+        'picture': None,
+        'avatar': role[0].upper(),
+        'provider': 'Demo Mode',
+        'authenticated': True,
+        'verified': True,
+        'login_time': datetime.now().isoformat(),
+        'primaryRole': role,
+        'organizationName': 'Demo Company',
+        'organizationId': 'demo_org_001',
+        'facilities': [
+            {'id': 'fac_01', 'name': 'Demo Facility A'},
+            {'id': 'fac_02', 'name': 'Demo Facility B'}
+        ],
+        'activeFacility': {'id': 'fac_01', 'name': 'Demo Facility A'},
+        'lastActivity': datetime.now().isoformat()
+    }
+    
+    # Set permanent session
+    session['user'] = demo_user
+    session.permanent = True
+    
+    log_action(demo_user['id'], demo_user['email'], role, 'DEMO_LOGIN', 
+              {'role': role}, 'success')
+    
+    return jsonify({
+        'success': True,
+        'user': demo_user,
+        'message': f'Demo login as {role.title()} successful!'
     })
 
 
