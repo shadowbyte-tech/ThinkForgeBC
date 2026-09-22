@@ -1757,22 +1757,41 @@
       }
 
       const user = data.user;
-      localStorage.setItem('rx_user', JSON.stringify(user));
-      window.RX_SPA.closeLoginModal();
+      
+      // Handle new flow: needs profile setup (role selection)
+      if (data.needsProfileSetup) {
+        localStorage.setItem('rx_temp_user', JSON.stringify(user));
+        window.RX_SPA.closeLoginModal();
+        
+        // Show role selection modal
+        if (window.RX_RBAC && window.RX_RBAC.showRoleSelectionModal) {
+          setTimeout(() => {
+            window.RX_RBAC.showRoleSelectionModal(user);
+          }, 300);
+        }
+        if (statusEl) {
+          statusEl.style.color = '#0F9D58';
+          statusEl.textContent = 'Please select your role to continue...';
+        }
+      } else {
+        // User already has role/org set up - direct login
+        localStorage.setItem('rx_user', JSON.stringify(user));
+        window.RX_SPA.closeLoginModal();
 
-      if (window.RX && window.RX.refreshNavUser) {
-        window.RX.refreshNavUser();
+        if (window.RX && window.RX.refreshNavUser) {
+          window.RX.refreshNavUser();
+        }
+        if (window.RX && window.RX.toast) {
+          window.RX.toast(`Signed in with Google as ${user.name}`, 'success');
+        }
+
+        // Refresh greeting text in dashboard section
+        const title = document.querySelector('#dashboard h2');
+        if (title) title.textContent = `Welcome back, ${user.name}`;
+
+        // Smooth scroll down to dashboard
+        window.RX_SPA.scrollToId('dashboard');
       }
-      if (window.RX && window.RX.toast) {
-        window.RX.toast(`Signed in with Google as ${user.name}`, 'success');
-      }
-
-      // Refresh greeting text in dashboard section
-      const title = document.querySelector('#dashboard h2');
-      if (title) title.textContent = `Welcome back, ${user.name}`;
-
-      // Smooth scroll down to dashboard
-      window.RX_SPA.scrollToId('dashboard');
 
     } catch (err) {
       console.error('Google verification error:', err);
@@ -1788,10 +1807,20 @@
     try {
       const res = await fetch(getApiBase() + '/api/auth/session', { credentials: 'include' });
       const data = await res.json();
+      
       if (data.authenticated && data.user) {
+        // User is fully authenticated
         localStorage.setItem('rx_user', JSON.stringify(data.user));
         if (window.RX && window.RX.refreshNavUser) {
           window.RX.refreshNavUser();
+        }
+      } else if (data.needsProfileSetup && data.tempUser) {
+        // User authenticated with Google but needs to complete profile (role selection)
+        localStorage.setItem('rx_temp_user', JSON.stringify(data.tempUser));
+        if (window.RX_RBAC && window.RX_RBAC.showRoleSelectionModal) {
+          setTimeout(() => {
+            window.RX_RBAC.showRoleSelectionModal(data.tempUser);
+          }, 500);
         }
       } else if (!data.authenticated) {
         if (localStorage.getItem('rx_user')) {
