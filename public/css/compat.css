@@ -1,0 +1,341 @@
+/* ============================================================
+   RESOURCEX CSS COMPATIBILITY & THEME PALETTE PATCH
+   Approved ResourceX Identity:
+   - BLACK: #050505
+   - NEAR BLACK: #0A0A0C
+   - GRAPHITE: #121216
+   - DARK GRAPHITE: #18181D
+   - DEEP LAVENDER: #5F4B8B
+   - MUTED LAVENDER: #7566A8
+   - SOFT LAVENDER: #9183C4
+   - LIGHT LAVENDER: #C2B8E6
+   - PALE LAVENDER: #E5E0F4
+   - GOLDEN YELLOW: #D6A928
+   - BRIGHT GOLD: #E5BC3F
+   - SOFT GOLD: #F0D77A
+   - WARM IVORY: #F4F1E8
+   - SOFT GRAY: #C9C7C2
+   - INDUSTRIAL GRAY: #8A8985
+   ============================================================ */
+
+:root {
+  /* Core Base Colors */
+  --rx-black: #050505;
+  --rx-near-black: #0A0A0C;
+  --rx-graphite: #121216;
+  --rx-dark-graphite: #18181D;
+
+  --rx-deep-lavender: #5F4B8B;
+  --rx-muted-lavender: #7566A8;
+  --rx-soft-lavender: #9183C4;
+  --rx-light-lavender: #C2B8E6;
+  --rx-pale-lavender: #E5E0F4;
+
+  --rx-gold: #D6A928;
+  --rx-bright-gold: #E5BC3F;
+  --rx-soft-gold: #F0D77A;
+
+  --rx-ivory: #F4F1E8;
+  --rx-soft-gray: #C9C7C2;
+  --rx-industrial-gray: #8A8985;
+  --rx-error: #D9534F;
+
+  /* Theme Overrides */
+  --rx-forest: var(--rx-dark-graphite);
+  --rx-forest-deep: var(--rx-near-black);
+  --rx-brass: var(--rx-gold);
+  --rx-blue: var(--rx-soft-lavender);
+
+  /* Surfaces & Borders */
+  --rx-surface: #121216;
+  --rx-surface-2: #18181D;
+  --rx-border: rgba(138, 137, 133, 0.2);
+  --rx-border-color: rgba(138, 137, 133, 0.25);
+
+  /* Typography Colors */
+  --rx-text: #F4F1E8;
+  --rx-text-dim: #C9C7C2;
+  --rx-text-faint: #8A8985;
+  --rx-text-accent: #D6A928;
+  --rx-text-blue: #9183C4;
+  --rx-text-gold: #E5BC3F;
+  --rx-text-lavender: #C2B8E6;
+
+  /* Spacing Aliases */
+  --rx-space-xs: var(--rx-space-2, 0.5rem);
+  --rx-space-sm: var(--rx-space-3, 0.75rem);
+  --rx-space-md: var(--rx-space-4, 1rem);
+  --rx-space-lg: var(--rx-space-6, 1.5rem);
+  --rx-space-xl: var(--rx-space-8, 2rem);
+  --rx-space-2xl: var(--rx-space-12, 3rem);
+  --rx-space-3xl: var(--rx-space-16, 4rem);
+
+  /* Legacy & Page Spacing Variables */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* Fonts */
+  --rx-font-display: 'Space Grotesk', system-ui, sans-serif;
+  --rx-font-sans: 'Inter', system-ui, sans-serif;
+  --rx-font-mono: 'JetBrains Mono', monospace;
+  --rx-font-body: 'Inter', system-ui, sans-serif;
+  --rx-font-tech: 'JetBrains Mono', monospace;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Generic Color Aliases */
+  --color-bg: #050505;
+  --color-surface: #121216;
+  --color-accent: #D6A928;
+  --color-brass: #D6A928;
+  --color-blue: #9183C4;
+  --color-text: #F4F1E8;
+  --color-text-muted: #8A8985;
+  --color-border: rgba(138, 137, 133, 0.2);
+  --color-green: #D6A928;
+  --color-graphite: #121216;
+  --color-forest: #18181D;
+  --color-ivory: #F4F1E8;
+  --color-stone: #C9C7C2;
+
+  /* Component & Subpage Variables */
+  --rx-bg-color: #050505;
+  --rx-text-color: #C9C7C2;
+  --rx-accent-color: #D6A928;
+  --rx-forest-green: #18181D;
+  --rx-bg: #050505;
+  --rx-primary: #D6A928;
+  --rx-accent: #D6A928;
+  --canvas-bg: #050505;
+  --sidebar-width: 320px;
+  --bank-card-bg: #121216;
+  --bank-header-bg: #0A0A0C;
+  --bank-header-text: #F4F1E8;
+  --bank-border: rgba(138, 137, 133, 0.2);
+  --bank-accent: #D6A928;
+}
+
+/* ============================================================
+   GLOBAL BODY & COMPONENT THEME OVERRIDES
+   ============================================================ */
+
+html, body {
+  background-color: #050505 !important;
+  color: #C9C7C2 !important;
+}
+
+/* Nav styling update */
+.rx-nav {
+  background: rgba(10, 10, 12, 0.94) !important;
+  border-bottom: 1px solid rgba(138, 137, 133, 0.2) !important;
+}
+
+.rx-nav.scrolled {
+  background: rgba(5, 5, 5, 0.98) !important;
+  border-bottom-color: rgba(214, 169, 40, 0.35) !important;
+}
+
+.rx-mega-menu {
+  background: #121216 !important;
+  border-color: rgba(138, 137, 133, 0.3) !important;
+}
+
+/* Hero Section */
+.rx-hero {
+  background: radial-gradient(circle at 70% 30%, rgba(95, 75, 139, 0.16) 0%, rgba(5, 5, 5, 0.98) 70%) !important;
+  border-bottom: 1px solid rgba(138, 137, 133, 0.15) !important;
+}
+
+.rx-hero-badge {
+  border-color: rgba(145, 131, 196, 0.4) !important;
+  background: rgba(95, 75, 139, 0.15) !important;
+  color: #C2B8E6 !important;
+}
+
+/* Primary Button (Golden Yellow) */
+.rx-btn-primary, .btn-primary {
+  background: linear-gradient(180deg, #E5BC3F 0%, #D6A928 100%) !important;
+  color: #050505 !important;
+  border-color: #D6A928 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(214, 169, 40, 0.25) !important;
+}
+
+.rx-btn-primary:hover, .btn-primary:hover {
+  background: linear-gradient(180deg, #F0D77A 0%, #E5BC3F 100%) !important;
+  border-color: #E5BC3F !important;
+  color: #050505 !important;
+  box-shadow: 0 4px 24px rgba(214, 169, 40, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Secondary Button (Graphite + Lavender Accent) */
+.rx-btn-secondary, .btn-secondary {
+  background: rgba(24, 24, 29, 0.6) !important;
+  color: #F4F1E8 !important;
+  border: 1px solid rgba(145, 131, 196, 0.4) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.rx-btn-secondary:hover, .btn-secondary:hover {
+  background: rgba(95, 75, 139, 0.2) !important;
+  border-color: #C2B8E6 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Ghost Button */
+.rx-btn-ghost {
+  color: #C9C7C2 !important;
+}
+.rx-btn-ghost:hover {
+  color: #F4F1E8 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Badges */
+.rx-badge-demo, .badge-seller-managed, [class*="badge-demo"] {
+  border-color: rgba(145, 131, 196, 0.35) !important;
+  background: rgba(95, 75, 139, 0.12) !important;
+  color: #C2B8E6 !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.rx-badge-sample {
+  border-color: rgba(138, 137, 133, 0.3) !important;
+  background: rgba(138, 137, 133, 0.1) !important;
+  color: #C9C7C2 !important;
+}
+
+.rx-badge-status.active {
+  background: rgba(214, 169, 40, 0.15) !important;
+  color: #E5BC3F !important;
+  border: 1px solid rgba(214, 169, 40, 0.4) !important;
+}
+
+/* Cards & Surfaces */
+.rx-card-technical, .rx-card-editorial, .bank-card, .match-card, .stat-card {
+  background: linear-gradient(180deg, rgba(18, 18, 22, 0.9) 0%, rgba(18, 18, 22, 1) 100%) !important;
+  border-color: rgba(138, 137, 133, 0.2) !important;
+  color: #C9C7C2 !important;
+}
+
+.rx-card-technical:hover, .bank-card:hover, .match-card:hover {
+  border-color: rgba(145, 131, 196, 0.25) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(145, 131, 196, 0.1) !important;
+  transform: translateY(-2px) !important;
+}
+
+.match-card.best-match {
+  border-color: #D6A928 !important;
+  box-shadow: 0 0 24px rgba(214, 169, 40, 0.25) !important;
+}
+
+.best-match-label, #badge-winner {
+  background: #D6A928 !important;
+  color: #050505 !important;
+  font-weight: 700 !important;
+}
+
+/* Category Grid Cards */
+.rx-cat-item {
+  background: #121216 !important;
+  border-color: rgba(138, 137, 133, 0.2) !important;
+}
+
+.rx-cat-item:hover {
+  border-color: #D6A928 !important;
+  background: #18181D !important;
+}
+
+.rx-cat-item .rx-mono-sm[style*="color: var(--rx-brass-400)"],
+.rx-cat-item .rx-text-brass {
+  color: #E5BC3F !important;
+}
+
+/* Value Breakdown Bars */
+.rx-value-bar.gross, .gross-bar {
+  background: #C9C7C2 !important;
+}
+
+.rx-value-bar.deduct, .deduction-bar, .deduction {
+  color: #8A8985 !important;
+  background: #8A8985 !important;
+}
+
+.rx-value-bar.net, .net-bar, .rx-value-amount.net {
+  background: #D6A928 !important;
+  color: #E5BC3F !important;
+}
+
+/* Calculation panel */
+.calc-panel {
+  background: rgba(10, 10, 12, 0.65) !important;
+  border-color: rgba(138, 137, 133, 0.25) !important;
+  color: #C9C7C2 !important;
+}
+
+/* Comparison Tables */
+.comparison-table {
+  background: linear-gradient(180deg, rgba(18, 18, 22, 0.9) 0%, rgba(18, 18, 22, 1) 100%) !important;
+  color: #C9C7C2 !important;
+}
+
+.comparison-table th {
+  color: #F4F1E8 !important;
+  background: rgba(0, 0, 0, 0.2) !important;
+  border-color: rgba(138, 137, 133, 0.2) !important;
+}
+
+.comparison-table td {
+  color: #C9C7C2 !important;
+  border-color: rgba(138, 137, 133, 0.18) !important;
+}
+
+/* Filter sidebars */
+.filter-sidebar, .rx-filter-sidebar {
+  background: linear-gradient(180deg, rgba(18, 18, 22, 0.6) 0%, rgba(18, 18, 22, 1) 100%) !important;
+  border-color: rgba(138, 137, 133, 0.18) !important;
+}
+
+/* Category Pills */
+.category-pill.active {
+  background: #D6A928 !important;
+  color: #050505 !important;
+  border-color: #D6A928 !important;
+  font-weight: 600 !important;
+}
+
+/* Inputs & Forms */
+input, textarea, select {
+  background: rgba(0, 0, 0, 0.35) !important;
+  color: #F4F1E8 !important;
+  border-color: rgba(138, 137, 133, 0.25) !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #D6A928 !important;
+  box-shadow: 0 0 0 3px rgba(214, 169, 40, 0.12) !important;
+}
+
+/* Footer */
+.rx-footer {
+  background: #050505 !important;
+  border-top: 1px solid rgba(138, 137, 133, 0.2) !important;
+}
+
+.rx-footer-col-label {
+  color: #D6A928 !important;
+  border-bottom-color: rgba(138, 137, 133, 0.2) !important;
+}
+
+.rx-footer-link:hover {
+  color: #F4F1E8 !important;
+}

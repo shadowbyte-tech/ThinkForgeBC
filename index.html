@@ -3,818 +3,468 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ResourceX — Industrial Resources. Reimagined.</title>
-  <meta name="description" content="ResourceX connects industrial material generators with potential buyers and processors, helping businesses discover commercially viable reuse opportunities based on material compatibility, location and net value.">
+  <title>ResourceX — Industrial Circular Economy & Byproduct Exchange</title>
+  <meta name="description" content="ResourceX connects industrial byproduct generators with certified buyers and processors based on landed net-value matching and chain-of-custody tracking.">
+  <!-- Google Identity Services SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-  <!-- Google Fonts: Space Grotesk (display), Inter (body), JetBrains Mono (code/mono) -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
+  <!-- Core Design System & Components -->
   <link rel="stylesheet" href="css/design-system.css">
-  <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/compat.css">
 
   <style>
-    /* Homepage Specific Section Styles */
-    .rx-problem-section {
-      background: #0d0f0e;
-      border-top: 1px solid rgba(223, 223, 222, 0.1);
-      padding: 6rem 0;
+    :root {
+      --rx-nav-height: 76px;
+      --rx-app-bg: #0D110F;
+      --rx-card-bg: rgba(21, 26, 23, 0.78);
+      --rx-card-border: rgba(201, 196, 184, 0.12);
+      --rx-hover-border: rgba(196, 173, 122, 0.4);
     }
-    .rx-problem-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+
+    * {
+      box-sizing: border-box;
     }
-    .rx-broken-chain-box {
-      background: #141716;
-      border: 1px solid rgba(223, 223, 222, 0.12);
-      border-radius: 8px;
-      padding: 2.5rem;
-      position: relative;
+
+    html {
+      scroll-behavior: smooth;
     }
-    .rx-chain-diagram {
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background-color: var(--rx-app-bg);
+      color: var(--rx-ivory-800, #F2EFE7);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 1.75rem;
-      margin-top: 1.5rem;
     }
-    .rx-chain-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1rem 1.25rem;
-      background: rgba(0,0,0,0.3);
+
+    /* Custom Sleek Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0E0D;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(196, 173, 122, 0.3);
       border-radius: 4px;
-      border: 1px solid rgba(223,223,222,0.08);
-      font-family: var(--rx-font-mono);
-      font-size: 0.8125rem;
     }
-    .rx-chain-row.broken {
-      border-color: rgba(225, 82, 108, 0.4);
-      background: rgba(225, 82, 108, 0.05);
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(196, 173, 122, 0.6);
     }
-    .rx-chain-row.solved {
-      border-color: rgba(4, 156, 108, 0.4);
-      background: rgba(4, 156, 108, 0.08);
+
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
     }
-    .rx-chain-node {
+
+    /* Action Buttons */
+    .rx-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 600;
-      color: #fff;
-    }
-    .rx-chain-arrow {
-      color: var(--rx-stone-400);
-      font-size: 1.1rem;
-    }
-
-    /* How It Works 4-Step */
-    .rx-steps-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    .rx-step-card {
-      background: #141716;
-      border: 1px solid rgba(223, 223, 222, 0.1);
-      border-radius: 6px;
-      padding: 2rem 1.5rem;
-      position: relative;
-      transition: all 0.25s ease;
-    }
-    .rx-step-card:hover {
-      border-color: var(--rx-green-500);
-      transform: translateY(-3px);
-    }
-    .rx-step-num {
-      font-family: var(--rx-font-mono);
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--rx-brass-400);
-      margin-bottom: 1rem;
-    }
-    .rx-step-title {
-      font-family: var(--rx-font-display);
-      font-size: 1.25rem;
-      color: #ffffff;
-      margin-bottom: 0.75rem;
-    }
-    .rx-step-desc {
-      font-size: 0.875rem;
-      color: var(--rx-stone-400);
-      line-height: 1.6;
-    }
-
-    /* Asymmetric Category Grid */
-    .rx-cat-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
-      margin-top: 3rem;
-    }
-    .rx-cat-card {
-      background: #141716;
-      border: 1px solid rgba(223, 223, 222, 0.1);
-      border-radius: 6px;
-      padding: 1.5rem;
+      font-size: 0.88rem;
+      padding: 0.7rem 1.35rem;
+      border-radius: 8px;
       text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 140px;
-      transition: all 0.2s ease;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid transparent;
     }
-    .rx-cat-card:hover {
-      border-color: var(--rx-green-500);
-      background: #181c1a;
+    .rx-btn-primary {
+      background: linear-gradient(135deg, #C4AD7A, #A88A52);
+      color: #0F1210;
+      box-shadow: 0 4px 16px rgba(168, 138, 82, 0.25);
+    }
+    .rx-btn-primary:hover {
+      background: linear-gradient(135deg, #D4C090, #B49A62);
+      box-shadow: 0 6px 22px rgba(168, 138, 82, 0.4);
       transform: translateY(-2px);
     }
-    .rx-cat-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 1rem;
+    .rx-btn-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(201, 196, 184, 0.18);
+      color: #F2EFE7;
     }
-    .rx-cat-icon {
-      font-size: 1.5rem;
-      color: var(--rx-brass-400);
+    .rx-btn-secondary:hover {
+      background: rgba(45, 112, 80, 0.2);
+      border-color: #2D7050;
+      color: #FFFFFF;
+      transform: translateY(-2px);
     }
-    .rx-cat-count {
-      font-family: var(--rx-font-mono);
-      font-size: 0.75rem;
-      color: var(--rx-green-400);
-      background: rgba(4, 156, 108, 0.1);
-      padding: 2px 8px;
-      border-radius: 2px;
-      border: 1px solid rgba(4, 156, 108, 0.2);
-    }
-    .rx-cat-name {
-      font-family: var(--rx-font-display);
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: #ffffff;
-      margin-bottom: 0.35rem;
-    }
-    .rx-cat-desc {
-      font-size: 0.75rem;
-      color: var(--rx-stone-400);
-      line-height: 1.4;
+    .rx-btn-sm {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.78rem;
+      border-radius: 6px;
     }
 
-    /* Net Value Visualizer Block */
-    .rx-nv-card {
-      background: #141716;
-      border: 1px solid rgba(223, 223, 222, 0.12);
-      border-radius: 8px;
-      padding: 2.5rem;
-      margin-top: 3rem;
+    /* Cards & Containers */
+    .table-card {
+      background: var(--rx-card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--rx-card-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
     }
-    .rx-nv-compare-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-      margin-top: 2rem;
-    }
-    .rx-nv-box {
-      background: #0d0f0e;
-      border: 1px solid rgba(223, 223, 222, 0.1);
-      border-radius: 6px;
-      padding: 1.75rem;
-    }
-    .rx-nv-box.winner {
-      border-color: var(--rx-green-500);
-      box-shadow: 0 0 20px rgba(4, 156, 108, 0.1);
-    }
-    .rx-nv-row {
+    .table-card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid rgba(223, 223, 222, 0.06);
-      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(201, 196, 184, 0.08);
     }
-    .rx-nv-row.total {
-      border-bottom: none;
-      border-top: 2px solid rgba(223, 223, 222, 0.15);
-      margin-top: 0.75rem;
-      padding-top: 1rem;
+    .table-card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
       font-weight: 700;
-      font-size: 1.125rem;
+      color: #F2EFE7;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
 
-    /* Circular Flow Section */
-    .rx-circular-diagram {
-      background: #141716;
-      border: 1px solid rgba(223, 223, 222, 0.12);
+    /* Tabs Ribbon */
+    .tabs-nav {
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(18, 23, 20, 0.85);
+      padding: 0.4rem;
+      border-radius: 12px;
+      border: 1px solid rgba(201, 196, 184, 0.12);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tabs-nav::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #A8A5A0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.6rem 1.15rem;
       border-radius: 8px;
-      padding: 3rem;
-      text-align: center;
-      margin-top: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tab-btn:hover {
+      color: #F2EFE7;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .tab-btn.active {
+      background: rgba(45, 112, 80, 0.35);
+      color: #F2EFE7;
+      border: 1px solid rgba(45, 112, 80, 0.5);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    }
+    .tab-badge {
+      background: rgba(196, 173, 122, 0.2);
+      color: #C4AD7A;
+      border: 1px solid rgba(196, 173, 122, 0.4);
+      font-size: 0.68rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Final CTA */
-    .rx-cta-banner {
-      background: linear-gradient(135deg, #0b1a13 0%, #06120d 100%);
-      border: 1px solid rgba(4, 156, 108, 0.3);
+    /* Metric Stat Cards */
+    .stat-card {
+      background: var(--rx-card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--rx-card-border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .stat-card:hover {
+      border-color: var(--rx-hover-border);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: #A8A5A0;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .stat-icon {
+      width: 32px;
+      height: 32px;
       border-radius: 8px;
-      padding: 5rem 3rem;
-      text-align: center;
-      margin: 6rem 0;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(201, 196, 184, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #C4AD7A;
+    }
+    .stat-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #F2EFE7;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-trend {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: #C4AD7A;
     }
 
-    @media (max-width: 1024px) {
-      .rx-problem-grid, .rx-nv-compare-grid { grid-template-columns: 1fr; }
-      .rx-steps-grid { grid-template-columns: repeat(2, 1fr); }
-      .rx-cat-grid { grid-template-columns: repeat(2, 1fr); }
+    /* Tables */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
     }
-    @media (max-width: 640px) {
-      .rx-steps-grid, .rx-cat-grid { grid-template-columns: 1fr; }
-      .rx-cta-banner { padding: 3rem 1.5rem; }
+    .data-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.88rem;
+    }
+    .data-table th {
+      text-align: left;
+      padding: 0.85rem 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: #A8A5A0;
+      text-transform: uppercase;
+      background: rgba(15, 18, 16, 0.6);
+      border-bottom: 1px solid rgba(201, 196, 184, 0.12);
+    }
+    .data-table td {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(201, 196, 184, 0.06);
+      color: #E8E4DB;
+      vertical-align: middle;
+    }
+    .data-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Badges & Indicators */
+    .tech-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: #C4AD7A;
+      background: rgba(196, 173, 122, 0.08);
+      border: 1px solid rgba(196, 173, 122, 0.2);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      display: inline-block;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    .status-pill.active {
+      background: rgba(45, 112, 80, 0.2);
+      border: 1px solid rgba(45, 112, 80, 0.5);
+      color: #3A8D65;
+    }
+    .status-pill.banked {
+      background: rgba(196, 173, 122, 0.15);
+      border: 1px solid rgba(196, 173, 122, 0.4);
+      color: #C4AD7A;
+    }
+    .status-pill.pending {
+      background: rgba(244, 162, 97, 0.15);
+      border: 1px solid rgba(244, 162, 97, 0.4);
+      color: #F4A261;
+    }
+    .table-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(201, 196, 184, 0.2);
+      color: #F2EFE7;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .table-action-btn:hover {
+      background: rgba(196, 173, 122, 0.15);
+      border-color: #C4AD7A;
+      color: #C4AD7A;
+    }
+    .table-action-btn.primary {
+      background: rgba(45, 112, 80, 0.25);
+      border-color: #2D7050;
+      color: #3A8D65;
+    }
+    .table-action-btn.primary:hover {
+      background: #2D7050;
+      color: #FFFFFF;
+    }
+
+    /* Google Sign In Button */
+    .google-signin-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #FFFFFF;
+      color: #1F1F1F;
+      border: 1px solid #DADCE0;
+      border-radius: 12px;
+      padding: 0.9rem 1.5rem;
+      font-family: 'Roboto', 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      transition: all 0.25s ease;
+      outline: none;
+    }
+    .google-signin-btn:hover {
+      background: #F8FAFC;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      transform: translateY(-2px);
+    }
+    .google-icon-svg {
+      width: 22px;
+      height: 22px;
+    }
+    .google-spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 3px solid #E2E8F0;
+      border-top-color: #4285F4;
+      border-radius: 50%;
+      animation: spinGoogle 0.8s linear infinite;
+    }
+    .google-signin-btn.loading .google-spinner { display: inline-block; }
+    .google-signin-btn.loading .google-icon-svg { display: none; }
+    .google-signin-btn.success {
+      background: #2D7050;
+      color: #FFFFFF;
+      border-color: #2D7050;
+    }
+    @keyframes spinGoogle {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Timeline */
+    .activity-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      padding-left: 1.25rem;
+    }
+    .activity-timeline::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: rgba(201, 196, 184, 0.12);
+    }
+    .timeline-item { position: relative; }
+    .timeline-dot {
+      position: absolute;
+      left: -1.25rem;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #2D7050;
+      border: 2px solid #0D110F;
+    }
+    .timeline-dot.gold { background: #C4AD7A; }
+    .timeline-dot.blue { background: #1A73E8; }
+    .timeline-text { font-size: 0.85rem; color: #E8E4DB; }
+    .timeline-time { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #7A7874; margin-top: 0.2rem; }
+
+    /* Fade Transition for SPA views */
+    #spa-app {
+      animation: viewFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes viewFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
-<body class="rx-theme-dark">
+<body>
 
-  <!-- Nav injected by js/nav.js -->
+  <!-- Shared Top Navigation Mount -->
+  <div id="rx-nav-container"></div>
 
-  <main id="main-content">
+  <!-- Dynamic SPA Application Viewport -->
+  <main id="spa-app" style="flex: 1; padding-top: calc(var(--rx-nav-height, 76px) + 1.25rem);"></main>
 
-    <!-- ========================= 01 HERO ========================= -->
-    <section class="rx-hero" aria-labelledby="hero-title">
-      <div class="rx-hero-grid-bg" aria-hidden="true"></div>
-
-      <div class="rx-container rx-hero-container">
-        <div class="rx-hero-content">
-          <div class="rx-hero-eyebrow">
-            <span class="rx-status-dot rx-status-dot-active" aria-hidden="true"></span>
-            01 — Industrial Exchange Platform
-          </div>
-
-          <h1 class="rx-hero-title" id="hero-title">
-            <span class="rx-hero-line">Industrial Resources.</span>
-            <span class="rx-hero-line rx-hero-line-brass">Reimagined.</span>
-          </h1>
-
-          <p class="rx-hero-sub">
-            ResourceX connects industrial material generators with potential buyers and processors, helping businesses discover commercially viable reuse opportunities based on material compatibility, location and net value.
-          </p>
-
-          <div class="rx-hero-ctas">
-            <a href="marketplace.html" class="rx-btn rx-btn-primary">
-              Explore Materials
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <a href="list-material.html" class="rx-btn rx-btn-secondary">
-              List a Material
-            </a>
-          </div>
-
-          <dl class="rx-hero-meta">
-            <div class="rx-hero-meta-item">
-              <dt class="rx-hero-meta-label">Catalogue</dt>
-              <dd class="rx-hero-meta-value">8 Industrial Streams</dd>
-            </div>
-            <div class="rx-hero-meta-sep" aria-hidden="true">/</div>
-            <div class="rx-hero-meta-item">
-              <dt class="rx-hero-meta-label">Anchor Entity</dt>
-              <dd class="rx-hero-meta-value rx-mono-sm">RX-AL-9402</dd>
-            </div>
-            <div class="rx-hero-meta-sep" aria-hidden="true">/</div>
-            <div class="rx-hero-meta-item">
-              <dt class="rx-hero-meta-label">Status</dt>
-              <dd class="rx-hero-meta-value rx-text-brass">DEMO DATA</dd>
-            </div>
-          </dl>
-        </div>
-
-        <div class="rx-hero-viz">
-          <div class="rx-viz-frame rx-grain">
-            <div class="rx-viz-head">
-              <span class="rx-viz-title">5-Node Industrial Ecosystem</span>
-              <span class="rx-viz-badge">INTERACTIVE TOPOLOGY</span>
-            </div>
-            <div class="rx-viz-body" id="rx-network" aria-label="Interactive conceptual network diagram"></div>
-            <div class="rx-net-readout" id="rx-readout" aria-live="polite"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= 02 THE PROBLEM ========================= -->
-    <section class="rx-problem-section" id="rx-problem" aria-labelledby="problem-title">
-      <div class="rx-container">
-        <div class="rx-problem-grid">
-          <div>
-            <span class="rx-section-label"><span class="rx-section-number">02</span> The Problem</span>
-            <h2 class="rx-display-md" id="problem-title" style="margin-bottom: 1.5rem;">
-              Industrial surplus is not waste. It is an undiscovered resource.
-            </h2>
-            <p style="color: var(--rx-stone-400); line-height: 1.7; margin-bottom: 1.5rem; font-size: 1rem;">
-              Millions of metric tons of high-purity industrial byproducts—machining turnings, engineered polymer regrind, clean mineral slag—are routinely downcycled or discarded.
-            </p>
-            <p style="color: var(--rx-stone-400); line-height: 1.7; margin-bottom: 2rem; font-size: 1rem;">
-              The failure is not technical chemistry; it is information asymmetry. Generators lack standardized technical fingerprinting, while secondary processors cannot assess contamination risks or freight costs before committing to procurement.
-            </p>
-            <div style="display: flex; gap: 2rem; border-top: 1px solid rgba(223, 223, 222, 0.1); padding-top: 1.5rem;">
-              <div>
-                <div style="font-family: var(--rx-font-mono); font-size: 1.5rem; color: var(--rx-accent-rose, #e1526c); font-weight: 700;">40%+</div>
-                <div style="font-size: 0.8125rem; color: var(--rx-stone-500); margin-top: 0.25rem;">Downcycled or Landfilled</div>
-              </div>
-              <div style="border-left: 1px solid rgba(223,223,222,0.1); padding-left: 2rem;">
-                <div style="font-family: var(--rx-font-mono); font-size: 1.5rem; color: var(--rx-brass-400); font-weight: 700;">100%</div>
-                <div style="font-size: 0.8125rem; color: var(--rx-stone-500); margin-top: 0.25rem;">Seller-Governed Pricing</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="rx-broken-chain-box">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-              <span style="font-family: var(--rx-font-mono); font-size: 0.75rem; color: var(--rx-stone-400); text-transform: uppercase; letter-spacing: 0.05em;">Supply Chain Diagnostic</span>
-              <span class="rx-badge-demo">SYSTEM MODEL</span>
-            </div>
-
-            <div class="rx-chain-diagram">
-              <div class="rx-chain-row broken">
-                <div class="rx-chain-node">Industrial Generator</div>
-                <div class="rx-chain-arrow">→</div>
-                <div style="color: var(--rx-accent-rose); font-weight: 700;">[ BROKEN LINK: ? ]</div>
-                <div class="rx-chain-arrow">→</div>
-                <div style="color: var(--rx-stone-500);">Scrap Dealer / Downcycle</div>
-              </div>
-
-              <div style="text-align: center; font-size: 0.8125rem; color: var(--rx-stone-500); font-family: var(--rx-font-mono);">
-                vs. ResourceX Deterministic Net Value Route
-              </div>
-
-              <div class="rx-chain-row solved">
-                <div class="rx-chain-node">Industrial Generator</div>
-                <div class="rx-chain-arrow" style="color: var(--rx-green-500);">➔</div>
-                <div style="color: var(--rx-green-400); font-weight: 700;">ResourceX Engine</div>
-                <div class="rx-chain-arrow" style="color: var(--rx-green-500);">➔</div>
-                <div style="color: #fff; font-weight: 600;">Direct Remanufacturer</div>
-              </div>
-            </div>
-
-            <p style="font-size: 0.8125rem; color: var(--rx-stone-400); margin-top: 1.5rem; line-height: 1.5;">
-              By evaluating chemical grade, contaminant thresholds, and logistics distance together, ResourceX eliminates the speculative broker middle tier.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= 03 HOW IT WORKS ========================= -->
-    <section class="rx-section" id="rx-how-it-works" style="background: #0b0a09;">
-      <div class="rx-container">
-        <span class="rx-section-label"><span class="rx-section-number">03</span> How It Works</span>
-        <h2 class="rx-display-md" style="max-width: 25ch;">
-          Four deterministic steps from byproduct generation to certified reuse.
-        </h2>
-
-        <div class="rx-steps-grid">
-          <div class="rx-step-card">
-            <div class="rx-step-num">01</div>
-            <h3 class="rx-step-title">Discover</h3>
-            <p class="rx-step-desc">
-              Industrial facilities capture byproduct output with verifiable chemical composition, physical form, and batch quantity.
-            </p>
-          </div>
-          <div class="rx-step-card">
-            <div class="rx-step-num">02</div>
-            <h3 class="rx-step-title">List</h3>
-            <p class="rx-step-desc">
-              Publish structured specifications to the private or public catalogue without aggressive automated discounting.
-            </p>
-          </div>
-          <div class="rx-step-card">
-            <div class="rx-step-num">03</div>
-            <h3 class="rx-step-title">Match</h3>
-            <p class="rx-step-desc">
-              Algorithmic Net Value model evaluates freight radius, processing factors, and compatibility before ranking suitors.
-            </p>
-          </div>
-          <div class="rx-step-card">
-            <div class="rx-step-num">04</div>
-            <h3 class="rx-step-title">Move</h3>
-            <p class="rx-step-desc">
-              Direct bilateral negotiation of commercial terms, dispatch logistics, and multi-stage lifecycle tracking.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= 04 MATERIAL CATEGORIES ========================= -->
-    <section class="rx-section" id="rx-categories" style="background: #0d0f0e; border-top: 1px solid rgba(223,223,222,0.1);">
-      <div class="rx-container">
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem;">
-          <div>
-            <span class="rx-section-label"><span class="rx-section-number">04</span> Material Categories</span>
-            <h2 class="rx-display-md">Standardized Industrial Taxonomies.</h2>
-          </div>
-          <a href="marketplace.html" class="rx-btn rx-btn-secondary" style="font-size: 0.8125rem;">
-            Browse All Categories →
-          </a>
-        </div>
-        <p style="color: var(--rx-stone-400); max-width: 65ch; line-height: 1.6;">
-          Every byproduct stream is categorized by metallurgical or polymer grade, form factor, and recycling suitability.
-        </p>
-
-        <div class="rx-cat-grid" id="home-categories-container">
-          <!-- Populated from window.RX_DATA.categories or fallback -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= 05 NET VALUE MATCHING ========================= -->
-    <section class="rx-section" id="rx-net-value" style="background: #0b0a09; border-top: 1px solid rgba(223,223,222,0.1);">
-      <div class="rx-container">
-        <span class="rx-section-label"><span class="rx-section-number">05</span> Net Value Matching</span>
-        <h2 class="rx-display-md" style="max-width: 25ch;">
-          The highest bid is not always the best match.
-        </h2>
-        <p style="color: var(--rx-stone-400); max-width: 68ch; line-height: 1.6; margin-bottom: 2rem;">
-          Freight logistics and reprocessing penalties often turn a premium gross offer into a net deficit. ResourceX computes true economics across every buyer.
-        </p>
-
-        <div class="rx-nv-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-            <div>
-              <span style="font-family: var(--rx-font-mono); font-size: 0.75rem; color: var(--rx-brass-300);">ACTIVE TRACE: RX-AL-9402 · 6063 ALUMINIUM TURNINGS (5,000 KG)</span>
-              <h3 style="font-family: var(--rx-font-display); font-size: 1.35rem; color: #fff; margin-top: 0.25rem;">Simulated Buyer Comparison</h3>
-            </div>
-            <span class="rx-badge-demo">ILLUSTRATIVE SIMULATION</span>
-          </div>
-
-          <div class="rx-nv-compare-grid">
-            <div class="rx-nv-box winner">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h4 style="font-family: var(--rx-font-display); font-size: 1.125rem; color: #fff; margin: 0;">Match A — Patancheru Facility</h4>
-                <span class="rx-badge-demo" style="border-color: var(--rx-green-500); color: var(--rx-green-400); background: rgba(4,156,108,0.15);">BEST NET VALUE</span>
-              </div>
-              <div style="font-size: 0.8125rem; color: var(--rx-stone-400); margin-bottom: 1rem; font-family: var(--rx-font-mono);">
-                Distance: 42 km · Compatibility: 94%
-              </div>
-              <div class="rx-nv-row">
-                <span>Gross Offer (₹92.64/kg)</span>
-                <span style="color: #fff; font-family: var(--rx-font-mono);">₹4,63,200</span>
-              </div>
-              <div class="rx-nv-row">
-                <span style="color: var(--rx-accent-rose);">Less: Freight (42 km @ ₹18/km)</span>
-                <span style="color: var(--rx-accent-rose); font-family: var(--rx-font-mono);">- ₹3,200</span>
-              </div>
-              <div class="rx-nv-row">
-                <span style="color: var(--rx-accent-rose);">Less: Processing / Degreasing</span>
-                <span style="color: var(--rx-accent-rose); font-family: var(--rx-font-mono);">- ₹18,000</span>
-              </div>
-              <div class="rx-nv-row total">
-                <span style="color: var(--rx-green-400);">Estimated Net Value</span>
-                <span style="color: var(--rx-green-400); font-family: var(--rx-font-mono); font-size: 1.25rem;">₹4,42,000</span>
-              </div>
-            </div>
-
-            <div class="rx-nv-box">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h4 style="font-family: var(--rx-font-display); font-size: 1.125rem; color: #fff; margin: 0;">Match B — Medak Industrial Unit</h4>
-                <span class="rx-badge-demo" style="border-color: var(--rx-stone-600); color: var(--rx-stone-400);">HIGHER GROSS BID</span>
-              </div>
-              <div style="font-size: 0.8125rem; color: var(--rx-stone-400); margin-bottom: 1rem; font-family: var(--rx-font-mono);">
-                Distance: 110 km · Compatibility: 88%
-              </div>
-              <div class="rx-nv-row">
-                <span>Gross Offer (₹93.00/kg)</span>
-                <span style="color: #fff; font-family: var(--rx-font-mono);">₹4,65,000</span>
-              </div>
-              <div class="rx-nv-row">
-                <span style="color: var(--rx-accent-rose);">Less: Long-Haul Freight (110 km)</span>
-                <span style="color: var(--rx-accent-rose); font-family: var(--rx-font-mono);">- ₹8,500</span>
-              </div>
-              <div class="rx-nv-row">
-                <span style="color: var(--rx-accent-rose);">Less: Processing / Sorting</span>
-                <span style="color: var(--rx-accent-rose); font-family: var(--rx-font-mono);">- ₹12,000</span>
-              </div>
-              <div class="rx-nv-row total">
-                <span style="color: #fff;">Estimated Net Value</span>
-                <span style="color: #fff; font-family: var(--rx-font-mono); font-size: 1.25rem;">₹4,44,500</span>
-              </div>
-            </div>
-          </div>
-
-          <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-            <div style="font-size: 0.8125rem; color: var(--rx-stone-400);">
-              * Test fuel surges and custom freight rates dynamically in the simulation engine.
-            </div>
-            <a href="match-explorer.html?id=RX-AL-9402" class="rx-btn rx-btn-primary">
-              Launch Match Explorer Simulation →
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= 06 MATERIAL JOURNEY PREVIEW ========================= -->
-    <section class="rx-section" id="rx-journey" style="background: #0d0f0e; border-top: 1px solid rgba(223,223,222,0.1);">
-      <div class="rx-container">
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem;">
-          <div>
-            <span class="rx-section-label"><span class="rx-section-number">06</span> Material Journey</span>
-            <h2 class="rx-display-md">Every material has a lifecycle story.</h2>
-          </div>
-          <a href="material-journey.html?id=RX-AL-9402" class="rx-btn rx-btn-secondary">
-            View Live Particle Journey →
-          </a>
-        </div>
-        <p style="color: var(--rx-stone-400); max-width: 68ch; line-height: 1.6; margin-bottom: 3rem;">
-          Track physical material custody, chemical transformations, and carbon avoidance across every stage from CNC machine cuttings to extrusion billets.
-        </p>
-
-        <div style="background: #141716; border: 1px solid rgba(223,223,222,0.12); border-radius: 8px; padding: 3rem 2rem;">
-          <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; position: relative;">
-            <div style="text-align: center;">
-              <div style="width: 48px; height: 48px; border-radius: 50%; background: #1a1d1c; border: 2px solid var(--rx-green-500); margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-family: var(--rx-font-mono); color: var(--rx-green-400); font-weight: 700;">1</div>
-              <div style="font-family: var(--rx-font-display); font-size: 0.95rem; color: #fff;">Generator</div>
-              <div style="font-size: 0.75rem; color: var(--rx-stone-500); margin-top: 0.25rem;">CNC Milling</div>
-            </div>
-            <div style="text-align: center;">
-              <div style="width: 48px; height: 48px; border-radius: 50%; background: #1a1d1c; border: 1px solid rgba(223,223,222,0.2); margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-family: var(--rx-font-mono); color: var(--rx-brass-400);">2</div>
-              <div style="font-family: var(--rx-font-display); font-size: 0.95rem; color: #fff;">Inspection</div>
-              <div style="font-size: 0.75rem; color: var(--rx-stone-500); margin-top: 0.25rem;">Spectrometry</div>
-            </div>
-            <div style="text-align: center;">
-              <div style="width: 48px; height: 48px; border-radius: 50%; background: #1a1d1c; border: 1px solid rgba(223,223,222,0.2); margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-family: var(--rx-font-mono); color: var(--rx-brass-400);">3</div>
-              <div style="font-family: var(--rx-font-display); font-size: 0.95rem; color: #fff;">Exchange</div>
-              <div style="font-size: 0.75rem; color: var(--rx-stone-500); margin-top: 0.25rem;">ResourceX</div>
-            </div>
-            <div style="text-align: center;">
-              <div style="width: 48px; height: 48px; border-radius: 50%; background: #1a1d1c; border: 1px solid rgba(223,223,222,0.2); margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-family: var(--rx-font-mono); color: var(--rx-brass-400);">4</div>
-              <div style="font-family: var(--rx-font-display); font-size: 0.95rem; color: #fff;">Processing</div>
-              <div style="font-size: 0.75rem; color: var(--rx-stone-500); margin-top: 0.25rem;">Briquetting</div>
-            </div>
-            <div style="text-align: center;">
-              <div style="width: 48px; height: 48px; border-radius: 50%; background: #1a1d1c; border: 1px solid rgba(223,223,222,0.2); margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-family: var(--rx-font-mono); color: var(--rx-brass-400);">5</div>
-              <div style="font-family: var(--rx-font-display); font-size: 0.95rem; color: #fff;">Remelt</div>
-              <div style="font-size: 0.75rem; color: var(--rx-stone-500); margin-top: 0.25rem;">Foundry Unit</div>
-            </div>
-            <div style="text-align: center;">
-              <div style="width: 48px; height: 48px; border-radius: 50%; background: #1a1d1c; border: 2px solid var(--rx-green-500); margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-family: var(--rx-font-mono); color: var(--rx-green-400); font-weight: 700;">6</div>
-              <div style="font-family: var(--rx-font-display); font-size: 0.95rem; color: #fff;">New Product</div>
-              <div style="font-size: 0.75rem; color: var(--rx-stone-500); margin-top: 0.25rem;">Extrusions</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= 07 MATERIAL BANK ========================= -->
-    <section class="rx-section" id="rx-bank" style="background: #0b0a09; border-top: 1px solid rgba(223,223,222,0.1);">
-      <div class="rx-container">
-        <div class="rx-problem-grid">
-          <div>
-            <span class="rx-section-label"><span class="rx-section-number">07</span> Material Bank</span>
-            <h2 class="rx-display-md" style="margin-bottom: 1.5rem;">
-              Material without an immediate match stays visible.
-            </h2>
-            <p style="color: var(--rx-stone-400); line-height: 1.7; margin-bottom: 1.5rem;">
-              Unmatched inventory does not expire or suffer automatic price deductions. Through Material Bank, generators retain sovereign control over reserve prices while accumulating interest signals from prospective buyers.
-            </p>
-            <ul style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
-              <li style="display: flex; gap: 0.75rem; color: var(--rx-ivory-800); font-size: 0.95rem;">
-                <span style="color: var(--rx-green-500);">✔</span> <strong>Seller-Controlled Sovereign Pricing:</strong> No forced discounts.
-              </li>
-              <li style="display: flex; gap: 0.75rem; color: var(--rx-ivory-800); font-size: 0.95rem;">
-                <span style="color: var(--rx-green-500);">✔</span> <strong>Buyer Interest Telemetry:</strong> Observe watching accounts and batch requests.
-              </li>
-              <li style="display: flex; gap: 0.75rem; color: var(--rx-ivory-800); font-size: 0.95rem;">
-                <span style="color: var(--rx-green-500);">✔</span> <strong>Continuous Match Re-evaluation:</strong> New processors trigger alerts.
-              </li>
-            </ul>
-            <a href="material-bank.html?id=RX-AL-9402" class="rx-btn rx-btn-primary">
-              Manage Banked Materials →
-            </a>
-          </div>
-
-          <div style="background: #141716; border: 1px solid rgba(223,223,222,0.12); border-radius: 8px; padding: 2.5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-              <span style="font-family: var(--rx-font-mono); font-size: 0.8125rem; color: var(--rx-brass-300);">BANK REPOSITORY OVERVIEW</span>
-              <span class="rx-badge-demo">ACTIVE RESERVE</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-              <div style="padding: 1rem; background: #0d0f0e; border: 1px solid rgba(223,223,222,0.08); border-radius: 4px;">
-                <div style="display: flex; justify-content: space-between; font-family: var(--rx-font-mono); font-size: 0.75rem; color: var(--rx-stone-400);">
-                  <span>LOT: BNK-AL-9402</span>
-                  <span style="color: var(--rx-green-400);">Listed 8 Days</span>
-                </div>
-                <div style="font-weight: 600; color: #fff; margin: 0.25rem 0;">6063 Aluminium Turnings · 5,000 kg</div>
-                <div style="font-size: 0.875rem; color: var(--rx-brass-400); font-family: var(--rx-font-mono);">Asking: ₹92.00/kg · Inquiries: 3 Active</div>
-              </div>
-              <div style="padding: 1rem; background: #0d0f0e; border: 1px solid rgba(223,223,222,0.08); border-radius: 4px;">
-                <div style="display: flex; justify-content: space-between; font-family: var(--rx-font-mono); font-size: 0.75rem; color: var(--rx-stone-400);">
-                  <span>LOT: BNK-PE-5218</span>
-                  <span style="color: var(--rx-green-400);">Listed 14 Days</span>
-                </div>
-                <div style="font-weight: 600; color: #fff; margin: 0.25rem 0;">HDPE Regrind — Natural · 12,000 kg</div>
-                <div style="font-size: 0.875rem; color: var(--rx-brass-400); font-family: var(--rx-font-mono);">Asking: ₹48.50/kg · Inquiries: 2 Active</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= 08 INDUSTRY APPLICATIONS ========================= -->
-    <section class="rx-section" id="rx-industries" style="background: #0d0f0e; border-top: 1px solid rgba(223,223,222,0.1);">
-      <div class="rx-container">
-        <span class="rx-section-label"><span class="rx-section-number">08</span> Industry Applications</span>
-        <h2 class="rx-display-md" style="max-width: 25ch; margin-bottom: 3rem;">
-          Cross-sector recovery ecosystems.
-        </h2>
-
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
-          <div style="background: #141716; border: 1px solid rgba(223,223,222,0.1); border-radius: 6px; padding: 1.75rem;">
-            <div style="font-size: 1.5rem; color: var(--rx-brass-400); margin-bottom: 0.75rem;">⚙</div>
-            <h3 style="font-family: var(--rx-font-display); font-size: 1.125rem; color: #fff; margin-bottom: 0.5rem;">Automotive & Aerospace</h3>
-            <p style="font-size: 0.8125rem; color: var(--rx-stone-400); line-height: 1.6;">
-              Extrusion offcuts, CNC turnings, and sheet metal trimmings routed directly into secondary remelt billets.
-            </p>
-          </div>
-          <div style="background: #141716; border: 1px solid rgba(223,223,222,0.1); border-radius: 6px; padding: 1.75rem;">
-            <div style="font-size: 1.5rem; color: var(--rx-brass-400); margin-bottom: 0.75rem;">◈</div>
-            <h3 style="font-family: var(--rx-font-display); font-size: 1.125rem; color: #fff; margin-bottom: 0.5rem;">Polymer Compounding</h3>
-            <p style="font-size: 0.8125rem; color: var(--rx-stone-400); line-height: 1.6;">
-              Post-industrial HDPE, PP, and PET sprues reground and classified by melt-flow index for extrusion blow molding.
-            </p>
-          </div>
-          <div style="background: #141716; border: 1px solid rgba(223,223,222,0.1); border-radius: 6px; padding: 1.75rem;">
-            <div style="font-size: 1.5rem; color: var(--rx-brass-400); margin-bottom: 0.75rem;">🏗</div>
-            <h3 style="font-family: var(--rx-font-display); font-size: 1.125rem; color: #fff; margin-bottom: 0.5rem;">Construction & Infrastructure</h3>
-            <p style="font-size: 0.8125rem; color: var(--rx-stone-400); line-height: 1.6;">
-              Fly ash, blast furnace slag, and crushed concrete matched with ready-mix batch plants for green cement blends.
-            </p>
-          </div>
-          <div style="background: #141716; border: 1px solid rgba(223,223,222,0.1); border-radius: 6px; padding: 1.75rem;">
-            <div style="font-size: 1.5rem; color: var(--rx-brass-400); margin-bottom: 0.75rem;">≋</div>
-            <h3 style="font-family: var(--rx-font-display); font-size: 1.125rem; color: #fff; margin-bottom: 0.5rem;">Technical Textiles</h3>
-            <p style="font-size: 0.8125rem; color: var(--rx-stone-400); line-height: 1.6;">
-              Post-industrial fiber yarn waste, selvage trimmings, and polyester fleece channeled into acoustic insulation bats.
-            </p>
-          </div>
-          <div style="background: #141716; border: 1px solid rgba(223,223,222,0.1); border-radius: 6px; padding: 1.75rem;">
-            <div style="font-size: 1.5rem; color: var(--rx-brass-400); margin-bottom: 0.75rem;">🗲</div>
-            <h3 style="font-family: var(--rx-font-display); font-size: 1.125rem; color: #fff; margin-bottom: 0.5rem;">Electronics & Hardware</h3>
-            <p style="font-size: 0.8125rem; color: var(--rx-stone-400); line-height: 1.6;">
-              Tinned copper punchings, bare copper busbars, and populated circuit offcuts directed to certified hydrometallurgical refineries.
-            </p>
-          </div>
-          <div style="background: #141716; border: 1px solid rgba(223,223,222,0.1); border-radius: 6px; padding: 1.75rem;">
-            <div style="font-size: 1.5rem; color: var(--rx-brass-400); margin-bottom: 0.75rem;">📦</div>
-            <h3 style="font-family: var(--rx-font-display); font-size: 1.125rem; color: #fff; margin-bottom: 0.5rem;">Packaging & Logistics</h3>
-            <p style="font-size: 0.8125rem; color: var(--rx-stone-400); line-height: 1.6;">
-              Heavy kraft cores, stretch film baling, and composite strapping collected in truckload volumes for repulping.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= 09 RESOURCE INTELLIGENCE PREVIEW ========================= -->
-    <section class="rx-section" id="rx-intelligence" style="background: #0b0a09; border-top: 1px solid rgba(223,223,222,0.1);">
-      <div class="rx-container">
-        <div class="rx-problem-grid">
-          <div>
-            <span class="rx-section-label"><span class="rx-section-number">09</span> Resource Intelligence</span>
-            <h2 class="rx-display-md" style="margin-bottom: 1.5rem;">
-              Data-driven secondary procurement.
-            </h2>
-            <p style="color: var(--rx-stone-400); line-height: 1.7; margin-bottom: 2rem;">
-              Understanding how chemical compatibility, contaminant thresholds, and logistics distance affect market clearance prices across regional corridors.
-            </p>
-            <a href="intelligence.html" class="rx-btn rx-btn-primary">
-              Explore Resource Intelligence →
-            </a>
-          </div>
-
-          <div style="background: #141716; border: 1px solid rgba(223,223,222,0.12); border-radius: 8px; padding: 2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-              <span style="font-family: var(--rx-font-mono); font-size: 0.75rem; color: var(--rx-brass-300);">INTELLIGENCE MATRIX: 6063 ALUMINIUM</span>
-              <span class="rx-badge-demo">ANALYTICAL</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
-              <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
-                <span style="color: #fff;">Direct Casting Compatibility</span>
-                <span style="color: var(--rx-green-400); font-family: var(--rx-font-mono);">★★★★★ 95%</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
-                <span style="color: #fff;">Extrusion Billet Dilution</span>
-                <span style="color: var(--rx-green-400); font-family: var(--rx-font-mono);">★★★★☆ 84%</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
-                <span style="color: #fff;">Steel Deoxidation Additive</span>
-                <span style="color: var(--rx-brass-400); font-family: var(--rx-font-mono);">★★★☆☆ 62%</span>
-              </div>
-            </div>
-            <div style="padding: 0.85rem; background: #0d0f0e; border-radius: 4px; border: 1px solid rgba(223,223,222,0.08); font-family: var(--rx-font-mono); font-size: 0.75rem;">
-              <span style="color: var(--rx-accent-rose); font-weight: 700;">LOGISTICS SENSITIVITY: HIGH</span>
-              <div style="color: var(--rx-stone-400); margin-top: 0.25rem;">Economic viability breaks beyond 140 km road freight corridor.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= 10 CIRCULAR INDUSTRIAL FLOW ========================= -->
-    <section class="rx-section" id="rx-circular" style="background: #0d0f0e; border-top: 1px solid rgba(223,223,222,0.1);">
-      <div class="rx-container">
-        <div style="text-align: center; max-width: 700px; margin: 0 auto 3rem auto;">
-          <span class="rx-section-label"><span class="rx-section-number">10</span> Circular Flow</span>
-          <h2 class="rx-display-md">Closing the Loop on Industrial Byproducts.</h2>
-          <p style="color: var(--rx-stone-400); line-height: 1.6; margin-top: 1rem;">
-            A continuous loop where manufacturing residuals immediately transition into validated secondary feedstocks.
-          </p>
-        </div>
-
-        <div class="rx-circular-diagram">
-          <div style="display: flex; justify-content: center; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
-            <span style="font-family: var(--rx-font-mono); color: #fff; background: #1a1d1c; padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid var(--rx-green-500);">01 GENERATION</span>
-            <span style="color: var(--rx-green-500);">➔</span>
-            <span style="font-family: var(--rx-font-mono); color: #fff; background: #1a1d1c; padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(223,223,222,0.2);">02 DISCOVERY</span>
-            <span style="color: var(--rx-green-500);">➔</span>
-            <span style="font-family: var(--rx-font-mono); color: #fff; background: #1a1d1c; padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(223,223,222,0.2);">03 MATCHING</span>
-            <span style="color: var(--rx-green-500);">➔</span>
-            <span style="font-family: var(--rx-font-mono); color: #fff; background: #1a1d1c; padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(223,223,222,0.2);">04 REPROCESSING</span>
-            <span style="color: var(--rx-green-500);">➔</span>
-            <span style="font-family: var(--rx-font-mono); color: #fff; background: #1a1d1c; padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid var(--rx-brass-400);">05 RE-ENTRY</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= 11 MARKETPLACE PREVIEW ========================= -->
-    <section class="rx-preview rx-section" aria-labelledby="preview-title">
-      <div class="rx-container">
-        <div class="rx-preview-head">
-          <div>
-            <span class="rx-section-label"><span class="rx-section-number">11</span> Catalogue Preview</span>
-            <h2 class="rx-display-sm" id="preview-title">Live Material Exchange Listings.</h2>
-          </div>
-          <span class="rx-badge-demo">DEMO DATASET</span>
-        </div>
-
-        <div class="rx-preview-grid" id="rx-material-grid">
-          <!-- material cards rendered by js/home.js from RX_DATA.materials -->
-        </div>
-
-        <div class="rx-preview-foot">
-          <a href="marketplace.html" class="rx-btn rx-btn-secondary">
-            View All Materials in Catalogue
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= 12 FINAL CTA ========================= -->
-    <section class="rx-section" style="background: #0b0a09;">
-      <div class="rx-container">
-        <div class="rx-cta-banner">
-          <h2 style="font-family: var(--rx-font-display); font-size: clamp(2rem, 3.5vw, 3rem); color: #ffffff; margin-bottom: 1rem;">
-            Industrial materials should be treated as resources before they are treated as waste.
-          </h2>
-          <p style="color: var(--rx-stone-400); max-width: 60ch; margin: 0 auto 2.5rem auto; font-size: 1.1rem; line-height: 1.6;">
-            Discover verified recycling routes, model logistics margins, and negotiate directly with certified facilities.
-          </p>
-          <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
-            <a href="marketplace.html" class="rx-btn rx-btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">
-              Explore Materials
-            </a>
-            <a href="list-material.html" class="rx-btn rx-btn-secondary" style="padding: 1rem 2rem; font-size: 1rem;">
-              List a Material
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Footer injected by js/nav.js -->
+  <!-- Shared Footer Mount -->
   <div id="rx-footer-container"></div>
 
-  <script src="js/data/types.js"></script>
+  <!-- Shared Toast Mount -->
+  <div class="rx-toast-container"></div>
+
+  <!-- Data Stores -->
   <script src="js/data/materials.js"></script>
   <script src="js/data/matches.js"></script>
   <script src="js/data/journeys.js"></script>
   <script src="js/data/index.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/hero-network.js"></script>
-  <script src="js/home.js"></script>
+
+  <!-- Navigation Utilities -->
   <script src="js/nav.js"></script>
+
+  <!-- SPA Router & View Renderer -->
+  <script src="js/spa-router.js"></script>
+
 </body>
 </html>

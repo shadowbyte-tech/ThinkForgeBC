@@ -11,25 +11,6 @@ window.RX_DATA = window.RX_DATA || {};
 /** @type {import('./types.js').BankEntry[]} */
 window.RX_DATA.bankEntries = [
   {
-    id: 'BNK-AL-9402',
-    materialId: 'RX-AL-9402',
-    materialName: '6063 Aluminium Turnings',
-    category: 'Metals',
-    quantity: 5000,
-    unit: 'kg',
-    location: 'Sangareddy, Telangana',
-    originalAsk: 94.0,
-    currentAsk: 92.64,
-    bulkOffer: 90.0,
-    negotiable: true,
-    daysListed: 8,
-    buyerInterest: 3,
-    status: 'active',
-    sellerManaged: true,
-    notes: 'Seller-managed listing. Staged for direct casting or remelting. Open to negotiation on full 5MT offtake.',
-    demo: true
-  },
-  {
     id: 'BNK-PP-6102',
     materialId: 'RX-PP-6102',
     materialName: 'PP Woven Bag Regrind',
@@ -126,21 +107,14 @@ window.RX_DATA.getMaterial = function (id) {
 
 /** Get matches for a material, sorted by estimated net value (desc). */
 window.RX_DATA.getMatchesFor = function (materialId) {
-  var pool = window.RX_DATA.matches || {};
-  var list = Array.isArray(pool) ? pool.filter(function (m) { return m.materialId === materialId; }) : (pool[materialId] || []);
-  return list.slice().sort(function (a, b) { return b.estimatedNetValue - a.estimatedNetValue; });
+  return (window.RX_DATA.matches || [])
+    .filter(function (m) { return m.materialId === materialId; })
+    .sort(function (a, b) { return b.estimatedNetValue - a.estimatedNetValue; });
 };
 
 /** Get all matches with their parent material attached. */
 window.RX_DATA.getAllMatches = function () {
-  var pool = window.RX_DATA.matches || {};
-  var out = [];
-  if (Array.isArray(pool)) {
-    out = pool.slice();
-  } else {
-    Object.keys(pool).forEach(function (k) { out = out.concat(pool[k]); });
-  }
-  return out.map(function (m) {
+  return (window.RX_DATA.matches || []).map(function (m) {
     return Object.assign({}, m, { material: window.RX_DATA.getMaterial(m.materialId) });
   });
 };

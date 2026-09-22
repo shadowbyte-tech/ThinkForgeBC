@@ -174,4 +174,4 @@
  * @property {string} [label]
  */
 
-/* Loaded as a classic script — JSDoc typedefs only, no runtime exports. */
+export {};

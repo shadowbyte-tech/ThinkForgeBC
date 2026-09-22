@@ -37,9 +37,6 @@
     els.forEach(function (el) { observer.observe(el); });
   }
 
-  // Re-scan for reveal elements injected after initial load (e.g. by page renderers)
-  window.RX.rescanReveals = initReveal;
-
   /* ---------------- Count-up ---------------- */
 
   function initCountUp() {

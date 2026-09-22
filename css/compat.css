@@ -1,275 +1,140 @@
 /* ============================================================
-   RESOURCEX CSS COMPATIBILITY & THEME PALETTE PATCH
-   Applies the extracted color swatch palette across all components & pages:
-   - Deep Cod Gray / Black (#0b0a09 / #020202)
-   - Green Haze (#049c6c / #03996c) & Sea Nymph (#6fa494)
-   - Cornflower & Royal Blue (#557ee8 / #567ce6)
-   - West Coast Earth (#6d491d) & Pablo (#776f62)
-   - Silver (#bbbbbb) & Quill Gray (#dfdfde)
-   - Mandy Rose Accent (#e1526c)
+   RESOURCEX CSS COMPATIBILITY PATCH
+   Maps common shorthand variable names to full design system tokens
+   Ensures all pages work regardless of which variable names subagents used
    ============================================================ */
 
 :root {
-  /* Core Base Colors */
-  --rx-graphite: #0b0a09;
-  --rx-graphite-deep: #020202;
-  --rx-forest: #049c6c;
-  --rx-forest-deep: #021a12;
-  --rx-brass: #049c6c; /* Vibrant green primary accent */
-  --rx-blue: #557ee8;  /* Technical accent */
-  --rx-ivory: #ffffff;
-  --rx-stone: #bbbbbb;
-  --rx-stone-muted: #5c6964;
+  /* Compatibility aliases */
+  --rx-graphite: var(--rx-graphite-800);
+  --rx-forest: var(--rx-green-600);
+  --rx-forest-deep: var(--rx-green-900);
+  --rx-brass: var(--rx-brass-600);
+  --rx-ivory: var(--rx-ivory-800);
+  --rx-stone: var(--rx-stone-500);
+  --rx-stone-muted: var(--rx-stone-700);
 
-  /* Surfaces & Borders */
-  --rx-surface: #1a1c1b;
-  --rx-surface-2: #2c2923;
-  --rx-border: rgba(187, 187, 187, 0.15);
-  --rx-border-color: rgba(187, 187, 187, 0.22);
+  /* Surface / border (some subagents may have used these) */
+  --rx-surface: var(--rx-graphite-700);
+  --rx-surface-2: var(--rx-graphite-600);
+  --rx-border: var(--rx-border-subtle);
+  --rx-border-color: var(--rx-border-light);
 
-  /* Typography Colors */
-  --rx-text: #ffffff;
-  --rx-text-dim: #dfdfde;
-  --rx-text-faint: #bbbbbb;
-  --rx-text-accent: #049c6c;
-  --rx-text-blue: #557ee8;
-  --rx-text-gold: #cca56f;
+  /* Text */
+  --rx-text: var(--rx-text-primary);
+  --rx-text-dim: var(--rx-text-secondary);
+  --rx-text-faint: var(--rx-text-muted);
 
-  /* Spacing Aliases */
-  --rx-space-xs: var(--rx-space-2, 0.5rem);
-  --rx-space-sm: var(--rx-space-3, 0.75rem);
-  --rx-space-md: var(--rx-space-4, 1rem);
-  --rx-space-lg: var(--rx-space-6, 1.5rem);
-  --rx-space-xl: var(--rx-space-8, 2rem);
-  --rx-space-2xl: var(--rx-space-12, 3rem);
-  --rx-space-3xl: var(--rx-space-16, 4rem);
+  /* Space aliases (some subagents may have used --rx-space-xl etc.) */
+  --rx-space-xs: var(--rx-space-2);
+  --rx-space-sm: var(--rx-space-3);
+  --rx-space-md: var(--rx-space-4);
+  --rx-space-lg: var(--rx-space-6);
+  --rx-space-xl: var(--rx-space-8);
+  --rx-space-2xl: var(--rx-space-12);
+  --rx-space-3xl: var(--rx-space-16);
 
-  /* Fonts */
+  /* Font aliases */
   --rx-font-display: 'Space Grotesk', system-ui, sans-serif;
   --rx-font-sans: 'Inter', system-ui, sans-serif;
   --rx-font-mono: 'JetBrains Mono', monospace;
 
-  /* Generic Color Aliases */
-  --color-bg: #0b0a09;
-  --color-surface: #1a1c1b;
-  --color-accent: #049c6c;
-  --color-brass: #6d491d;
-  --color-blue: #557ee8;
-  --color-text: #ffffff;
-  --color-text-muted: #bbbbbb;
-  --color-border: rgba(187, 187, 187, 0.15);
-  --color-green: #049c6c;
+  /* Radius aliases */
+  --rx-radius: var(--rx-radius-md);
+  --rx-rounded: var(--rx-radius-lg);
+  --rx-rounded-sm: var(--rx-radius-sm);
+
+  /* Color aliases sometimes used */
+  --color-bg: var(--rx-graphite-800);
+  --color-surface: var(--rx-graphite-700);
+  --color-accent: var(--rx-brass-600);
+  --color-text: var(--rx-ivory-800);
+  --color-text-muted: var(--rx-stone-500);
+  --color-border: rgba(201, 196, 184, 0.1);
+  --color-green: var(--rx-green-600);
 }
 
 /* ============================================================
-   GLOBAL BODY & COMPONENT THEME OVERRIDES
+   GLOBAL OVERRIDES
+   Ensure dark background is consistent on pages that didn't set it
    ============================================================ */
 
 html, body {
-  background-color: #0b0a09 !important;
-  color: #dfdfde !important;
+  background-color: #151817;
+  color: #F2EFE7;
 }
 
-/* Nav styling update */
-.rx-nav {
-  background: rgba(11, 10, 9, 0.92) !important;
-  border-bottom: 1px solid rgba(187, 187, 187, 0.12) !important;
-}
-
-.rx-nav.scrolled {
-  background: rgba(2, 2, 2, 0.98) !important;
-  border-bottom-color: rgba(4, 156, 108, 0.3) !important;
-}
-
-.rx-mega-menu {
-  background: #1a1c1b !important;
-  border-color: rgba(187, 187, 187, 0.2) !important;
-}
-
-/* Hero Section */
-.rx-hero {
-  background: radial-gradient(circle at 70% 30%, rgba(4, 156, 108, 0.22) 0%, rgba(11, 10, 9, 0.98) 70%) !important;
-  border-bottom: 1px solid rgba(187, 187, 187, 0.15) !important;
-}
-
-.rx-hero-title span {
-  color: #049c6c !important;
-}
-
-.rx-hero-badge {
-  border-color: rgba(4, 156, 108, 0.4) !important;
-  background: rgba(4, 156, 108, 0.08) !important;
-  color: #26b583 !important;
-}
-
-/* Primary Button (Green Haze from swatches) */
-.rx-btn-primary, .btn-primary {
-  background: #049c6c !important;
-  color: #ffffff !important;
-  border-color: #049c6c !important;
-  font-weight: 600 !important;
-}
-
-.rx-btn-primary:hover, .btn-primary:hover {
-  background: #03996c !important;
-  border-color: #03996c !important;
-  box-shadow: 0 4px 18px rgba(4, 156, 108, 0.35) !important;
-}
-
-/* Secondary Button (Cornflower Blue Accent from swatches) */
-.rx-btn-secondary, .btn-secondary {
-  background: rgba(85, 126, 232, 0.12) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(85, 126, 232, 0.45) !important;
-}
-
-.rx-btn-secondary:hover, .btn-secondary:hover {
-  background: rgba(85, 126, 232, 0.25) !important;
-  border-color: #557ee8 !important;
-  color: #ffffff !important;
-}
-
-/* Ghost Button */
-.rx-btn-ghost {
-  color: #dfdfde !important;
-}
-.rx-btn-ghost:hover {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-}
-
-/* Badges */
-.rx-badge-demo, .badge-seller-managed, [class*="badge-demo"] {
-  border-color: rgba(85, 126, 232, 0.4) !important;
-  background: rgba(85, 126, 232, 0.12) !important;
-  color: #557ee8 !important;
-}
-
-.rx-badge-sample {
-  border-color: rgba(187, 187, 187, 0.25) !important;
-  background: rgba(187, 187, 187, 0.08) !important;
-  color: #bbbbbb !important;
-}
-
-.rx-badge-status.active {
-  background: rgba(4, 156, 108, 0.15) !important;
-  color: #26b583 !important;
-  border: 1px solid rgba(4, 156, 108, 0.4) !important;
-}
-
-/* Cards & Surfaces */
-.rx-card-technical, .rx-card-editorial, .bank-card, .match-card, .stat-card {
-  background: #1a1c1b !important;
-  border-color: rgba(187, 187, 187, 0.16) !important;
-  color: #dfdfde !important;
-}
-
-.rx-card-technical:hover, .bank-card:hover, .match-card:hover {
-  border-color: #049c6c !important;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5) !important;
-}
-
-.match-card.best-match {
-  border-color: #049c6c !important;
-  box-shadow: 0 0 24px rgba(4, 156, 108, 0.25) !important;
-}
-
-.best-match-label, #badge-winner {
-  background: #049c6c !important;
-  color: #ffffff !important;
-}
-
-/* Category Grid Cards */
-.rx-cat-item {
-  background: #1a1c1b !important;
-  border-color: rgba(187, 187, 187, 0.14) !important;
-}
-
-.rx-cat-item:hover {
-  border-color: #049c6c !important;
-  background: #252826 !important;
-}
-
-.rx-cat-item .rx-mono-sm[style*="color: var(--rx-brass-400)"],
-.rx-cat-item .rx-text-brass {
-  color: #26b583 !important;
-}
-
-/* Value Breakdown Bars */
-.rx-value-bar.gross, .gross-bar {
-  background: #bbbbbb !important;
-}
-
-.rx-value-bar.deduct, .deduction-bar, .deduction {
-  color: #e1526c !important;
-  background: #e1526c !important;
-}
-
-.rx-value-bar.net, .net-bar, .rx-value-amount.net {
-  background: #049c6c !important;
-  color: #26b583 !important;
-}
-
-/* Calculation panel */
+/* Fix any white backgrounds that leaked through */
 .calc-panel {
-  background: rgba(0,0,0,0.35) !important;
-  border-color: rgba(187, 187, 187, 0.18) !important;
-  color: #dfdfde !important;
+  background: rgba(0,0,0,0.2) !important;
+  border-color: var(--rx-border-subtle) !important;
+  color: var(--rx-text-primary) !important;
 }
 
-/* Comparison Tables */
+/* Ensure comparison table is dark */
 .comparison-table {
-  background: #1a1c1b !important;
-  color: #dfdfde !important;
+  background: var(--rx-graphite-700) !important;
+  color: var(--rx-text-primary) !important;
 }
 
 .comparison-table th {
-  color: #bbbbbb !important;
-  background: #2c2923 !important;
-  border-color: rgba(187, 187, 187, 0.15) !important;
+  color: var(--rx-stone-400) !important;
+  background: var(--rx-graphite-600) !important;
+  border-color: var(--rx-border-subtle) !important;
 }
 
 .comparison-table td {
-  color: #dfdfde !important;
-  border-color: rgba(187, 187, 187, 0.12) !important;
+  color: var(--rx-text-primary) !important;
+  border-color: var(--rx-border-subtle) !important;
 }
 
-/* Filter sidebars */
+/* Fix match cards that may have used var(--rx-surface) */
+.match-card {
+  background: var(--rx-graphite-700) !important;
+  border-color: var(--rx-border-subtle) !important;
+  color: var(--rx-text-primary) !important;
+}
+
+/* Fix any filter panels */
 .filter-sidebar, .rx-filter-sidebar {
-  background: #1a1c1b !important;
-  border-color: rgba(187, 187, 187, 0.15) !important;
+  background: var(--rx-graphite-700);
 }
 
-/* Category Pills */
-.category-pill.active {
-  background: #049c6c !important;
-  color: #ffffff !important;
-  border-color: #049c6c !important;
+/* Generic section backgrounds */
+section, .section {
+  background-color: inherit;
 }
 
-/* Inputs & Forms */
+/* Ensure modals are dark */
+.modal, .rx-modal, [class*="modal"] {
+  background: rgba(0,0,0,0.8) !important;
+}
+
+.modal-content, .rx-modal-content, [class*="modal-content"] {
+  background: var(--rx-graphite-700) !important;
+  color: var(--rx-text-primary) !important;
+  border: 1px solid var(--rx-border-light) !important;
+}
+
+/* Fix input fields across pages */
 input, textarea, select {
-  background: rgba(0, 0, 0, 0.4) !important;
-  color: #ffffff !important;
-  border-color: rgba(187, 187, 187, 0.22) !important;
+  background: rgba(0,0,0,0.2) !important;
+  color: var(--rx-text-primary) !important;
+  border-color: var(--rx-border-subtle) !important;
 }
 
 input:focus, textarea:focus, select:focus {
-  border-color: #049c6c !important;
-  box-shadow: 0 0 0 2px rgba(4, 156, 108, 0.2) !important;
+  border-color: var(--rx-brass-600) !important;
+  outline: none !important;
 }
 
-/* Footer */
-.rx-footer {
-  background: #020202 !important;
-  border-top: 1px solid rgba(187, 187, 187, 0.14) !important;
+/* ============================================================
+   LOADING STATE
+   ============================================================ */
+.rx-page-loading {
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
-
-.rx-footer-col-label {
-  color: #049c6c !important;
-  border-bottom-color: rgba(187, 187, 187, 0.14) !important;
-}
-
-.rx-footer-link:hover {
-  color: #ffffff !important;
+.rx-page-loading.loaded {
+  opacity: 1;
 }

@@ -1,0 +1,111 @@
+/* ============================================================
+   RESOURCEX FOOTER STYLES
+   ============================================================ */
+
+.rx-footer {
+  background: var(--rx-black);
+  border-top: 1px solid var(--rx-border-subtle);
+  padding: var(--rx-space-16) 0 var(--rx-space-8);
+}
+
+.rx-footer-top {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--rx-space-16);
+  padding-bottom: var(--rx-space-12);
+  border-bottom: 1px solid var(--rx-border-subtle);
+  margin-bottom: var(--rx-space-8);
+}
+
+.rx-footer-tagline {
+  font-family: var(--rx-font-display);
+  font-size: var(--rx-text-base);
+  color: var(--rx-text-secondary);
+  margin-top: var(--rx-space-4);
+  font-weight: 500;
+}
+
+.rx-footer-sub {
+  font-size: var(--rx-text-sm);
+  color: var(--rx-stone-500);
+  margin-top: var(--rx-space-2);
+  line-height: 1.5;
+}
+
+.rx-footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--rx-space-8);
+}
+
+.rx-footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rx-space-3);
+}
+
+.rx-footer-col-label {
+  font-family: var(--rx-font-display);
+  font-size: var(--rx-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rx-gold);
+  margin-bottom: var(--rx-space-1);
+  padding-bottom: var(--rx-space-2);
+  border-bottom: 1px solid var(--rx-border-subtle);
+}
+
+.rx-footer-link {
+  font-size: var(--rx-text-sm);
+  color: var(--rx-stone-500);
+  text-decoration: none;
+  transition: color var(--rx-duration-fast) ease,
+              transform var(--rx-duration-fast) ease;
+  display: inline-block;
+}
+
+.rx-footer-link:hover {
+  color: var(--rx-ivory);
+  transform: translateX(3px);
+}
+
+.rx-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rx-space-4);
+  flex-wrap: wrap;
+}
+
+.rx-footer-legal {
+  display: flex;
+  align-items: center;
+  gap: var(--rx-space-3);
+  flex-wrap: wrap;
+}
+
+.rx-footer-sep {
+  color: var(--rx-stone-700);
+}
+
+.rx-footer-disclaimer {
+  font-size: var(--rx-text-xs);
+  color: var(--rx-stone-600);
+}
+
+@media (max-width: 768px) {
+  .rx-footer-top {
+    grid-template-columns: 1fr;
+    gap: var(--rx-space-8);
+  }
+  .rx-footer-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .rx-footer-links {
+    grid-template-columns: 1fr;
+  }
+}

@@ -4,7 +4,8 @@
   "description": "ResourceX — Industrial Resources. Reimagined.",
   "scripts": {
     "dev": "npx serve . -p 3000",
-    "start": "npx serve . -p 3000"
+    "backend": "python app.py",
+    "start": "python app.py"
   },
   "keywords": ["industrial-exchange", "byproducts", "circular-materials", "net-value-matching"],
   "author": "ResourceX",

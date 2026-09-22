@@ -5,66 +5,58 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* NOTE: @import above is the resilient fallback; index.html also preloads the same
-   stylesheet via <link> for faster font loading. Do not remove either. */
-
 /* ============================================================
    CSS CUSTOM PROPERTIES — COLOR TOKENS
    ============================================================ */
 
 :root {
-  /* Primary Darks — Black #020202, Cod Gray #0b0a09, Dune #2c2923, Armadillo #454037 */
-  --rx-graphite-900: #020202; /* Pure Black */
-  --rx-graphite-800: #0b0a09; /* Cod Gray */
-  --rx-graphite-700: #1a1c1b; /* Deep Surface */
-  --rx-graphite-600: #2c2923; /* Dune */
-  --rx-graphite-500: #454037; /* Armadillo */
+  /* Primary — Dark Graphite */
+  --rx-graphite-900: #0F1210;
+  --rx-graphite-800: #151817;
+  --rx-graphite-700: #1C1F1D;
+  --rx-graphite-600: #252926;
+  --rx-graphite-500: #2E322F;
 
-  /* Secondary Greens — Green Haze #049c6c / #03996c, Sea Nymph #6fa494, Turquoise #52dbb3 */
-  --rx-green-900: #021a12;
-  --rx-green-800: #034833;
-  --rx-green-700: #036b4b;
-  --rx-green-600: #049c6c; /* Green Haze */
-  --rx-green-500: #03996c; /* Green Haze secondary */
-  --rx-green-400: #26b583;
-  --rx-green-300: #6fa494; /* Sea Nymph */
-  --rx-green-200: #52dbb3; /* Turquoise */
+  /* Secondary — Deep Forest Green */
+  --rx-green-900: #0D2119;
+  --rx-green-800: #173A2B;
+  --rx-green-700: #1C4432;
+  --rx-green-600: #204936;
+  --rx-green-500: #265C42;
+  --rx-green-400: #2D7050;
+  --rx-green-300: #3A8D65;
 
-  /* Secondary Blues — Cornflower #557ee8, Royal Blue #567ce6, Tory Blue #18429f, Blue Ribbon #005dff */
-  --rx-blue-900: #0e245a;
-  --rx-blue-800: #18429f; /* Tory Blue */
-  --rx-blue-700: #005dff; /* Blue Ribbon */
-  --rx-blue-600: #386df0;
-  --rx-blue-500: #557ee8; /* Cornflower Blue */
-  --rx-blue-400: #567ce6; /* Royal Blue */
-  --rx-blue-300: #6480bf; /* Ship Cove */
+  /* Accent — Lavender */
+  --rx-lavender-900: #2A2040;
+  --rx-lavender-800: #3D2F5C;
+  --rx-lavender-700: #5F4B8A;
+  --rx-lavender-600: #7B63A8;
+  --rx-lavender-500: #9183C4;
+  --rx-lavender-400: #B0A3D8;
+  --rx-lavender-300: #C2B8E6;
 
-  /* Warm Earth / Brass — West Coast #6d491d & Pablo #776f62 */
-  --rx-brass-700: #543714;
-  --rx-brass-600: #6d491d; /* West Coast */
-  --rx-brass-500: #93652d;
-  --rx-brass-400: #b58242;
-  --rx-brass-300: #cca56f;
-  --rx-brass-200: #e3c79d;
+  /* Accent — Muted Brass */
+  --rx-brass-700: #8A7040;
+  --rx-brass-600: #A88A52;
+  --rx-brass-500: #B49A62;
+  --rx-brass-400: #C4AD7A;
+  --rx-brass-300: #D4C090;
+  --rx-brass-200: #E4D3A8;
 
-  /* Lights — White #ffffff & Quill Gray #dfdfde */
-  --rx-ivory-900: #c2c2c1;
-  --rx-ivory-800: #dfdfde; /* Quill Gray */
-  --rx-ivory-700: #efefee;
-  --rx-ivory-600: #ffffff; /* White */
+  /* Light — Warm Ivory */
+  --rx-ivory-900: #E8E4DB;
+  --rx-ivory-800: #F2EFE7;
+  --rx-ivory-700: #F7F4EE;
+  --rx-ivory-600: #FAFAF7;
 
-  /* Neutrals — Silver #bbbbbb, Concord #827c78, Corduroy #5c6964, Pablo #776f62 */
-  --rx-stone-700: #454037; /* Armadillo */
-  --rx-stone-600: #5c6964; /* Corduroy */
-  --rx-stone-500: #776f62; /* Pablo */
-  --rx-stone-400: #827c78; /* Concord */
-  --rx-stone-300: #bbbbbb; /* Silver */
-  --rx-stone-200: #dfdfde; /* Quill Gray */
-  --rx-stone-100: #ffffff; /* White */
-
-  /* Accent Highlight — Mandy #e1526c */
-  --rx-accent-rose: #e1526c; /* Mandy */
-  --rx-accent-teal: #52dbb3; /* Turquoise */
+  /* Neutrals — Stone */
+  --rx-stone-700: #5F625D;
+  --rx-stone-600: #6E7269;
+  --rx-stone-500: #8D8A82;
+  --rx-stone-400: #A8A5A0;
+  --rx-stone-300: #C9C4B8;
+  --rx-stone-200: #DDD9D0;
+  --rx-stone-100: #ECEAE4;
 
   /* Semantic */
   --rx-bg-primary: var(--rx-graphite-800);
@@ -73,19 +65,16 @@
   --rx-bg-green: var(--rx-green-800);
   --rx-bg-green-deep: var(--rx-green-900);
 
-  --rx-text-primary: var(--rx-ivory-600);
-  --rx-text-secondary: var(--rx-ivory-800);
-  --rx-text-muted: var(--rx-stone-300);
-  --rx-text-accent: var(--rx-green-400);
-  --rx-text-green: var(--rx-green-400);
-  --rx-text-blue: var(--rx-blue-500);
+  --rx-text-primary: var(--rx-ivory-800);
+  --rx-text-secondary: var(--rx-stone-300);
+  --rx-text-muted: var(--rx-stone-500);
+  --rx-text-accent: var(--rx-brass-500);
+  --rx-text-green: var(--rx-green-300);
 
-  --rx-border-subtle: rgba(187, 187, 187, 0.1);
-  --rx-border-light: rgba(187, 187, 187, 0.2);
-  --rx-border-medium: rgba(187, 187, 187, 0.3);
-  --rx-border-brass: rgba(109, 73, 29, 0.45);
-  --rx-border-blue: rgba(85, 126, 232, 0.4);
-  --rx-border-green: rgba(4, 156, 108, 0.4);
+  --rx-border-subtle: rgba(201, 196, 184, 0.08);
+  --rx-border-light: rgba(201, 196, 184, 0.15);
+  --rx-border-medium: rgba(201, 196, 184, 0.25);
+  --rx-border-brass: rgba(168, 138, 82, 0.3);
 
   /* Typography */
   --rx-font-display: 'Space Grotesk', system-ui, sans-serif;
@@ -171,36 +160,6 @@ body {
   background-color: var(--rx-bg-primary);
   min-height: 100vh;
   overflow-x: hidden;
-}
-
-/* Visible, consistent focus ring across the whole product */
-:focus-visible {
-  outline: 2px solid var(--rx-brass-500);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-
-::selection {
-  background: rgba(168, 138, 82, 0.35);
-  color: var(--rx-ivory-800);
-}
-
-/* Global hidden utility */
-[hidden] {
-  display: none !important;
-}
-
-/* Screen-reader-only utility (visually hidden, screen-reader accessible) */
-.rx-sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 /* ============================================================
@@ -468,169 +427,6 @@ body {
   height: 1px;
   background: var(--rx-brass-600);
   margin: var(--rx-space-6) 0;
-}
-
-/* ============================================================
-   RESOURCE TRACE — SIGNATURE CROSS-PAGE UX
-   ============================================================ */
-
-.rx-trace-bar {
-  background: #0b0a09;
-  border-bottom: 1px solid rgba(223, 223, 222, 0.12);
-  padding: 0.5rem 1.5rem;
-  font-family: var(--rx-font-mono);
-  font-size: 0.8125rem;
-  color: var(--rx-ivory-800);
-  position: sticky;
-  top: var(--rx-nav-height, 68px);
-  z-index: 95;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-}
-
-.rx-trace-inner {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.rx-trace-info {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.rx-trace-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: rgba(4, 156, 108, 0.12);
-  color: var(--rx-green-500);
-  border: 1px solid rgba(4, 156, 108, 0.3);
-  padding: 0.2rem 0.6rem;
-  border-radius: 2px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.rx-trace-pulse {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--rx-green-500);
-  box-shadow: 0 0 8px var(--rx-green-500);
-  animation: rx-pulse 2s infinite;
-}
-
-@keyframes rx-pulse {
-  0% { transform: scale(0.95); opacity: 0.8; }
-  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 12px var(--rx-green-400); }
-  100% { transform: scale(0.95); opacity: 0.8; }
-}
-
-.rx-trace-id {
-  color: var(--rx-brass-300);
-  font-weight: 600;
-}
-
-.rx-trace-sep {
-  color: var(--rx-stone-500);
-}
-
-.rx-trace-name {
-  color: var(--rx-ivory-600);
-  font-family: var(--rx-font-sans);
-  font-weight: 500;
-}
-
-.rx-trace-meta {
-  color: var(--rx-stone-400);
-  font-size: 0.75rem;
-}
-
-.rx-trace-nav {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.rx-trace-link {
-  color: var(--rx-ivory-800);
-  text-decoration: none;
-  padding: 0.25rem 0.65rem;
-  border-radius: 3px;
-  border: 1px solid rgba(223, 223, 222, 0.15);
-  background: rgba(255, 255, 255, 0.02);
-  font-size: 0.75rem;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.rx-trace-link:hover {
-  background: rgba(85, 126, 232, 0.15);
-  border-color: var(--rx-blue-500);
-  color: #ffffff;
-}
-
-.rx-trace-link.active {
-  background: rgba(4, 156, 108, 0.2);
-  border-color: var(--rx-green-500);
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.rx-trace-select {
-  background: #151817;
-  color: var(--rx-ivory-800);
-  border: 1px solid var(--rx-stone-600);
-  padding: 0.25rem 0.6rem;
-  border-radius: 3px;
-  font-family: var(--rx-font-mono);
-  font-size: 0.75rem;
-  cursor: pointer;
-  outline: none;
-}
-
-.rx-trace-select:focus {
-  border-color: var(--rx-brass-400);
-}
-
-@media (max-width: 768px) {
-  .rx-trace-bar {
-    padding: 0.4rem 1rem;
-    font-size: 0.75rem;
-  }
-  .rx-trace-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.4rem;
-  }
-  .rx-trace-nav {
-    width: 100%;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 2px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .rx-trace-nav::-webkit-scrollbar {
-    display: none;
-  }
-  .rx-trace-select {
-    flex-shrink: 0;
-  }
-  .rx-trace-link {
-    flex-shrink: 0;
-  }
 }
 
 /* ============================================================

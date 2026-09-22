@@ -262,7 +262,7 @@ window.RX_DATA.materials = [
     currency: '₹',
     contamination: 'Mixed',
     applications: ['Metal Recovery', 'Copper Recovery', 'Smelting'],
-    description: 'Post-industrial PCB assembly scrap from electronics manufacturing. Sorted by board type. Copper and precious metal recovery potential. Requires certified e-waste processor.',
+    description: 'Post-industrial PCB assembly scrap from electronics manufacturing. Sorted by board type. Copper and precious metal recovery potential. Requires licensed e-waste processor.',
     specifications: {
       copperContent: '~15–25% (est., unverified)',
       goldContent: 'Trace (est., unverified)',
@@ -293,9 +293,3 @@ window.RX_DATA.categories = [
   { name: 'Packaging Materials', slug: 'packaging', icon: '▭', count: 45, desc: 'Corrugated, film, stretch wrap, foil' },
   { name: 'Other Industrial Resources', slug: 'other', icon: '◦', count: 31, desc: 'Specialty materials and mixed streams' }
 ];
-
-/** Map of materials by ID for O(1) lookup across the application */
-window.RX_DATA.materialsMap = window.RX_DATA.materials.reduce(function (acc, item) {
-  acc[item.id] = item;
-  return acc;
-}, {});
