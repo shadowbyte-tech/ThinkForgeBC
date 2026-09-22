@@ -20,6 +20,43 @@
   <link rel="stylesheet" href="css/compat.css">
 
   <style>
+    /* Hero Image Animation Enhancements */
+    .rx-hero-viz {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .hero-visual-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(196, 173, 122, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(45, 112, 80, 0.3);
+    }
+    
+    .hero-visual-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+    }
+    
+    /* Responsive adjustments for hero image */
+    @media (max-width: 768px) {
+      .hero-visual-container {
+        max-width: 100%;
+        border-radius: 12px;
+      }
+      
+      .rx-hero-viz {
+        gap: 1.5rem;
+      }
+    }
+    
     /* Homepage Specific Section Styles */
     .rx-problem-section {
       background: linear-gradient(180deg, #0d0f0e 0%, #080a09 100%);
@@ -299,7 +336,28 @@
         </div>
 
         <div class="rx-hero-viz">
-          <div class="rx-viz-frame rx-grain">
+          <!-- Hero Image Container with Animations -->
+          <div class="hero-visual-container hero-seq-visual">
+            <div class="hero-visual-glow" aria-hidden="true"></div>
+            <img src="assets/hero-illustration.png" alt="Industrial circular economy visualization showing material flow from factory to processor to manufacturer" class="hero-visual-img">
+            
+            <!-- Animated particles for dynamic effect -->
+            <div class="hero-dust-field" aria-hidden="true">
+              <div class="dust-particle dp-1"></div>
+              <div class="dust-particle dp-2"></div>
+              <div class="dust-particle dp-3"></div>
+              <div class="dust-particle dp-4"></div>
+              <div class="dust-particle dp-5"></div>
+              <div class="dust-particle dp-6"></div>
+            </div>
+            
+            <!-- Orbiting material flow particles -->
+            <div class="hero-orbit-node orbit-1" aria-hidden="true"></div>
+            <div class="hero-orbit-node orbit-2" aria-hidden="true"></div>
+          </div>
+          
+          <!-- Interactive Network Visualization -->
+          <div class="rx-viz-frame rx-grain" style="margin-top: 2rem;">
             <div class="rx-viz-head">
               <span class="rx-viz-title">5-Node Industrial Ecosystem</span>
               <span class="rx-viz-badge">INTERACTIVE TOPOLOGY</span>

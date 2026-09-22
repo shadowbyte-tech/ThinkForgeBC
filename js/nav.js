@@ -445,6 +445,9 @@
           window.RX_SPA.updateDashboardUser(null);
         }
       }
+      if (window.RX_RBAC) {
+        window.RX_RBAC.applyAccess(user);
+      }
     } catch (e) {
       console.error('refreshNavUser error:', e);
     }

@@ -2231,5 +2231,7 @@ body.switch-mode .module-conduit {
 }
 
 
-/* === RBAC: gated sections hidden until JS reveals them === */
-section.scroll-section[data-rx-role] { display: none; }
+/* === RBAC: only sections explicitly marked hidden stay off-screen === */
+section.scroll-section[data-rbac-hidden="1"] {
+  display: none !important;
+}

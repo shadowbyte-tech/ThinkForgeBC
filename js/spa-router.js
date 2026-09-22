@@ -156,7 +156,7 @@
       <!-- ============================================================
            SECTION 2: MATERIAL MARKETPLACE (#marketplace)
            ============================================================ -->
-      <section id="marketplace" class="scroll-section rx-marketplace-section" style="padding: 3rem 6% 4rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem);" data-rx-role="seller buyer logistics" style="display:none;">
+      <section id="marketplace" class="scroll-section rx-marketplace-section" style="padding: 3rem 6% 4rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem); display:none;" data-rx-role="seller buyer logistics">
         <!-- Continuous Ambient Background Motion (Dual-Layer Lattice, Glow & Atmospheric Particles) -->
         <div class="marketplace-ambient-grid-1" aria-hidden="true"></div>
         <div class="marketplace-ambient-grid-2" aria-hidden="true"></div>
@@ -213,7 +213,7 @@
       <!-- ============================================================
            SECTION 3: NET VALUE MATCH EXPLORER (#net-value)
            ============================================================ -->
-      <section id="net-value" class="scroll-section" style="padding: 3rem 6% 4rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem);" data-rx-role="seller buyer" style="display:none;">
+      <section id="net-value" class="scroll-section" style="padding: 3rem 6% 4rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem); display:none;" data-rx-role="seller buyer">
         
         <div class="rx-reveal-item slide-up" style="margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid rgba(201,196,184,0.1);">
           <div style="font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:#C4AD7A; margin-bottom:0.4rem;">
@@ -315,7 +315,7 @@
       <!-- ============================================================
            SECTION 4: MATERIAL JOURNEY (#material-journey)
            ============================================================ -->
-      <section id="material-journey" class="scroll-section" style="padding: 3rem 6% 4rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem);" data-rx-role="seller buyer logistics" style="display:none;">
+      <section id="material-journey" class="scroll-section" style="padding: 3rem 6% 4rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem); display:none;" data-rx-role="seller buyer logistics">
         
         <div class="rx-reveal-item slide-up" style="margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid rgba(201,196,184,0.1);">
           <div style="font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:#3A8D65; margin-bottom:0.4rem;">
@@ -446,7 +446,7 @@
       <!-- ============================================================
            SECTION 5: MATERIAL BANK (#material-bank)
            ============================================================ -->
-      <section id="material-bank" class="scroll-section" style="padding: 3rem 6% 4rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem);" data-rx-role="seller" style="display:none;">
+      <section id="material-bank" class="scroll-section" style="padding: 3rem 6% 4rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem); display:none;" data-rx-role="seller">
         
         <div class="rx-reveal-item slide-up" style="margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid rgba(201,196,184,0.1);">
           <div style="font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:#C4AD7A; margin-bottom:0.4rem;">
@@ -506,7 +506,7 @@
       <!-- ============================================================
            SECTION 6: ABOUT RESOURCE X (#about)
            ============================================================ -->
-      <section id="about" class="scroll-section" style="padding: 3rem 6% 5rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem);" data-rx-role="seller buyer logistics" style="display:none;">
+      <section id="about" class="scroll-section" style="padding: 3rem 6% 5rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem); display:none;" data-rx-role="seller buyer logistics">
         
         <div style="max-width: 900px; margin:0 auto;">
           <div class="table-card rx-reveal-item roll-in" style="padding: 2.75rem;">
@@ -532,7 +532,7 @@
       <!-- ============================================================
            SECTION 7: GENERATOR DASHBOARD (#dashboard)
            ============================================================ -->
-      <section id="dashboard" class="scroll-section rx-reveal-item slide-up" style="padding: 3rem 6% 4rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem);" data-rx-role="seller buyer logistics" style="display:none;">
+      <section id="dashboard" class="scroll-section rx-reveal-item slide-up" style="padding: 3rem 6% 4rem; max-width: 1440px; margin: 0 auto; position:relative; scroll-margin-top: calc(var(--rx-nav-height, 76px) + 1rem); display:none;" data-rx-role="seller buyer logistics">
         
         <!-- Live Ledger Notice -->
         <div class="sim-banner rx-reveal-item slide-up" style="background:linear-gradient(90deg, rgba(23,58,43,0.7), rgba(32,73,54,0.8), rgba(23,58,43,0.7)); border:1px solid rgba(45,112,80,0.35); border-radius:10px; color:#C9C4B8; font-family:'JetBrains Mono',monospace; font-size:0.76rem; padding:0.5rem 1rem; display:flex; align-items:center; justify-content:center; gap:0.6rem; margin-bottom:1.75rem;">
@@ -755,12 +755,27 @@
         </div>
 
         <div style="margin-bottom: 1.5rem; text-align: left;">
-            <label style="display: block; font-size: 0.85rem; color: var(--rx-stone-300); margin-bottom: 0.5rem;">Select your organizational role</label>
-            <select id="rx-auth-role" style="width: 100%; padding: 0.75rem; background: #141c18; border: 1px solid rgba(196,173,122,0.35); border-radius: 8px; color: #F2EFE7; outline: none; appearance: none; -webkit-appearance: none; cursor: pointer; font-size: 0.9rem; background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23C4AD7A%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>'); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem;">
-                <option value="seller" style="background: #0f1210; color: #F2EFE7; font-weight: 600;">🏭 Generator / Seller (Source Material)</option>
-                <option value="buyer" style="background: #0f1210; color: #F2EFE7; font-weight: 600;">🔄 Processor / Buyer (Procure Material)</option>
-                <option value="logistics" style="background: #0f1210; color: #F2EFE7; font-weight: 600;">🚚 Logistics / Transport Partner</option>
-            </select>
+            <label style="display: block; font-size: 0.85rem; color: var(--rx-stone-300); margin-bottom: 0.5rem;">Select your organizational role(s)</label>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 0.75rem; background: #141c18; border: 1px solid rgba(196,173,122,0.35); border-radius: 8px;">
+                <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; color: #F2EFE7; font-size: 0.9rem;">
+                    <input type="checkbox" id="rx-role-seller" class="rx-role-checkbox" value="seller" style="accent-color: #C4AD7A; width: 1.1rem; height: 1.1rem; cursor: pointer;">
+                    <span>🏭 Generator / Seller (Source Material)</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; color: #F2EFE7; font-size: 0.9rem;">
+                    <input type="checkbox" id="rx-role-buyer" class="rx-role-checkbox" value="buyer" style="accent-color: #C4AD7A; width: 1.1rem; height: 1.1rem; cursor: pointer;">
+                    <span>🔄 Processor / Buyer (Procure Material)</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; color: #F2EFE7; font-size: 0.9rem;">
+                    <input type="checkbox" id="rx-role-logistics" class="rx-role-checkbox" value="logistics" style="accent-color: #C4AD7A; width: 1.1rem; height: 1.1rem; cursor: pointer;">
+                    <span>🚚 Logistics / Transport Partner</span>
+                </label>
+                <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(201,196,184,0.1);">
+                    <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; color: #C4AD7A; font-size: 0.85rem; font-weight: 600;">
+                        <input type="checkbox" id="rx-select-all" style="accent-color: #C4AD7A; width: 1.1rem; height: 1.1rem; cursor: pointer;" onclick="window.RX_SPA.toggleAllRoles()">
+                        <span>Select All Roles (Demo Mode)</span>
+                    </label>
+                </div>
+            </div>
         </div>
         
         <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
@@ -1155,6 +1170,14 @@
   let currentModule = 'home';
   let isSwitching = false;
 
+  function ensureSwitchMode() {
+    if (document.body.classList.contains('switch-mode')) return;
+    document.body.classList.add('switch-mode');
+    document.querySelectorAll('.scroll-section').forEach(s => {
+      s.classList.toggle('active-module', s.id === currentModule);
+    });
+  }
+
   window.RX_SPA.switchToModule = function (targetId) {
     if (!targetId) return;
     targetId = targetId.replace('#', '').replace('/', '');
@@ -1166,6 +1189,8 @@
     const oldEl = document.getElementById(oldId);
     const newEl = document.getElementById(targetId);
     if (!newEl) return;
+
+    ensureSwitchMode();
 
     const oldIdx = MODULES.indexOf(oldId);
     const newIdx = MODULES.indexOf(targetId);
@@ -1254,23 +1279,15 @@
   window.RX_SPA.scrollToId = function (id) {
     if (!id) return;
     id = id.replace('#', '').replace('/', '');
-    if (document.body.classList.contains('switch-mode')) {
-      window.RX_SPA.switchToModule(id);
-    } else {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        currentModule = id;
-        window.history.replaceState(null, '', '#' + id);
-        document.querySelectorAll('[data-scroll]').forEach(l => {
-          l.classList.toggle('active', l.getAttribute('data-scroll') === id);
-        });
-      }
-    }
+    if (!MODULES.includes(id)) id = 'home';
+    ensureSwitchMode();
+    window.RX_SPA.switchToModule(id);
   };
 
   /* ---- SCROLLSPY (Highlights active navbar links during scrolling) ---- */
   function setupScrollSpy() {
+    if (document.body.classList.contains('switch-mode')) return;
+
     const sections = ['home', 'marketplace', 'net-value', 'material-journey', 'material-bank', 'about', 'dashboard'];
     
     function onScroll() {
@@ -1436,6 +1453,24 @@
       m.style.display = 'flex';
       void m.offsetHeight; // trigger reflow for smooth opacity/scale entrance
       m.classList.add('active');
+      
+      // Preselect all roles for demo by default
+      setTimeout(() => {
+        const selectAll = document.getElementById('rx-select-all');
+        const checkboxes = document.querySelectorAll('.rx-role-checkbox');
+        if (selectAll && checkboxes.length === 3) {
+          selectAll.checked = true;
+          checkboxes.forEach(cb => {
+            cb.checked = true;
+          });
+        }
+        
+        // Set demo email if empty
+        const emailInput = document.getElementById('rx-demo-email');
+        if (emailInput && !emailInput.value) {
+          emailInput.value = 'demo@resourcex.com';
+        }
+      }, 50);
     }
     const status = document.getElementById('google-auth-status');
     if (status) status.textContent = '';
@@ -1451,6 +1486,78 @@
           m.style.display = 'none';
         }
       }, 250);
+    }
+  };
+
+  // Toggle all role checkboxes
+  window.RX_SPA.toggleAllRoles = function () {
+    const selectAll = document.getElementById('rx-select-all');
+    const checkboxes = document.querySelectorAll('.rx-role-checkbox');
+    if (selectAll && checkboxes) {
+      const isChecked = selectAll.checked;
+      checkboxes.forEach(cb => {
+        cb.checked = isChecked;
+      });
+    }
+  };
+
+  // Demo email login function
+  window.RX_SPA.executeDemoEmailLogin = function () {
+    const email = document.getElementById('rx-demo-email')?.value || 'demo@resourcex.com';
+    const name = email.split('@')[0];
+    
+    // Get selected roles
+    const selectedRoles = [];
+    if (document.getElementById('rx-role-seller')?.checked) selectedRoles.push('seller');
+    if (document.getElementById('rx-role-buyer')?.checked) selectedRoles.push('buyer');
+    if (document.getElementById('rx-role-logistics')?.checked) selectedRoles.push('logistics');
+    
+    // If no roles selected, select all for demo
+    if (selectedRoles.length === 0) {
+      selectedRoles.push('seller', 'buyer', 'logistics');
+    }
+    
+    // Create role description text
+    const roleText = selectedRoles.map(role => {
+      switch(role) {
+        case 'seller': return 'Generator/Seller';
+        case 'buyer': return 'Processor/Buyer';
+        case 'logistics': return 'Logistics Partner';
+        default: return role;
+      }
+    }).join(', ');
+    
+    // Create the session based on selected roles
+    const user = { 
+      name: name.charAt(0).toUpperCase() + name.slice(1), 
+      email, 
+      avatar: name.charAt(0).toUpperCase(), 
+      provider: 'Email Demo', 
+      authenticated: true,
+      roles: selectedRoles,
+      role: selectedRoles.length > 1 ? 'Multi-Role Partner' : roleText,
+      role_key: selectedRoles.length > 1 ? 'multi' : selectedRoles[0],
+      facility: name.charAt(0).toUpperCase() + name.slice(1) + " Industrial Corp",
+      location: "Global Logistics Hub",
+      has_all_roles: selectedRoles.length === 3
+    };
+    
+    localStorage.setItem('rx_user', JSON.stringify(user));
+    window.RX_SPA.closeLoginModal();
+
+    if (window.RX && window.RX.refreshNavUser) {
+      window.RX.refreshNavUser();
+    }
+    if (window.RX && window.RX.toast) {
+      const roleMessage = selectedRoles.length === 3 ? 
+        'with ALL roles (Seller, Buyer, Logistics)' : 
+        `with ${selectedRoles.length} role(s): ${roleText}`;
+      window.RX.toast(`Signed in successfully as ${user.name} ${roleMessage}`, 'success');
+    }
+    
+    // Apply RBAC if available
+    if (window.RX_RBAC) {
+      window.RX_RBAC.applyAccess(user);
     }
   };
 
@@ -1948,10 +2055,10 @@
   ============================================================ */
   const RX_RBAC = {
     sectionsByRole: {
-      seller:    ['home', 'marketplace', 'net-value', 'material-bank', 'material-journey', 'dashboard'],
-      buyer:     ['home', 'marketplace', 'net-value', 'material-journey', 'dashboard'],
-      logistics: ['home', 'marketplace', 'material-journey', 'dashboard'],
-      guest:     ['home']
+      seller:    ['home', 'marketplace', 'net-value', 'material-bank', 'material-journey', 'dashboard', 'about'],
+      buyer:     ['home', 'marketplace', 'net-value', 'material-journey', 'dashboard', 'about'],
+      logistics: ['home', 'marketplace', 'material-journey', 'dashboard', 'about'],
+      guest:     ['home', 'marketplace', 'net-value', 'material-journey', 'material-bank', 'about', 'dashboard']
     },
 
     navByRole: {
@@ -1961,42 +2068,63 @@
       guest:     []
     },
 
-    getRole(user) {
-      if (!user || !user.name) return 'guest';
+    getAllRoles(user) {
+      if (!user || !user.name) return ['guest'];
+      const roles = [];
+
+      // Check roles array first (multi-role support)
+      if (user.roles && Array.isArray(user.roles) && user.roles.length > 0) {
+        user.roles.forEach(r => {
+          if (!roles.includes(r)) roles.push(r);
+        });
+      }
+
+      // Also check role_key
       const roleVal = user.role_key || '';
-      if (roleVal === 'buyer') return 'buyer';
-      if (roleVal === 'logistics') return 'logistics';
-      if (roleVal === 'seller') return 'seller';
+      if (roleVal && roleVal !== 'multi' && !roles.includes(roleVal)) {
+        roles.push(roleVal);
+      }
+
       // Fallback: match by role text
-      const roleText = (user.role || '').toLowerCase();
-      if (roleText.includes('buyer') || roleText.includes('processor')) return 'buyer';
-      if (roleText.includes('logistic') || roleText.includes('transport')) return 'logistics';
-      if (roleText.includes('seller') || roleText.includes('generator')) return 'seller';
-      return 'guest';
+      if (roles.length === 0) {
+        const roleText = (user.role || '').toLowerCase();
+        if (roleText.includes('buyer') || roleText.includes('processor')) roles.push('buyer');
+        if (roleText.includes('logistic') || roleText.includes('transport')) roles.push('logistics');
+        if (roleText.includes('seller') || roleText.includes('generator')) roles.push('seller');
+      }
+
+      if (roles.length === 0) roles.push('guest');
+      return roles;
+    },
+
+    getRole(user) {
+      return this.getAllRoles(user)[0] || 'guest';
     },
 
     applyAccess(user) {
-      const role = this.getRole(user);
-      const allowed = this.sectionsByRole[role] || ['home'];
+      const roles = this.getAllRoles(user);
 
-      // Show/hide all scroll-sections using data-rx-role attribute
+      // Merge allowed sections from ALL assigned roles
+      const allowedSet = new Set();
+      roles.forEach(role => {
+        const allowed = this.sectionsByRole[role] || this.sectionsByRole.guest;
+        allowed.forEach(id => allowedSet.add(id));
+      });
+      const allowed = Array.from(allowedSet);
+
       document.querySelectorAll('section.scroll-section').forEach(sec => {
         const id = sec.id;
         if (!id) return;
-        
+
         if (allowed.includes(id)) {
-          // Show with smooth fade
-          sec.style.display = '';
-          sec.style.opacity = '0';
           sec.removeAttribute('data-rbac-hidden');
-          requestAnimationFrame(() => {
-            sec.style.transition = 'opacity 0.4s ease';
-            sec.style.opacity = '1';
-          });
+          sec.style.removeProperty('display');
+          sec.style.opacity = '1';
         } else {
+          sec.setAttribute('data-rbac-hidden', '1');
+          sec.classList.remove('active-module');
           sec.style.display = 'none';
           sec.style.opacity = '0';
-          sec.setAttribute('data-rbac-hidden', '1');
         }
       });
 
@@ -2015,52 +2143,26 @@
         }
       });
 
-      // Show/hide nav items based on role — hide links to gated sections
       document.querySelectorAll('a[href^="#"]').forEach(link => {
-        const sectionId = (link.getAttribute('href') || '').replace('#', '');
-        if (sectionId && !allowed.includes(sectionId) && sectionId !== '') {
-          link.style.display = 'none';
-        } else {
-          link.style.display = '';
-        }
+        link.style.display = '';
       });
 
-      // If guest, show a "login prompt" overlay on the page (light indicator)
       const existingBanner = document.getElementById('rx-login-prompt-banner');
-      if (role === 'guest') {
-        if (!existingBanner) {
-          const banner = document.createElement('div');
-          banner.id = 'rx-login-prompt-banner';
-          banner.style.cssText = `
-            position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
-            background: rgba(15, 18, 16, 0.95); border: 1px solid rgba(196,173,122,0.4);
-            border-radius: 16px; padding: 1.25rem 1.5rem; max-width: 320px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5); backdrop-filter: blur(12px);
-          `;
-          banner.innerHTML = `
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:0.75rem;">
-              <div style="width:8px; height:8px; border-radius:50%; background:#C4AD7A; animation: pulse 2s infinite;"></div>
-              <strong style="color:#F2EFE7; font-size:0.9rem;">Industrial Access Required</strong>
-            </div>
-            <p style="color:#A8A5A0; font-size:0.82rem; margin:0 0 1rem; line-height:1.5;">
-              Sign in with your organizational role to access the marketplace, net-value engine, and supply chain tools.
-            </p>
-            <button onclick="window.RX_SPA.openLoginModal()" style="
-              width:100%; padding:0.6rem 1rem; background: var(--rx-brass-400, #C4AD7A); color:#0F1210;
-              border:none; border-radius:8px; font-weight:700; font-size:0.85rem; cursor:pointer;
-            ">Sign In to Access Portal →</button>
-            <button onclick="document.getElementById('rx-login-prompt-banner').remove()" style="
-              position:absolute; top:0.75rem; right:0.75rem; background:none; border:none;
-              color:#8D8A82; cursor:pointer; font-size:1rem;
-            ">✕</button>
-          `;
-          document.body.appendChild(banner);
-        }
-      } else {
-        if (existingBanner) existingBanner.remove();
-      }
+      if (existingBanner) existingBanner.remove();
 
-      console.log(`[RX-RBAC] Applied access for role: ${role} | Visible: [${allowed.join(', ')}]`);
+      if (document.body.classList.contains('switch-mode')) {
+        const activeEl = document.querySelector('.scroll-section.active-module');
+        const activeId = activeEl && activeEl.id ? activeEl.id : currentModule;
+        if (!allowed.includes(activeId)) {
+          window.RX_SPA.scrollToId('home');
+        } else {
+          document.querySelectorAll('.scroll-section').forEach(sec => {
+            if (sec.id) {
+              sec.classList.toggle('active-module', sec.id === activeId);
+            }
+          });
+        }
+      }
     }
   };
 
@@ -2071,14 +2173,16 @@
     if (!app) return;
     app.innerHTML = renderCompletePage();
 
+    document.body.classList.add('switch-mode');
+    document.querySelectorAll('.scroll-section').forEach(s => {
+      s.classList.toggle('active-module', s.id === 'home');
+    });
+
     initializeAllSections();
 
-    // ── RBAC: Apply role-based section visibility immediately (no flash) ──
-    (function applyInitialRBAC() {
-      let user = null;
-      try { user = JSON.parse(localStorage.getItem('rx_user') || 'null'); } catch(e) {}
-      if (window.RX_RBAC) window.RX_RBAC.applyAccess(user);
-    })();
+    let bootUser = null;
+    try { bootUser = JSON.parse(localStorage.getItem('rx_user') || 'null'); } catch (e) {}
+    if (window.RX_RBAC) window.RX_RBAC.applyAccess(bootUser);
 
     if (window.RX && window.RX.refreshNavUser) {
       window.RX.refreshNavUser();
@@ -2088,25 +2192,38 @@
       window.RX_SPA.loadAuthConfig();
     }
 
-    // Disable browser scroll restoration so page never reloads midway through or stuck on dashboard
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
 
-    // Always start at the beginning (Section 01: Hero & Vision) on initial load / refresh
-    currentModule = 'home';
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    window.history.replaceState(null, '', window.location.pathname);
+    const initialHash = (window.location.hash || '').replace('#', '').replace('/', '') || 'home';
+    const targetModule = MODULES.includes(initialHash) ? initialHash : 'home';
+    currentModule = targetModule;
 
-    // Highlight navbar 'home' item
-    document.querySelectorAll('[data-scroll]').forEach(l => {
-      l.classList.toggle('active', l.getAttribute('data-scroll') === 'home');
+    document.querySelectorAll('.scroll-section').forEach(s => {
+      s.classList.toggle('active-module', s.id === targetModule);
     });
 
-    // Secondary frame check to counter deferred layout/font reflow
+    document.querySelectorAll('[data-scroll]').forEach(l => {
+      l.classList.toggle('active', l.getAttribute('data-scroll') === targetModule);
+    });
+
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    window.history.replaceState(null, '', '#' + targetModule);
+
     requestAnimationFrame(() => {
       window.scrollTo(0, 0);
     });
+
+    if (!window._rxHashNavBound) {
+      window._rxHashNavBound = true;
+      window.addEventListener('hashchange', function () {
+        const hashId = (window.location.hash || '').replace('#', '').replace('/', '');
+        if (hashId && MODULES.includes(hashId) && hashId !== currentModule) {
+          window.RX_SPA.scrollToId(hashId);
+        }
+      });
+    }
 
     // Close modals on Escape key
     document.addEventListener('keydown', function (e) {
